@@ -608,7 +608,7 @@ body::before{
   background:var(--pat),linear-gradient(140deg,var(--a),var(--b));box-shadow:0 10px 24px -16px rgba(0,0,20,.8);
   transition:transform .3s var(--ease-out),box-shadow .3s}
 .cat-tile::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);pointer-events:none}
-.ct-name{position:relative;z-index:2;max-width:58%;font:600 14px/1.18 var(--f-ui);text-wrap:balance;text-shadow:0 1px 8px rgba(0,0,0,.35);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ct-name{position:relative;z-index:2;max-width:66%;font:600 14px/1.18 var(--f-ui);text-wrap:balance;text-shadow:0 1px 8px rgba(0,0,0,.35);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .ct-n{position:relative;z-index:2;margin-top:auto;font-size:var(--t-12);opacity:.8}
 .ct-fan{position:absolute;right:8px;bottom:-12px;width:48px;height:72px;z-index:1}
 .ct-fan img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:2px 4px 4px 2px;box-shadow:0 8px 16px -6px rgba(0,0,0,.7);transform-origin:50% 100%;transition:transform .35s var(--ease-out)}
@@ -1062,7 +1062,7 @@ const CATS = ['Усі', ...(HAS_SCR ? [SCR] : []), ...Object.entries(BOOKS.reduc
 const PAGE = 30;
 const state = {page:1, 
   cat:'Усі', q:'', inStock:false, ek:false, sort:'pop', featured:0, cart:loadCart(), view:'list',
-  form:{name:'', phone:'', city:'', branch:'', get:'pickup', ship:'one', pay:'card'}, touched:{},
+  form:{name:'', phone:'', city:'', branch:'', get:'pickup', ship:'one', pay:'cod'}, touched:{},
 };
 function loadCart(){ try { return JSON.parse(localStorage.getItem('palitourka-cart') || '{}') || {}; } catch (e) { return {}; } }
 function saveCart(){
@@ -1547,7 +1547,7 @@ const Stage = (() => {
       const r = canvas.getBoundingClientRect(), w = Math.max(1, r.width), h = Math.max(1, r.height);
       renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
       inViewer = !!wrap.closest('.viewer');
-      baseZ = inViewer ? Math.max(6.6, 6.8 / camera.aspect)   // у вікні перегляду — ближче, на весь екран
+      baseZ = inViewer ? Math.max(6.6, 4.6 / camera.aspect)   // у вікні перегляду — ближче, на весь екран
         : Math.max(8.8, 7.8 / camera.aspect);   // книжка в розмір сцени, лише трохи виходить за край
       // розгорнута книжка у вікні перегляду заповнює місце між верхом і кнопками; краї сторінок на .4 ближчі за корінець
       const bar = wrap.querySelector('.stagebar .glass'), top = 28;
@@ -2504,7 +2504,7 @@ function setQty(id, q){ if (q <= 0) return removeLine(id); state.cart[id] = q; s
 const FIELDS = [
   {id:'name', label:'Імʼя та прізвище', ac:'name', ph:'Олена Коваленко', help:'Як у документі: за ним видадуть посилку.',
     check:v => v.trim().split(/\s+/).filter(Boolean).length >= 2 ? '' : 'Вкажіть імʼя та прізвище через пробіл.'},
-  {id:'phone', label:'Телефон', type:'tel', ac:'tel', ph:'+380 67 123 45 67', help:'Сюди прийде SMS з номером ТТН.',
+  {id:'phone', label:'Телефон', type:'tel', ac:'tel', ph:'+380 67 123 45 67', help:'Зателефонуємо, щоб підтвердити замовлення.',
     check:v => /^(\+?38)?0\d{9}$/.test(v.replace(/[\s()-]/g, '')) ? '' : 'Номер має бути у форматі +380 XX XXX XX XX.'},
   {id:'city', label:'Місто', ac:'address-level2', ph:'Львів', check:v => v.trim() ? '' : 'Вкажіть місто доставки.'},
   {id:'branch', label:'Відділення чи поштомат НП', ph:'Відділення №12', check:v => v.trim() ? '' : 'Вкажіть номер відділення або поштомата.'},
@@ -2538,7 +2538,7 @@ function renderCart(){
   }
   const hasWait = L.some(x => avail(x.b).k === 'wait'), hasOk = L.some(x => avail(x.b).k === 'ok');
   const allEk = L.every(x => x.b.st.includes('єКнига')), left = Math.max(0, FREE_SHIP - sum);
-  if (!allEk && state.form.pay === 'ek') state.form.pay = 'card';
+  if ((!allEk && state.form.pay === 'ek') || state.form.pay === 'card') state.form.pay = 'cod';
   if (state.view === 'list'){
     $('#cart-h').textContent = 'Кошик';
     body.innerHTML = L.map(({b, q}) => { const av = avail(b); return `<div class="line">
@@ -2562,7 +2562,7 @@ function renderCart(){
   body.innerHTML = `<form class="form" id="co" novalidate>
     <div class="two">${fieldHTML(FIELDS[0])}${fieldHTML(FIELDS[1])}</div>
     <fieldset class="pay"><legend class="legend">Як отримати</legend>
-      ${opt('get', 'pickup', 'Забрати в магазині в Ніжині', 'Безкоштовно. Напишемо в SMS, коли книжки приїдуть')}
+      ${opt('get', 'pickup', 'Забрати в магазині в Ніжині', 'Безкоштовно. Зателефонуємо, коли книжки приїдуть')}
       ${opt('get', 'np', 'Нова Пошта', 'Відділення або поштомат, за тарифом НП')}
     </fieldset>
     ${state.form.get === 'np' ? `<div class="two">${fieldHTML(FIELDS[2])}${fieldHTML(FIELDS[3])}</div>` : ''}
@@ -2572,9 +2572,8 @@ function renderCart(){
       ${opt('ship', 'two', 'Двома посилками', 'Що є на складі, поїде сьогодні, решта пізніше')}
     </fieldset>` : ''}
     <fieldset class="pay"><legend class="legend">Оплата</legend>
-      ${opt('pay', 'card', 'Карткою онлайн', 'Apple Pay, Google Pay, Visa, Mastercard')}
       ${opt('pay', 'ek', 'єКнига', allEk ? 'Усі книжки в кошику підходять' : 'Не всі книжки в кошику беруть участь у програмі', !allEk)}
-      ${opt('pay', 'cod', 'Післяплата', 'Оплата у відділенні, комісія за тарифом НП')}
+      ${opt('pay', 'cod', 'При отриманні', state.form.get === 'np' ? 'У відділенні Нової Пошти, комісія за тарифом НП' : 'Коли забираєте книжки в магазині')}
     </fieldset>
     <p class="callout" id="co-err" role="alert" hidden></p>
   </form>`;
