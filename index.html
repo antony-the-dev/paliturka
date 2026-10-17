@@ -2614,12 +2614,10 @@ function renderDone(sum, serverNo, real){
     <div class="seal"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></div>
     <h3>Замовлення ${no} прийнято</h3>
     <p>Сума ${money(sum)}. ${real ? 'Ми отримали замовлення і скоро зателефонуємо, щоб підтвердити.' : 'Це сайт для перегляду: замовлення нікуди не надіслано.'}</p>
-    <ol>
-      <li>Клієнт отримує SMS з номером замовлення.</li>
-      <li>Замовлення автоматично йде постачальнику.</li>
-      <li>${state.form.get === 'np' ? 'Книжки приїжджають у Ніжин і їдуть далі Новою Поштою, ТТН приходить у SMS.' : 'Книжки приїжджають у магазин у Ніжині, і ми пишемо в SMS, що можна забирати.'}</li>
-    </ol>
-    <span class="note"><b>Фаза 4</b> Передачу замовлення постачальнику робимо через API розділу «Замовлення» в порталі. Поки його немає, замовлення формуємо вручну.</span>
+    ${real ? `<ol>
+      <li>Зателефонуємо, щоб підтвердити замовлення.</li>
+      <li>${state.form.get === 'np' ? 'Відправимо книжки Новою Поштою і надішлемо номер накладної.' : 'Повідомимо, коли книжки можна забрати в магазині в Ніжині.'}</li>
+    </ol>` : ''}
   </div>`;
   $('#cart-foot').innerHTML = `<button class="btn btn-buy press" type="button" id="finish">Повернутися до каталогу</button>`;
   $('#finish').addEventListener('click', () => { state.cart = {}; saveCart(); renderBadges(); state.view = 'list'; requestClose(); });
