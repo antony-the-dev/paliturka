@@ -1,4 +1,4 @@
-<!doctype html><html lang="uk"><head><meta name="robots" content="noindex"><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!doctype html><html lang="uk"><head><meta name="robots" content="noindex"><script>window.NO_PAGES = 1</script><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Палітурка — книгарня в Ніжині з доставкою по Україні</title>
 <meta name="description" content="Книжки українських і світових видавництв за нашими цінами. Забирайте в магазині в Ніжині або отримуйте Новою Поштою. Оплата єКнигою і Нацкешбеком.">
 <meta name="theme-color" content="#161B52">
@@ -1724,7 +1724,7 @@ const Stage = (() => {
       if (reader.b === b) return;
       resetReader(); reader.b = b; showSpread();
       const urls = (b.gal || []).slice(0, 12);   // обкладинку build_storefront.py уже прибрав зі списку
-      if (!/^https?:/.test(location.protocol) || !urls.length) return;
+      if (!/^https?:/.test(location.protocol) || window.NO_PAGES || !urls.length) return;   // NO_PAGES: копія без сервера (GitHub)
       reader.loading = true;
       Promise.all(urls.map(u => new Promise(res => {
         const im = new Image(); im.decoding = 'async';
@@ -2296,7 +2296,7 @@ function renderDetail(b){
   $('#detail-body').innerHTML = `<div class="detail">
     <div class="cover-col">
       ${galleryHTML(b)}
-      <button class="d-3d press" type="button" data-3d="${b.id}">${I.cube}${(b.gal || []).length ? 'Гортати в 3D' : 'Покрутити в 3D'}</button>
+      <button class="d-3d press" type="button" data-3d="${b.id}">${I.cube}${(b.gal || []).length && !window.NO_PAGES ? 'Гортати в 3D' : 'Покрутити в 3D'}</button>
     </div>
     <div>
       <div class="d-stickers">${b.st.map(s => `<span class="pill${s === 'єКнига' ? ' ink' : ''}">${esc(s)}</span>`).join('')}</div>
