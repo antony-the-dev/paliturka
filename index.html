@@ -1,0 +1,2698 @@
+<!doctype html><html lang="uk"><head><meta name="robots" content="noindex"><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Палітурка — книгарня в Ніжині з доставкою по Україні</title>
+<meta name="description" content="Книжки українських і світових видавництв за нашими цінами. Забирайте в магазині в Ніжині або отримуйте Новою Поштою. Оплата єКнигою і Нацкешбеком.">
+<meta name="theme-color" content="#161B52">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Палітурка"><meta property="og:locale" content="uk_UA">
+<meta property="og:title" content="Палітурка — книгарня в Ніжині"><meta property="og:description" content="Сотні тисяч видань. Самовивіз у Ніжині або Нова Пошта по всій Україні.">
+<!-- Коли буде домен: <link rel="canonical"> і og:image з абсолютними адресами -->
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BookStore","name":"Палітурка","address":{"@type":"PostalAddress","addressLocality":"Ніжин","addressCountry":"UA"},"areaServed":"UA","currenciesAccepted":"UAH"}</script><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,500&family=Onest:wght@400;500;600;700;800&family=Unbounded:wght@500;700;800&display=swap">
+<style>
+:root{
+  /* Вітрина-полиця: темна сцена з 3D-книжкою → полиця → добірки-бенто → каталог → історія «як це працює» */
+  --paper:#F3F4F8; --surface:#FFFFFF; --sunk:#E8EAF3;
+  --ink:#14163A; --ink-2:#555978; --line:#DADCEA;
+  --buy:#2A3BD6; --buy-hover:#2231B8; --on-buy:#FFFFFF;
+  --foil:#F4B731; --on-foil:#2B1F00; --ring:#E8A800;
+  --ok:#17794A; --wait:#94590A; --none:#62667F; --err:#B42E27;
+  --stage:#161B52; --stage-2:#2A33A0; --on-stage:#F1F2FF; --on-stage-2:#BCC1EE; --stage-line:rgba(255,255,255,.16);
+  --stage-ok:#7CE0AC; --stage-wait:#F6C46E; --stage-buy:#9AA4FF; --on-stage-buy:#0E1140;
+  --glass-bg:rgba(255,255,255,.10); --glass-border:rgba(255,255,255,.2); --glass-shadow:0 8px 32px rgba(0,0,20,.35);
+  --bar-glass:rgba(243,244,248,.82);
+  --plank:#C9CCDE; --plank-edge:#AEB2C9;
+  --note:#FFE27A; --on-note:#382B00;
+  --code-bg:#0F1233; --code-fg:#D9DCFF; --code-dim:#8C91C7; --code-key:#9AA4FF; --code-str:#F6C46E; --code-num:#7CE0AC;
+  --scrim:rgba(12,14,38,.5);
+  --shadow-book:0 1px 1px rgba(20,22,58,.10), 0 12px 22px -10px rgba(20,22,58,.45);
+  --shadow-panel:0 24px 70px -24px rgba(20,22,58,.45);
+
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-book:"Literata",Georgia,"Times New Roman",serif;
+  --f-ui:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --t-12:.75rem; --t-14:.875rem; --t-16:1rem; --t-20:1.25rem; --t-25:1.5625rem; --t-31:1.953rem;
+
+  --s-1:4px; --s-2:8px; --s-3:12px; --s-4:16px; --s-5:24px; --s-6:32px; --s-7:48px; --s-8:64px;
+  --r-s:8px; --r-m:14px; --r-l:20px; --r-xl:28px;
+
+  --ease-out:cubic-bezier(.2,.8,.2,1); --ease-in:cubic-bezier(.5,0,.75,0);
+  --d-fast:150ms; --d:240ms; --d-exit:180ms;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0C0E1E; --surface:#161931; --sunk:#1E2244;
+    --ink:#E9EAF6; --ink-2:#A6A9C8; --line:#2A2E52;
+    --buy:#8C97FF; --buy-hover:#A5AEFF; --on-buy:#0C0E1E;
+    --ok:#52CB8F; --wait:#E8A94A; --none:#8A8EAE; --err:#FF8A80;
+    --stage:#12164A; --stage-2:#232B8C; --ring:#FFD43B;
+    --bar-glass:rgba(12,14,30,.8);
+    --plank:#2A2E54; --plank-edge:#1D2042;
+    --note:#EBD06C; --on-note:#2A2000;
+    --scrim:rgba(0,0,0,.6);
+    --shadow-book:0 1px 1px rgba(0,0,0,.4), 0 12px 22px -10px rgba(0,0,0,.8);
+    --shadow-panel:0 24px 70px -24px rgba(0,0,0,.8);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0C0E1E; --surface:#161931; --sunk:#1E2244;
+  --ink:#E9EAF6; --ink-2:#A6A9C8; --line:#2A2E52;
+  --buy:#8C97FF; --buy-hover:#A5AEFF; --on-buy:#0C0E1E;
+  --ok:#52CB8F; --wait:#E8A94A; --none:#8A8EAE; --err:#FF8A80;
+  --stage:#12164A; --stage-2:#232B8C; --ring:#FFD43B;
+  --bar-glass:rgba(12,14,30,.8);
+  --plank:#2A2E54; --plank-edge:#1D2042;
+  --note:#EBD06C; --on-note:#2A2000;
+  --scrim:rgba(0,0,0,.6);
+  --shadow-book:0 1px 1px rgba(0,0,0,.4), 0 12px 22px -10px rgba(0,0,0,.8);
+  --shadow-panel:0 24px 70px -24px rgba(0,0,0,.8);
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+@media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
+body{background:var(--paper);color:var(--ink);font:400 var(--t-16)/1.5 var(--f-ui);-webkit-font-smoothing:antialiased}
+body.locked{overflow:hidden}
+.app{overflow-x:clip}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+p{text-wrap:pretty}
+:focus-visible{outline:2px solid var(--buy);outline-offset:2px}
+.wrap{max-width:1440px;margin-inline:auto;padding-inline:clamp(16px,3vw,40px)}
+.num{font-variant-numeric:tabular-nums}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.press{transition:transform var(--d-fast) var(--ease-out),background-color var(--d-fast),box-shadow var(--d-fast),color var(--d-fast)}
+.press:active{transform:scale(.97)}
+
+/* Кнопки: синій лише для покупки, жовтий лише для стікерів і акцентів */
+.btn{min-height:48px;border-radius:999px;border:0;padding:0 var(--s-5);font-weight:600;font-size:var(--t-16);display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2);text-decoration:none}
+.btn-buy{background:var(--buy);color:var(--on-buy)}
+.btn-buy:hover{background:var(--buy-hover)}
+.btn-line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn-line:hover{box-shadow:inset 0 0 0 1.5px var(--ink-2)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn .spin{width:16px;height:16px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.textbtn{background:none;border:0;padding:0;min-height:44px;color:var(--buy);font-weight:600;font-size:var(--t-14);text-decoration:underline;text-underline-offset:3px}
+
+
+
+/* Прототип-смужка */
+.proto{background:var(--sunk);color:var(--ink-2);font-size:var(--t-14)}
+.proto .wrap{display:flex;flex-wrap:wrap;gap:0 var(--s-4);align-items:center;justify-content:space-between;padding-block:var(--s-1)}
+
+/* Шапка: скло над контентом, що прокручується під нею */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bar-glass);backdrop-filter:saturate(1.5) blur(14px);-webkit-backdrop-filter:saturate(1.5) blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-3) var(--s-5);padding-block:var(--s-3)}
+.logo{display:flex;align-items:center;gap:10px;font:700 var(--t-20)/1 var(--f-display);letter-spacing:-.01em;color:var(--ink);text-decoration:none;min-height:44px}
+.logo small{display:block;font:600 var(--t-12)/1 var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin-top:4px}
+.mainnav{display:none;gap:var(--s-1)}
+.mainnav a{min-height:44px;display:inline-flex;align-items:center;padding:0 14px;border-radius:999px;color:var(--ink-2);text-decoration:none;font-weight:600;font-size:var(--t-14)}
+.mainnav a:hover{color:var(--ink);background:var(--sunk)}
+.mainnav a[aria-current="true"]{color:var(--ink);box-shadow:inset 0 -2px 0 var(--ink)}
+@media (min-width:1100px){.mainnav{display:flex}}
+.search{position:relative;flex:1 1 260px;max-width:520px;margin-inline:auto}
+.search input{width:100%;height:48px;border-radius:999px;border:1px solid var(--line);background:var(--surface);padding:0 var(--s-4) 0 44px;font-size:var(--t-16)}
+.search input::placeholder{color:var(--ink-2)}
+.search input:focus{outline:none;border-color:var(--buy);box-shadow:0 0 0 3px color-mix(in srgb,var(--buy) 22%,transparent)}
+.search > svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--ink-2)}
+.actions{display:flex;gap:var(--s-2);align-items:center}
+.iconbtn{min-height:48px;min-width:48px;border-radius:999px;border:1px solid var(--line);background:var(--surface);display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2);padding:0 var(--s-4);font-weight:600;font-size:var(--t-14)}
+.iconbtn[aria-pressed="true"]{background:var(--note);color:var(--on-note);border-color:transparent}
+.cartbtn{background:var(--ink);color:var(--paper);border-color:transparent}
+.badge{min-width:22px;height:22px;border-radius:11px;background:var(--foil);color:var(--on-foil);font:800 var(--t-12)/22px var(--f-ui);padding:0 6px;text-align:center;display:inline-block}
+.badge[data-n="0"]{display:none}
+@media (max-width:760px){
+  .search{order:3;flex-basis:100%;max-width:none}
+  .hide-sm{display:none}
+  .actions{margin-left:auto}
+}
+
+/* Нотатки для команди */
+.note{display:none}
+.present .proto,.present .note,.present #notes-toggle,.present #how,.present .logo small{display:none!important}
+.proto-acts{display:flex;gap:0 16px;flex-wrap:wrap}
+@media (hover:none){.kbd{display:none}}
+.notes-on .note{display:flex;gap:var(--s-2);align-items:flex-start;background:var(--note);color:var(--on-note);font:500 var(--t-14)/1.45 var(--f-ui);padding:10px 12px;border-radius:10px;margin-top:var(--s-2);max-width:52ch;box-shadow:0 6px 16px -8px rgba(0,0,0,.35);text-align:left}
+.note b{font-weight:700;flex:none}
+.note code{font:600 var(--t-12)/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.08);padding:0 4px;border-radius:4px}
+.note.float{position:absolute;z-index:3;margin:0}
+.notes-row{display:flex;flex-wrap:wrap;gap:0 var(--s-3);margin-bottom:var(--s-4)}
+
+main{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(48px,7vw,88px);padding-block:var(--s-5) var(--s-8)}
+main > section{scroll-margin-top:100px}
+@media (max-width:760px){main > section{scroll-margin-top:136px}}
+
+/* Сцена */
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);border-radius:var(--r-xl);color:var(--on-stage);
+  background:var(--stage);min-height:560px;transition:--h1 1.2s var(--ease-out),--h2 1.2s var(--ease-out),--h3 1.2s var(--ease-out)}
+/* Сцена в кольорах книжки: три головні кольори обкладинки → живе сяйво за книжкою.
+   --h1..--h3 зареєстровані як кольори, тому при зміні книжки фон плавно перетікає. */
+@property --h1{syntax:"<color>";inherits:true;initial-value:#2A33A0}
+@property --h2{syntax:"<color>";inherits:true;initial-value:#161B52}
+@property --h3{syntax:"<color>";inherits:true;initial-value:#2A33A0}
+.hero-bg{position:absolute;inset:0;border-radius:inherit;overflow:hidden;pointer-events:none}
+.hero > .hero-bg{position:absolute;z-index:0}
+.hero-bg::before{content:"";position:absolute;inset:-20%;z-index:0;pointer-events:none;
+  background:radial-gradient(34% 42% at 72% 46%,color-mix(in srgb,var(--h1) 72%,transparent) 0%,transparent 70%),
+    radial-gradient(30% 38% at 90% 86%,color-mix(in srgb,var(--h2) 62%,transparent) 0%,transparent 72%),
+    radial-gradient(26% 30% at 58% 12%,color-mix(in srgb,var(--h3) 58%,transparent) 0%,transparent 70%);
+  animation:aurora 24s ease-in-out infinite alternate;transition:filter 1.2s var(--ease-out)}
+.hero-bg::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--stage) 94%,transparent) 0%,color-mix(in srgb,var(--stage) 62%,transparent) 40%,transparent 68%)}
+.hero > *{position:relative;z-index:1}
+.hero.is-open .hero-bg::before{filter:saturate(1.45) brightness(1.3)}
+@keyframes aurora{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(-3%,2%,0) scale(1.07)}100%{transform:translate3d(2%,-2%,0) scale(1.02)}}
+@media (max-width:860px){
+  .hero-bg::before{background:radial-gradient(48% 30% at 50% 20%,color-mix(in srgb,var(--h1) 72%,transparent) 0%,transparent 70%),
+    radial-gradient(40% 26% at 86% 40%,color-mix(in srgb,var(--h2) 62%,transparent) 0%,transparent 72%),
+    radial-gradient(36% 24% at 14% 8%,color-mix(in srgb,var(--h3) 58%,transparent) 0%,transparent 70%)}
+  .hero-bg::after{background:linear-gradient(180deg,transparent 0%,transparent 36%,color-mix(in srgb,var(--stage) 86%,transparent) 60%)}
+}
+.hero-copy{padding:clamp(28px,5vw,64px);display:flex;flex-direction:column;gap:var(--s-5);justify-content:center;min-width:0}
+.eyebrow{font:600 var(--t-12)/1.3 var(--f-ui);letter-spacing:.12em;text-transform:uppercase;color:var(--on-stage-2)}
+.hero h1{margin:0;font:700 clamp(36px,5.4vw,66px)/1.02 var(--f-display);letter-spacing:-.025em;text-wrap:balance}
+.hero{--ring:#FFD43B}
+.hero h1 em{font-style:normal;color:var(--foil)}
+.lede{margin:0;max-width:42ch;font-size:var(--t-20);line-height:1.45;color:var(--on-stage-2)}
+.ctas{display:flex;flex-wrap:wrap;gap:var(--s-3)}
+.btn-light{background:var(--on-stage);color:var(--stage)}
+.btn-ghost{background:transparent;color:var(--on-stage);box-shadow:inset 0 0 0 1.5px var(--stage-line)}
+.btn-ghost:hover{box-shadow:inset 0 0 0 1.5px var(--on-stage-2)}
+.onstage{border-top:1px solid var(--stage-line);padding-top:var(--s-4);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--s-1) var(--s-4);align-items:end}
+.onstage .lbl{grid-column:1/-1;font:600 var(--t-12)/1 var(--f-ui);letter-spacing:.12em;text-transform:uppercase;color:var(--on-stage-2)}
+.onstage h2{margin:6px 0 0;font:italic 500 var(--t-25)/1.2 var(--f-book)}
+.onstage p{margin:0;color:var(--on-stage-2);font-size:var(--t-14)}
+.onstage .price{font-size:var(--t-25);color:var(--on-stage)}
+.onstage .price s{color:var(--on-stage-2)}
+.onstage .row{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-4);align-items:center;margin-top:var(--s-2)}
+.hero .avail.ok{color:var(--stage-ok)}.hero .avail.wait{color:var(--stage-wait)}.hero .avail.none{color:var(--on-stage-2)}
+.btn-stagebuy{background:var(--stage-buy);color:var(--on-stage-buy);min-height:44px;font-size:var(--t-14)}
+.btn-stageghost{background:transparent;color:var(--on-stage);box-shadow:inset 0 0 0 1.5px var(--stage-line);min-height:44px;font-size:var(--t-14)}
+
+.stage{position:relative;min-height:440px;min-width:0;cursor:grab;touch-action:pan-y}
+.stage:active{cursor:grabbing}
+.hero > .stage{z-index:2}
+.stage canvas{position:absolute;left:-34%;top:-16%;width:168%;height:134%;display:block;outline:none;pointer-events:none}  /* явний розмір: інакше полотно бере розмір зі своїх пікселів і росте */
+.stage:has(canvas:focus-visible){outline:2px solid var(--on-stage-2);outline-offset:-6px;border-radius:var(--r-l)}   /* полотно ширше за сцену — рамку малюємо на сцені */
+.stage .fallback{display:none}
+.stage.no3d canvas{display:none}
+.stage.no3d .fallback{display:block;position:absolute;left:50%;top:44%;width:min(46%,240px);transform:translate(-50%,-50%) perspective(900px) rotateY(-18deg);border-radius:3px 7px 7px 3px;box-shadow:0 30px 50px -20px rgba(0,0,0,.7);animation:sway 6s ease-in-out infinite}
+@keyframes sway{50%{transform:translate(-50%,-52%) perspective(900px) rotateY(14deg)}}
+.stagebar{position:absolute;left:0;right:0;bottom:var(--s-5);display:flex;justify-content:center;padding-inline:var(--s-4)}
+.glass{display:flex;align-items:center;gap:var(--s-1);padding:var(--s-1);border-radius:999px;background:var(--glass-bg);border:1px solid var(--glass-border);box-shadow:var(--glass-shadow);
+  backdrop-filter:blur(16px) saturate(160%);-webkit-backdrop-filter:blur(16px) saturate(160%)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass{background:var(--stage)}}
+.round{width:44px;height:44px;border-radius:50%;border:0;background:transparent;color:var(--on-stage);display:grid;place-items:center}
+.round:hover{background:var(--glass-bg)}
+.round[aria-pressed="true"]{background:var(--on-stage);color:var(--stage)}
+.pager{font:600 var(--t-14)/1 var(--f-ui);color:var(--on-stage-2);min-width:48px;text-align:center}
+.sep{width:1px;height:24px;background:var(--glass-border);margin-inline:var(--s-1)}
+.hint{position:absolute;top:var(--s-4);right:var(--s-5);font-size:var(--t-12);color:var(--on-stage-2);display:flex;gap:6px;align-items:center}
+.stage .note.float{left:var(--s-4);top:var(--s-4)}
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;min-height:0}
+  .stage{order:-1;min-height:400px}
+  .hint{right:auto;left:50%;transform:translateX(-50%);white-space:nowrap}
+  .stage .note.float{top:44px}
+}
+
+/* Секції */
+.sec-head{display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-5);align-items:baseline;justify-content:space-between;margin-bottom:var(--s-5)}
+.sec-head h2{margin:0;font:700 clamp(24px,2.6vw,31px)/1.1 var(--f-display);letter-spacing:-.02em}
+.sec-head p{margin:0;color:var(--ink-2);max-width:60ch}
+
+/* Полиця: горіхова шафа — ніша з тінню від верхньої дошки, бокові стійки, дошка з верхом і переднім краєм.
+   Книжка — 3D-коробка: корінець (продовження справжньої обкладинки), обкладинка збоку, верх сторінок.
+   Наведення: книжку витягують із ряду, вона повертається до вас обкладинкою, а за нею на стінці — біле світло */
+@property --go{syntax:'<number>';inherits:true;initial-value:0}
+@property --gx{syntax:'<length>';inherits:true;initial-value:0px}
+:root{--wood-a:#C08F60;--wood-b:#94653D;--wood-c:#734C2C;--wall-a:#E6DED0;--wall-b:#D8CDBB}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--wood-a:#6B4A31;--wood-b:#4A3220;--wood-c:#2E1F14;--wall-a:#191A33;--wall-b:#121329}}
+:root[data-theme="dark"]{--wood-a:#6B4A31;--wood-b:#4A3220;--wood-c:#2E1F14;--wall-a:#191A33;--wall-b:#121329}
+.shelf-scroll{overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding:var(--s-6) 0 var(--s-2)}
+.shelf-scroll::-webkit-scrollbar{display:none}
+.shelf-wrap{position:relative}
+.shelf-arrow{position:absolute;z-index:6;top:calc(50% - 6px);width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:var(--ink);cursor:pointer;
+  background:color-mix(in srgb,var(--surface) 80%,transparent);border:1px solid var(--line);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:0 10px 24px -12px rgba(0,0,0,.6);transition:opacity .25s,transform .2s var(--ease-out)}
+.shelf-arrow.prev{left:-10px}.shelf-arrow.next{right:-10px}
+.shelf-arrow:disabled{opacity:0;pointer-events:none}
+.shelf-arrow:active{transform:scale(.94)}
+@media (hover:none){.shelf-arrow{display:none}}
+.case{--gx:0px;--go:0;transition:--go .45s var(--ease-out),--gx .35s var(--ease-out);position:relative;width:max-content;min-width:100%;isolation:isolate}
+.case-wall{position:absolute;left:0;right:0;top:0;bottom:30px;z-index:0;border-radius:10px 10px 0 0;
+  background:radial-gradient(210px 230px at var(--gx) 58%,rgba(255,255,255,calc(.6 * var(--go))),rgba(255,255,255,calc(.16 * var(--go))) 55%,transparent 100%),
+    linear-gradient(180deg,rgba(0,0,0,.18),transparent 22%),linear-gradient(90deg,rgba(0,0,0,.35),transparent 7%,transparent 93%,rgba(0,0,0,.35)),
+    linear-gradient(180deg,var(--wall-a),var(--wall-b))}
+.shelf{position:relative;z-index:1;display:flex;align-items:flex-end;width:max-content;padding:34px 24px 0 0}
+.board{position:relative;z-index:2;height:30px;border-radius:0 0 6px 6px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--wood-a) 70%,#fff) 0,var(--wood-a) 2px,var(--wood-a) 9px,var(--wood-c) 9px,var(--wood-b) 11px,var(--wood-c)),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.04) 0 1px,transparent 1px 4px);background-blend-mode:normal,overlay;
+  box-shadow:inset 0 -2px 0 rgba(0,0,0,.25),0 14px 22px -12px rgba(0,0,0,.7)}
+.sp{position:relative;flex:none;width:var(--d);height:var(--h);margin-left:var(--m);border:0;padding:0;background:none;cursor:pointer;perspective:1000px;perspective-origin:50% 15%}
+.sp-book{position:absolute;inset:0;transform-style:preserve-3d;transform:translateZ(calc(var(--w) / -2)) rotateY(-30deg);transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.sp-spine,.sp-cover,.sp-top{position:absolute;backface-visibility:hidden}
+.sp-spine{left:0;top:0;width:var(--d);height:var(--h);border-radius:3px 3px 1px 1px;overflow:hidden;color:#fff;transform:translateZ(calc(var(--w) / 2));
+  background:linear-gradient(90deg,rgba(0,0,0,.5),rgba(255,255,255,.16) 28%,rgba(255,255,255,.04) 55%,rgba(0,0,0,.42)),var(--img) 0 0/1600% 100% no-repeat,var(--bg);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.sp-cover{top:0;left:calc((var(--d) - var(--w)) / 2);width:var(--w);max-width:none;height:var(--h);object-fit:cover;border-radius:1px 4px 4px 1px;background:var(--bg);
+  transform:rotateY(90deg) translateZ(calc(var(--d) / 2))}
+.sp-top{left:0;top:calc((var(--h) - var(--w)) / 2);width:var(--d);height:var(--w);transform:rotateX(90deg) translateZ(calc(var(--h) / 2));
+  background:linear-gradient(90deg,var(--bg) 0 3px,transparent 3px calc(100% - 3px),var(--bg) calc(100% - 3px)),repeating-linear-gradient(90deg,#f1ebde 0 1px,#d8cfbd 1px 2px)}
+.sp-t{position:absolute;left:50%;top:9%;max-height:82%;writing-mode:vertical-rl;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  transform:translateX(-50%) rotate(180deg);font:600 var(--fs)/1.05 var(--f-book);text-shadow:0 1px 3px rgba(0,0,0,.55)}
+.sp:focus-visible{outline:none}.sp:focus-visible .sp-spine{outline:2px solid #fff;outline-offset:2px}
+.sp.lean{transform-origin:0 100%;transform:rotate(-7deg);margin-left:16px;transition:transform .5s var(--ease-out)}
+@media (hover:hover){
+  .sp:hover,.sp:focus-visible{z-index:5}
+  .sp:hover .sp-book,.sp:focus-visible .sp-book{transform:translateY(-18px) translateZ(calc(var(--w) / -2 + 52px)) rotateY(-74deg)}
+  .sp.lean:hover,.sp.lean:focus-visible{transform:none}
+}
+.sp:active .sp-book{transform:translateY(-8px) translateZ(calc(var(--w) / -2 + 20px)) rotateY(-50deg)}
+@media (prefers-reduced-motion: reduce){.sp-book{transition:none}}
+.shelf-cap{min-height:24px;margin:28px 4px 0;font-size:var(--t-14);color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:opacity .25s}
+.shelf-cap b{font:600 var(--t-16)/1.3 var(--f-book);color:var(--ink)}
+.shelf-cap .num{margin-right:8px;font-weight:700;color:var(--ink-2)}
+@media (hover:none){.shelf-cap{display:none}}
+
+
+/* Добірки: бенто */
+.bento{display:grid;gap:var(--s-4);grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:minmax(200px,auto)}
+.cell{position:relative;overflow:hidden;border-radius:var(--r-l);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);padding:var(--s-5);display:flex;flex-direction:column;align-items:flex-start;gap:var(--s-2);text-align:left;min-width:0;border:0;color:var(--ink)}
+button.cell{font:inherit;transition:transform var(--d-fast) var(--ease-out),box-shadow var(--d-fast)}
+button.cell:hover{box-shadow:inset 0 0 0 1.5px var(--ink-2)}
+button.cell:active{transform:scale(.985)}
+.cell.big{grid-column:span 2;grid-row:span 2}
+.cell.wide{grid-column:span 2}
+.cell-k{font:700 var(--t-12)/1.2 var(--f-ui);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
+.cell h3{margin:0;font:600 var(--t-20)/1.2 var(--f-book);text-wrap:balance;position:relative;z-index:2}
+.cell.big h3{font-size:var(--t-31)}
+.cell p{margin:0;color:var(--ink-2);font-size:var(--t-14);position:relative;z-index:2}
+.cell.big h3,.cell.big p{max-width:52%}
+.ship p,.free p,.ekc p,.free h3{max-width:none}
+.cell .go{margin-top:auto;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--sunk);color:var(--ink);transition:transform var(--d) var(--ease-out);position:relative;z-index:2}
+button.cell:hover .go{transform:translateX(4px)}
+.fan{position:absolute;right:14%;bottom:-24%;width:min(30%,110px);aspect-ratio:2/3;pointer-events:none}
+.cell.big .fan{width:28%;right:14%;bottom:-8%}
+.fan-b{position:absolute;inset:0;border-radius:2px 5px 5px 2px;background:var(--bg);box-shadow:var(--shadow-book);transform-origin:50% 100%;transition:transform var(--d) var(--ease-out)}
+.fan-b img{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
+.fan-b:nth-child(1){z-index:3}
+.fan-b:nth-child(2){z-index:2;transform:translateX(-46%) rotate(-10deg)}
+.fan-b:nth-child(3){z-index:1;transform:translateX(46%) rotate(10deg)}
+button.cell:hover .fan-b:nth-child(1){transform:translateY(-8px)}
+button.cell:hover .fan-b:nth-child(2){transform:translateX(-60%) rotate(-14deg)}
+button.cell:hover .fan-b:nth-child(3){transform:translateX(60%) rotate(14deg)}
+.ekc{background:var(--ink);color:var(--paper);box-shadow:none}
+.ekc .cell-k,.ekc p{color:color-mix(in srgb,var(--paper) 72%,var(--ink))}
+.ek-word{font:800 clamp(28px,3vw,39px)/1 var(--f-display);letter-spacing:-.03em}
+.ekc .textbtn{color:var(--paper);margin-top:auto}
+.ship .clock{font:700 clamp(30px,4vw,44px)/1 var(--f-display);letter-spacing:-.02em}
+.ship p{max-width:48ch}
+.dayline{position:relative;width:100%;margin-top:auto;padding-top:var(--s-3);display:flex;justify-content:space-between;font:600 var(--t-12)/1 var(--f-ui);color:var(--ink-2)}
+.dayline::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;border-radius:3px;background:var(--sunk)}
+.dayline i{position:absolute;top:-3px;width:12px;height:12px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px var(--surface);left:var(--x,0%);transform:translateX(-50%)}
+.meter{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden;width:100%}
+.meter i{display:block;height:100%;background:var(--ok);border-radius:3px;transform-origin:left center;transform:scaleX(var(--p,0));transition:transform var(--d) var(--ease-out)}
+.free .meter{margin-top:auto}
+@media (max-width:960px){.bento{grid-template-columns:repeat(2,minmax(0,1fr))}.cell.big{grid-row:span 1}}
+@media (max-width:540px){.bento{grid-template-columns:1fr;grid-auto-rows:minmax(180px,auto)}.cell.big,.cell.wide{grid-column:auto}.cell.big h3{font-size:var(--t-25)}}
+
+/* Каталог */
+.toolbar{display:flex;flex-wrap:wrap;gap:var(--s-3) var(--s-5);align-items:center;margin-bottom:var(--s-5)}
+.chips{display:flex;gap:var(--s-2);overflow-x:auto;scrollbar-width:none;padding-block:2px;min-width:0;flex:1 1 420px}
+.chip{flex:none;min-height:44px;padding:0 var(--s-4);border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:500;font-size:var(--t-14);white-space:nowrap}
+.chip:hover{border-color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.filters{display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-4);align-items:center}
+.switch{display:inline-flex;gap:10px;align-items:center;font-size:var(--t-14);font-weight:500;cursor:pointer;user-select:none;min-height:44px}
+.switch input{appearance:none;-webkit-appearance:none;width:40px;height:24px;border-radius:12px;background:var(--line);position:relative;margin:0;cursor:pointer;transition:background var(--d-fast)}
+.switch input::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--surface);transition:transform var(--d-fast) var(--ease-out);box-shadow:0 1px 2px rgba(0,0,0,.3)}
+.switch input:checked{background:var(--ink)}
+.switch input:checked::after{transform:translateX(16px)}
+.sort{min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--surface);padding:0 var(--s-3);font-size:var(--t-14)}
+.count{color:var(--ink-2);font-size:var(--t-14)}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,176px),1fr));gap:var(--s-6) var(--s-5);transition:opacity .2s}
+.grid.loading{opacity:.5;pointer-events:none}
+@media (max-width:440px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s-5) var(--s-3)}}
+.card{display:flex;flex-direction:column;gap:10px;min-width:0}
+.cover{position:relative;display:block;width:100%;aspect-ratio:2/3;padding:0;border:0;background:var(--bg,var(--sunk));border-radius:2px 6px 6px 2px;box-shadow:var(--shadow-book);transition:transform 350ms var(--ease-out);transform-origin:left center}
+.cover img{display:block;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.cover::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(90deg,rgba(0,0,0,.22) 0,rgba(255,255,255,.18) 2.5%,rgba(0,0,0,.08) 4.5%,transparent 9%,transparent 92%,rgba(255,255,255,.06))}
+.skel{position:absolute;inset:0;overflow:hidden;border-radius:inherit}
+.skel::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-100%);animation:shimmer 1.3s var(--ease-out) infinite}
+@keyframes shimmer{to{transform:translateX(100%)}}
+.cover.ready .skel{display:none}
+@media (hover:hover){.card:hover .cover{transform:perspective(900px) rotateY(-11deg)}}
+.card.out .cover img{filter:grayscale(.7);opacity:.7}
+.sticker{position:absolute;top:-12px;right:-10px;width:70px;height:70px;border-radius:50%;background:var(--foil);color:var(--on-foil);display:grid;place-items:center;text-align:center;
+  font:800 var(--t-12)/1.05 var(--f-ui);text-transform:uppercase;padding:6px;transform:rotate(12deg);box-shadow:0 4px 10px -4px rgba(0,0,0,.45);z-index:2}
+.sticker.long{width:auto;height:auto;min-height:0;border-radius:6px;padding:6px 8px;top:10px;left:10px;right:auto;transform:none;white-space:nowrap;max-width:calc(100% - 20px);overflow:hidden;text-overflow:ellipsis;box-shadow:0 2px 6px -2px rgba(0,0,0,.4)}
+.ek{position:absolute;left:10px;bottom:10px;background:var(--ink);color:var(--paper);font:700 var(--t-12)/1 var(--f-ui);padding:6px 8px;border-radius:6px;z-index:2}
+.card h3{margin:0;font:600 var(--t-16)/1.25 var(--f-book);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card h3 button{all:unset;cursor:pointer}
+.card h3 button:focus-visible{outline:2px solid var(--buy)}
+.author{margin:2px 0 0;color:var(--ink-2);font-size:var(--t-14);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.buy{display:flex;flex-wrap:wrap;gap:var(--s-2);align-items:center;justify-content:space-between;margin-top:auto}
+.price{font:700 var(--t-20)/1 var(--f-ui);font-variant-numeric:tabular-nums;white-space:nowrap}
+.price s{font-weight:500;font-size:var(--t-14);color:var(--ink-2);margin-left:6px}
+.add{min-height:44px;border-radius:999px;border:0;background:var(--buy);color:var(--on-buy);padding:0 var(--s-4);font-weight:600;font-size:var(--t-14);display:inline-flex;align-items:center;gap:6px}
+.add:hover{background:var(--buy-hover)}
+.add.added{background:var(--ok);color:var(--surface)}
+.add.alt{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.avail{display:flex;gap:7px;align-items:center;font-size:var(--t-14);font-weight:500;margin:0}
+.avail::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.avail.ok{color:var(--ok)}
+.avail.wait{color:var(--wait)}
+.avail.wait::before{background:linear-gradient(90deg,currentColor 50%,transparent 50%);box-shadow:inset 0 0 0 1.5px currentColor}
+.avail.none{color:var(--none)}
+.avail.none::before{background:transparent;box-shadow:inset 0 0 0 1.5px currentColor}
+.empty{padding:var(--s-7) var(--s-5);text-align:center;border:1.5px dashed var(--line);border-radius:var(--r-m);color:var(--ink-2)}
+.empty b{display:block;color:var(--ink);font:600 var(--t-20)/1.3 var(--f-book);margin-bottom:6px}
+.empty .btn{margin-top:var(--s-4)}
+
+/* Як це працюватиме: липка історія */
+.how{background:var(--surface);border-radius:var(--r-xl);padding:clamp(24px,4vw,48px);box-shadow:inset 0 0 0 1px var(--line)}
+.tag{display:inline-block;background:var(--note);color:var(--on-note);font:700 var(--t-12)/1 var(--f-ui);letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border-radius:6px;margin-bottom:var(--s-3)}
+.story{display:grid;gap:var(--s-6)}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;gap:var(--s-4)}
+.step{counter-increment:s;padding:var(--s-4) 0 var(--s-4) 52px;position:relative;min-width:0}
+.step::before{content:counter(s);position:absolute;left:0;top:var(--s-4);display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--sunk);color:var(--ink);font:700 var(--t-14)/1 var(--f-display);transition:background var(--d),color var(--d)}
+.step h3{margin:0 0 6px;font:600 var(--t-20)/1.25 var(--f-book)}
+.step p{margin:0;color:var(--ink-2);max-width:48ch}
+.step.on::before{background:var(--ink);color:var(--paper)}
+.viz{margin-top:var(--s-4)}
+.story-panel{display:none}
+.cap{display:block;margin-top:var(--s-2);font:600 var(--t-12)/1.4 ui-monospace,Menlo,monospace;color:var(--ink-2)}
+.code{margin:0;background:var(--code-bg);color:var(--code-fg);border-radius:var(--r-m);padding:var(--s-4) var(--s-5);font:500 13px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-x:auto;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.code .k{color:var(--code-key)}.code .s{color:var(--code-str)}.code .n{color:var(--code-num)}.code .c{color:var(--code-dim)}
+.vcard{display:grid;grid-template-columns:96px 1fr;gap:var(--s-4);align-items:center;background:var(--paper);border-radius:var(--r-m);padding:var(--s-4)}
+.vcard img,.vcard .ph{width:96px;aspect-ratio:2/3;border-radius:2px 5px 5px 2px;box-shadow:var(--shadow-book);display:block;background:#F5C4D6}
+.vcard b{display:block;font:600 var(--t-16)/1.25 var(--f-book)}
+.vcard .price{display:block;margin:var(--s-2) 0}
+.parcel{background:var(--paper);border-radius:var(--r-m);padding:var(--s-4);display:grid;gap:var(--s-3)}
+.parcel .ttn{display:flex;justify-content:space-between;gap:var(--s-3);flex-wrap:wrap;font:700 var(--t-16)/1.2 var(--f-display)}
+.parcel dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px var(--s-4);font-size:var(--t-14)}
+.parcel dt{color:var(--ink-2)}.parcel dd{margin:0}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:var(--t-12);font-weight:600}
+.flow span{padding:4px 8px;border-radius:6px;background:var(--sunk)}
+@media (min-width:961px){
+  .story{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:start}
+  .step{padding-block:9vh}
+  .step:not(.on){opacity:.5}
+  .step{transition:opacity var(--d)}
+  .step .viz{display:none}
+  .story-panel{display:block;position:sticky;top:120px;height:400px}
+  .story-panel .viz{position:absolute;inset:0;margin:0;opacity:0;transform:translateY(10px);transition:opacity var(--d-exit) var(--ease-in),transform var(--d-exit) var(--ease-in);display:flex;flex-direction:column;justify-content:center}
+  .story-panel .viz.on{opacity:1;transform:none;transition:opacity var(--d) var(--ease-out),transform var(--d) var(--ease-out)}
+}
+
+/* Підвал */
+footer{border-top:1px solid var(--line);padding-block:var(--s-6) var(--s-7);color:var(--ink-2);font-size:var(--t-14)}
+footer .wrap{display:grid;grid-template-columns:1.2fr repeat(2,1fr);gap:var(--s-5)}
+footer h4{margin:0 0 var(--s-2);color:var(--ink);font:600 var(--t-16)/1.3 var(--f-ui)}
+footer p{margin:0 0 4px}
+@media (max-width:700px){footer .wrap{grid-template-columns:1fr}}
+
+/* Нижня навігація на телефоні */
+.tabbar{display:none}
+@media (max-width:760px){
+  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-1);padding:6px var(--s-2) calc(6px + env(safe-area-inset-bottom,0px));
+    background:var(--bar-glass);backdrop-filter:saturate(1.5) blur(14px);-webkit-backdrop-filter:saturate(1.5) blur(14px);border-top:1px solid var(--line)}
+  .tabbar a,.tabbar button{min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font:600 var(--t-12)/1.1 var(--f-ui);color:var(--ink-2);text-decoration:none;background:none;border:0;border-radius:12px;position:relative}
+  .tabbar [aria-current="true"]{color:var(--ink);background:var(--sunk)}
+  .tabbar .badge{position:absolute;top:4px;left:calc(50% + 6px)}
+  .app{padding-bottom:76px}
+  .cartbtn{display:none}
+}
+
+/* Панелі */
+.scrim{position:fixed;inset:0;background:var(--scrim);opacity:0;visibility:hidden;transition:opacity var(--d-exit),visibility var(--d-exit);z-index:40}
+.scrim.on{opacity:1;visibility:visible;transition-duration:var(--d)}
+.sheet{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--surface);z-index:50;display:flex;flex-direction:column;
+  transform:translateX(104%);visibility:hidden;transition:transform var(--d-exit) var(--ease-in),visibility var(--d-exit);box-shadow:var(--shadow-panel);
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.sheet.wide{width:min(820px,100%)}
+.sheet.open{transform:none;visibility:visible;transition:transform 280ms var(--ease-out),visibility 0s}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;gap:var(--s-3);padding:var(--s-3) var(--s-3) var(--s-3) var(--s-5);border-bottom:1px solid var(--line)}
+.sheet-head h2{margin:0;font:700 var(--t-20)/1.2 var(--f-display);letter-spacing:-.01em}
+.x{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;flex:none}
+.x:hover{border-color:var(--ink-2)}
+.sheet-body{flex:1;overflow-y:auto;padding:var(--s-5);overscroll-behavior:contain}
+.sheet-foot{border-top:1px solid var(--line);padding:var(--s-4) var(--s-5);display:grid;gap:var(--s-3)}
+@media (max-width:700px){
+  .sheet,.sheet.wide{top:auto;left:0;width:100%;max-height:92dvh;border-radius:var(--r-l) var(--r-l) 0 0;transform:translateY(104%)}
+  .sheet.open{transform:none}
+}
+
+/* Шторки на телефоні: ручка, свайп униз закриває; липка панель «ціна + У кошик» */
+.grabber{display:none}
+.sheet.dragging{transition:none!important}
+@media (max-width:700px){
+  .grabber{display:block;flex:none;width:40px;height:5px;border-radius:3px;background:var(--line);margin:8px auto 0}
+  .sheet-head{padding-top:var(--s-2)}
+}
+.buybar{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-2) var(--s-4);background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.bb-price{display:grid;gap:2px;flex:1 1 0;min-width:0}
+.bb-price b{font:800 var(--t-25)/1 var(--f-ui);font-variant-numeric:tabular-nums}
+.bb-price small{font-size:var(--t-12);color:var(--ink-2)}
+.buybar .btn{flex:0 0 auto;min-width:42%}
+.buybar .eta{flex-basis:100%;margin:0}
+/* Ще від автора / серія / схожі: горизонтальні ряди обкладинок */
+.more{margin-top:var(--s-6);display:grid;gap:var(--s-3);min-width:0}
+.more h4{margin:0;font:600 var(--t-16)/1.3 var(--f-ui)}
+.mini-row{display:grid;grid-auto-flow:column;grid-auto-columns:112px;gap:var(--s-3);overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:var(--s-2);overscroll-behavior-x:contain;scrollbar-width:thin}
+.mini{all:unset;cursor:pointer;display:grid;gap:6px;align-content:start;scroll-snap-align:start;min-width:0}
+.mini:focus-visible{outline:2px solid var(--buy);outline-offset:2px;border-radius:4px}
+.mini-cover{display:block;aspect-ratio:2/3;border-radius:2px 5px 5px 2px;background:var(--bg,var(--sunk));box-shadow:var(--shadow-book);overflow:hidden;transition:transform var(--d) var(--ease-out)}
+.mini:hover .mini-cover{transform:translateY(-3px)}
+.mini-cover img{width:100%;height:100%;object-fit:cover;display:block}
+.mini-t{font:600 var(--t-14)/1.25 var(--f-book);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mini-p{font:700 var(--t-14)/1 var(--f-ui);font-variant-numeric:tabular-nums}
+.paychips{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.paychips span{font:700 11.5px/1 var(--f-ui);padding:4px 6px;border-radius:5px;background:var(--ink);color:var(--paper)}
+/* Галерея в картці: свайп між обкладинкою й фото, крапки, стрілки на десктопі */
+.gallery{position:relative}
+.g-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:6px;overscroll-behavior-x:contain}
+.g-track::-webkit-scrollbar{display:none}
+.g-slide{flex:0 0 100%;margin:0;scroll-snap-align:center;aspect-ratio:2/3;display:grid;place-items:center;background:var(--sunk);border-radius:6px;overflow:hidden}
+.g-slide img{width:100%;height:100%;object-fit:contain;display:block}
+.g-slide.is-cover{background:var(--bg,var(--sunk));box-shadow:0 24px 40px -18px rgba(20,22,58,.55);border-radius:2px 6px 6px 2px}
+.g-slide.is-cover img{object-fit:cover}
+.g-dots{display:flex;justify-content:center;gap:6px;margin-top:var(--s-3);flex-wrap:wrap}
+.g-dots button{width:8px;height:8px;border-radius:50%;border:0;padding:0;background:var(--line);transition:transform var(--d-fast),background var(--d-fast)}
+.g-dots button[aria-current="true"]{background:var(--ink);transform:scale(1.3)}
+.g-nav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:0;background:color-mix(in srgb,var(--surface) 85%,transparent);color:var(--ink);display:none;place-items:center;box-shadow:0 4px 12px -4px rgba(0,0,0,.35)}
+.g-nav.prev{left:6px}.g-nav.next{right:6px}
+@media (hover:hover){.gallery:hover .g-nav{display:grid}}
+.g-count{position:absolute;top:8px;right:8px;font:700 var(--t-12)/1 var(--f-ui);padding:5px 7px;border-radius:999px;background:color-mix(in srgb,var(--ink) 75%,transparent);color:var(--paper)}
+/* Картка книжки */
+.detail{display:grid;grid-template-columns:240px minmax(0,1fr);gap:var(--s-6)}
+.detail .cover{box-shadow:0 24px 40px -18px rgba(20,22,58,.55)}
+@media (hover:hover){.detail .cover:hover{transform:perspective(900px) rotateY(-14deg)}}
+.d-stickers{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:var(--s-3)}
+.pill{font:700 var(--t-12)/1 var(--f-ui);padding:6px 8px;border-radius:6px;background:var(--foil);color:var(--on-foil);text-transform:uppercase;letter-spacing:.04em}
+.pill.ink{background:var(--ink);color:var(--paper);text-transform:none;letter-spacing:0}
+.detail h3{margin:0;font:600 clamp(25px,3vw,31px)/1.15 var(--f-book);text-wrap:balance}
+.d-author{margin:6px 0 var(--s-4);font-size:var(--t-16);color:var(--ink-2)}
+.d-wait{color:var(--ink-2);font-style:italic}
+.d-desc{margin:0 0 var(--s-4);font:400 var(--t-16)/1.6 var(--f-book);max-width:60ch}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:6px var(--s-4);margin:0 0 var(--s-5);font-size:var(--t-14)}
+.facts dt{color:var(--ink-2)}
+.facts dd{margin:0;min-width:0}
+.d-buy{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-3) var(--s-5);padding:var(--s-4);border-radius:var(--r-m);background:var(--paper)}
+.d-buy .price{font-size:var(--t-25)}
+.d-buy .avail{flex-basis:100%}
+.d-buy .avail span{font-weight:400;color:var(--ink-2)}
+.d-3d{margin-top:var(--s-3);width:100%;min-height:44px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:var(--t-14);display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2)}
+@media (max-width:700px){.detail{grid-template-columns:1fr}.detail .cover-col{max-width:340px;margin-inline:auto;width:100%}.g-slide{aspect-ratio:3/4}}
+
+/* Кошик */
+.line{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:var(--s-3) var(--s-4);align-items:start;padding-block:var(--s-4);border-bottom:1px solid var(--line)}
+.line img,.line .ph{width:64px;aspect-ratio:2/3;border-radius:2px 4px 4px 2px;box-shadow:var(--shadow-book);object-fit:cover;display:block}
+.line h4{margin:0;font:600 var(--t-16)/1.25 var(--f-book)}
+.line p{margin:2px 0 0;font-size:var(--t-14);color:var(--ink-2)}
+.line .avail{margin-top:4px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);border-radius:999px;margin-top:var(--s-2)}
+.qty button{width:44px;height:44px;border:0;background:none;font-size:var(--t-20);line-height:1;border-radius:50%}
+.qty button:hover{background:var(--sunk)}
+.qty span{min-width:24px;text-align:center;font-weight:700}
+.line .price{font-size:var(--t-16);text-align:right}
+.rm{display:block;margin:var(--s-2) 0 0 auto;border:0;background:none;color:var(--ink-2);font-size:var(--t-14);text-decoration:underline;text-underline-offset:2px;padding:0;min-height:44px}
+.sumrow{display:flex;justify-content:space-between;gap:var(--s-3);font-size:var(--t-14)}
+.sumrow.total{font-size:var(--t-20);font-weight:700}
+.callout{padding:var(--s-3) var(--s-4);border-radius:var(--r-m);background:var(--sunk);font-size:var(--t-14);line-height:1.45}
+.callout b{font-weight:600}
+.cart-empty{text-align:center;padding:var(--s-7) var(--s-3);color:var(--ink-2)}
+.cart-empty svg{color:var(--line);margin-bottom:var(--s-3)}
+.cart-empty b{display:block;color:var(--ink);font:600 var(--t-20)/1.3 var(--f-book);margin-bottom:6px}
+
+.form{display:grid;gap:var(--s-4)}
+.field{display:grid;gap:6px;align-content:start}
+.field label,.legend{font-size:var(--t-14);font-weight:600}
+.field input{min-height:48px;border-radius:12px;border:1px solid var(--line);background:var(--paper);padding:0 14px;font-size:var(--t-16)}
+.field input:focus{border-color:var(--buy);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--buy) 22%,transparent)}
+.field.bad input{border-color:var(--err)}
+.field.bad input:focus{box-shadow:0 0 0 3px color-mix(in srgb,var(--err) 22%,transparent)}
+.help{color:var(--ink-2);font-size:var(--t-12);line-height:1.4}
+.err{color:var(--err);font-size:var(--t-14);font-weight:600;line-height:1.35;display:flex;gap:6px;align-items:flex-start}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3)}
+@media (max-width:440px){.two{grid-template-columns:1fr}}
+.pay{display:grid;gap:var(--s-2);border:0;padding:0;margin:0}
+.pay legend{margin-bottom:var(--s-2)}
+.opt{display:grid;grid-template-columns:auto 1fr;gap:2px var(--s-3);align-items:center;padding:var(--s-3) 14px;border-radius:12px;border:1px solid var(--line);cursor:pointer;min-height:56px}
+.opt input{margin:0;accent-color:var(--buy);grid-row:span 2;width:18px;height:18px}
+.opt span{font-weight:600;font-size:var(--t-16)}
+.opt small{color:var(--ink-2);font-size:var(--t-14)}
+.opt:has(input:checked){border-color:var(--buy);box-shadow:inset 0 0 0 1px var(--buy)}
+.opt:has(input:disabled){opacity:.6;cursor:not-allowed}
+.done{text-align:center;padding:var(--s-5) var(--s-2)}
+.done .seal{width:88px;height:88px;margin:0 auto var(--s-4);border-radius:50%;background:var(--foil);color:var(--on-foil);display:grid;place-items:center;transform:rotate(-8deg)}
+.done h3{margin:0 0 6px;font:700 var(--t-25)/1.2 var(--f-display)}
+.done ol{text-align:left;margin:var(--s-5) 0 0;padding-left:20px;display:grid;gap:var(--s-2)}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);opacity:0;background:var(--ink);color:var(--paper);padding:6px 6px 6px 18px;min-height:56px;border-radius:14px;font-size:var(--t-14);font-weight:500;z-index:60;
+  transition:opacity var(--d-exit) var(--ease-in),transform var(--d-exit) var(--ease-in);max-width:calc(100% - 32px);pointer-events:none;display:flex;gap:var(--s-3);align-items:center}
+.toast.on{opacity:1;transform:translate(-50%,0);transition:opacity var(--d) var(--ease-out),transform var(--d) var(--ease-out)}
+.toast.interactive{pointer-events:auto}
+.toast-act{border:0;background:transparent;color:var(--paper);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--paper) 55%,transparent);font-weight:600;min-height:44px;padding:0 var(--s-4);border-radius:999px;transition:background .25s,color .25s}
+.toast-act:hover{background:var(--paper);color:var(--ink)}
+@media (max-width:760px){.toast{bottom:calc(84px + env(safe-area-inset-bottom,0px))}}
+.ghost{position:fixed;z-index:70;pointer-events:none;border-radius:3px 6px 6px 3px;box-shadow:0 18px 30px -10px rgba(0,0,0,.5);object-fit:cover}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+/* ── Фон сайту: ледь помітне світло в кольорах книжки зі сцени (перетікає разом зі сценою),
+   тонкі промені з правого верхнього кута і матове зерно, як шліфований камінь ── */
+:root{--amb:15%}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--amb:20%}}
+:root[data-theme="dark"]{--amb:20%}
+html{background:var(--paper);transition:--h1 1.6s var(--ease-out),--h2 1.6s var(--ease-out),--h3 1.6s var(--ease-out)}
+body{background:transparent}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none}
+body::before{
+  background:radial-gradient(42% 38% at 88% 14%,color-mix(in srgb,var(--h1) var(--amb),transparent),transparent 72%),
+    radial-gradient(46% 42% at 4% 58%,color-mix(in srgb,var(--h3) calc(var(--amb) * .8),transparent),transparent 72%),
+    radial-gradient(55% 40% at 62% 104%,color-mix(in srgb,var(--h2) var(--amb),transparent),transparent 72%)}
+/* ── Кнопки як «Відкрити книжку»: прозора таблетка з тонкою рамкою.
+   Колір міняється заливкою, що розтікається з точки під курсором/пальцем і стікає туди, де курсор вийшов.
+   Головні дії (У кошик, Купити, Оформити) — з яскравішою рамкою. «Додано» — зелена заливка ── */
+.btn,.add{--b-text:var(--ink);--b-line:var(--line);--b-fill:var(--ink);--b-on:var(--paper)}
+.btn-buy,.add:not(.alt){--b-line:color-mix(in srgb,var(--ink) 55%,transparent)}
+.btn-light,.btn-ghost,.btn-stagebuy,.btn-stageghost{--b-text:var(--on-stage);--b-line:var(--stage-line);--b-fill:var(--on-stage);--b-on:var(--stage)}
+.btn-light,.btn-stagebuy{--b-line:color-mix(in srgb,var(--on-stage) 60%,transparent)}
+.btn,.add{position:relative;isolation:isolate;overflow:hidden;background:transparent;color:var(--b-text);box-shadow:inset 0 0 0 1.5px var(--b-line);
+  transition:color .35s var(--ease-out),box-shadow .35s var(--ease-out),transform .35s cubic-bezier(.34,1.56,.64,1)}
+.btn::before,.add::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--b-fill);pointer-events:none;
+  clip-path:circle(0% at var(--mx,50%) var(--my,50%));transition:clip-path .55s cubic-bezier(.2,.8,.2,1)}
+@media (hover:hover){
+  .btn:hover:not(:disabled),.add:hover{background:transparent;color:var(--b-on);box-shadow:inset 0 0 0 1.5px var(--b-fill)}
+  .btn:hover:not(:disabled)::before,.add:hover::before{clip-path:circle(150% at var(--mx,50%) var(--my,50%))}
+}
+.btn:active:not(:disabled),.add:active{color:var(--b-on);transform:scale(.96);transition-duration:.12s}
+.btn:active:not(:disabled)::before,.add:active::before{clip-path:circle(150% at var(--mx,50%) var(--my,50%));transition-duration:.3s}
+.add.added{--b-fill:var(--ok);--b-on:#fff;background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px var(--ok)}
+.add.added::before{clip-path:circle(150% at var(--mx,50%) var(--my,50%))}
+.pg.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+@media (prefers-reduced-motion: reduce){.btn::before,.add::before{transition:none}}
+
+/* ── Категорії картою: усе видно одразу. Фон під жанр (манґа — півтон і лінії швидкості, фентезі — зорі,
+   детективи — нуарний дощ, екранізовані — кіноплівка…) + віяло з трьох справжніх обкладинок ── */
+.toolbar .cats{flex:1 1 100%;display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:var(--s-3);overflow:visible;padding:2px}
+.cat-tile{--a:#2B2F7A;--b:#14174A;--pat:none;position:relative;height:112px;border:0;border-radius:16px;overflow:hidden;padding:12px 14px;
+  display:flex;flex-direction:column;align-items:flex-start;text-align:left;color:#fff;cursor:pointer;isolation:isolate;
+  background:var(--pat),linear-gradient(140deg,var(--a),var(--b));box-shadow:0 10px 24px -16px rgba(0,0,20,.8);
+  transition:transform .3s var(--ease-out),box-shadow .3s}
+.cat-tile::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);pointer-events:none}
+.ct-name{position:relative;z-index:2;max-width:58%;font:600 14px/1.18 var(--f-ui);text-wrap:balance;text-shadow:0 1px 8px rgba(0,0,0,.35);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ct-n{position:relative;z-index:2;margin-top:auto;font-size:var(--t-12);opacity:.8}
+.ct-fan{position:absolute;right:8px;bottom:-12px;width:48px;height:72px;z-index:1}
+.ct-fan img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:2px 4px 4px 2px;box-shadow:0 8px 16px -6px rgba(0,0,0,.7);transform-origin:50% 100%;transition:transform .35s var(--ease-out)}
+.ct-fan img:nth-child(1){z-index:3}
+.ct-fan img:nth-child(2){z-index:2;transform:translateX(-30%) rotate(-10deg)}
+.ct-fan img:nth-child(3){z-index:1;transform:translateX(26%) rotate(10deg)}
+@media (hover:hover){
+  .cat-tile:hover{transform:translateY(-2px);box-shadow:0 16px 30px -16px rgba(0,0,20,.9)}
+  .cat-tile:hover .ct-fan img:nth-child(1){transform:translateY(-6px)}
+  .cat-tile:hover .ct-fan img:nth-child(2){transform:translateX(-52%) rotate(-18deg)}
+  .cat-tile:hover .ct-fan img:nth-child(3){transform:translateX(52%) rotate(18deg)}
+}
+.cat-tile:active{transform:scale(.97)}
+.cat-tile[aria-pressed="true"]{box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--ink),0 16px 30px -16px rgba(0,0,20,.9)}
+.cat-tile[data-g="all"]{--a:#3A2C9E;--b:#0F1240;--pat:radial-gradient(60% 80% at 100% 0%,rgba(255,212,59,.28),transparent 60%)}
+.cat-tile[data-g="film"]{--a:#26262B;--b:#0B0B0E;--pat:repeating-linear-gradient(90deg,rgba(255,255,255,.55) 0 7px,transparent 7px 15px) 0 6px/100% 5px no-repeat,
+  repeating-linear-gradient(90deg,rgba(255,255,255,.55) 0 7px,transparent 7px 15px) 0 calc(100% - 6px)/100% 5px no-repeat,radial-gradient(70% 90% at 80% 50%,rgba(255,190,90,.25),transparent 70%)}
+.cat-tile[data-g="film"] .ct-name{margin-top:8px}
+.cat-tile[data-g="manga"]{--a:#E23C57;--b:#3A0816;--pat:radial-gradient(rgba(255,255,255,.22) 1.1px,transparent 1.6px) 0 0/7px 7px,
+  repeating-conic-gradient(from 0deg at 110% 110%,rgba(255,255,255,.1) 0 2deg,transparent 2deg 9deg)}
+.cat-tile[data-g="fantasy"]{--a:#4B2A9E;--b:#0D0A30;--pat:radial-gradient(1.5px 1.5px at 18% 28%,#fff,transparent),radial-gradient(1px 1px at 42% 70%,#fff,transparent),
+  radial-gradient(1.2px 1.2px at 64% 18%,#fff,transparent),radial-gradient(1px 1px at 30% 88%,#fff,transparent),radial-gradient(1.4px 1.4px at 8% 62%,#fff,transparent),
+  radial-gradient(60% 70% at 80% 30%,rgba(160,120,255,.45),transparent 70%)}
+.cat-tile[data-g="noir"]{--a:#2A2A33;--b:#09090D;--pat:repeating-linear-gradient(105deg,rgba(255,255,255,.07) 0 1px,transparent 1px 8px),radial-gradient(60% 80% at 85% 20%,rgba(220,40,50,.35),transparent 65%)}
+.cat-tile[data-g="romance"]{--a:#E0628E;--b:#4E1033;--pat:radial-gradient(14px 14px at 20% 75%,rgba(255,255,255,.18),transparent),radial-gradient(22px 22px at 55% 30%,rgba(255,255,255,.12),transparent),radial-gradient(10px 10px at 40% 55%,rgba(255,255,255,.2),transparent)}
+.cat-tile[data-g="kids"]{--a:#F29E1B;--b:#B4401A;--pat:radial-gradient(4px 4px at 15% 70%,#FFE27A,transparent),radial-gradient(5px 5px at 45% 25%,#7EE0C3,transparent),radial-gradient(4px 4px at 30% 45%,#fff,transparent),radial-gradient(5px 5px at 60% 85%,#9AB4FF,transparent)}
+.cat-tile[data-g="classic"]{--a:#7A5A30;--b:#2B1E0E;--pat:repeating-linear-gradient(0deg,rgba(255,240,210,.07) 0 1px,transparent 1px 11px)}
+.cat-tile[data-g="history"]{--a:#8A6A44;--b:#2A1C0E;--pat:radial-gradient(80% 90% at 50% 50%,transparent 50%,rgba(0,0,0,.35))}
+.cat-tile[data-g="adventure"]{--a:#13857A;--b:#05302C;--pat:repeating-radial-gradient(circle at 85% 30%,rgba(255,255,255,.08) 0 1px,transparent 1px 12px)}
+.cat-tile[data-g="ua"]{--a:#2457E0;--b:#0B2470;--pat:radial-gradient(70% 60% at 50% 115%,rgba(255,212,59,.45),transparent 65%)}
+.cat-tile[data-g="world"]{--a:#0E7490;--b:#06283A;--pat:repeating-radial-gradient(circle at 115% 50%,rgba(255,255,255,.09) 0 1px,transparent 1px 14px),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 22px)}
+.cat-tile[data-g="study"]{--a:#2F6B4F;--b:#10291D;--pat:linear-gradient(rgba(255,255,255,.07) 1px,transparent 1px) 0 0/16px 16px,linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px) 0 0/16px 16px}
+.cat-tile[data-g="science"]{--a:#1D3E8A;--b:#07122E;--pat:radial-gradient(rgba(140,200,255,.35) 1px,transparent 1.5px) 0 0/12px 12px,radial-gradient(60% 70% at 85% 25%,rgba(80,170,255,.3),transparent 70%)}
+.cat-tile[data-g="mind"]{--a:#5B2A86;--b:#1A0B2E;--pat:repeating-radial-gradient(circle at 80% 40%,rgba(255,220,150,.1) 0 1px,transparent 1px 10px)}
+.cat-tile[data-g="military"]{--a:#4B5A2A;--b:#1B210E;--pat:repeating-linear-gradient(135deg,rgba(255,255,255,.06) 0 6px,transparent 6px 14px)}
+.cat-tile[data-g="art"]{--a:#C2417A;--b:#3B0F2A;--pat:radial-gradient(40px 40px at 85% 20%,rgba(255,200,90,.35),transparent),radial-gradient(30px 30px at 65% 85%,rgba(120,200,255,.3),transparent)}
+.cat-tile[data-g="food"]{--a:#D9622B;--b:#4A1A08;--pat:radial-gradient(60% 70% at 85% 30%,rgba(255,220,120,.35),transparent 70%)}
+.cat-tile[data-g="sport"]{--a:#0F8A5F;--b:#05301F;--pat:repeating-linear-gradient(100deg,rgba(255,255,255,.08) 0 2px,transparent 2px 18px)}
+.cat-tile[data-g="business"]{--a:#334155;--b:#0F172A;--pat:linear-gradient(transparent 60%,rgba(80,200,140,.25)),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 18px)}
+.cats-more{display:none}
+@media (max-width:640px){
+  .toolbar .cats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .cat-tile{height:96px}
+  .cats.collapsed .cat-tile:nth-child(n+6){display:none}
+  .cats-more{display:flex;align-items:center;justify-content:center;min-height:96px;border-radius:16px;border:1.5px dashed var(--line);background:transparent;color:var(--ink);font:600 var(--t-14) var(--f-ui)}
+  .cats:not(.collapsed) .cats-more{min-height:48px;grid-column:1 / -1}
+}
+/* кіноплитка в «Добірках» */
+.cell.film{background:radial-gradient(70% 90% at 85% 40%,rgba(255,190,90,.22),transparent 70%),linear-gradient(140deg,#26262B,#0B0B0E);color:#fff;box-shadow:none}
+.cell.film::before,.cell.film::after{content:"";position:absolute;left:0;right:0;height:6px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.5) 0 8px,transparent 8px 17px);pointer-events:none}
+.cell.film::before{top:8px}.cell.film::after{bottom:8px}
+.cell.film .cell-k,.cell.film p{color:rgba(255,255,255,.72)}
+.cell.film .go{background:rgba(255,255,255,.12);color:#fff}
+
+/* ── Пагінація ── */
+.pages{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:var(--s-2);margin-top:var(--s-7)}
+.pg{min-width:44px;height:44px;padding:0 12px;border-radius:12px;border:1px solid var(--line);color:var(--ink);font:600 var(--t-14)/1 var(--f-ui);font-variant-numeric:tabular-nums;
+  background:color-mix(in srgb,var(--surface) 72%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .15s var(--ease-out),border-color .15s}
+.pg:hover:not(:disabled){border-color:var(--ink-2)}
+.pg:active:not(:disabled){transform:scale(.95)}
+.pg:disabled{opacity:.4;cursor:default}
+.pg-gap{color:var(--ink-2);padding:0 2px}
+
+/* ── Перегляд 3D поверх сторінки: та сама сцена переїжджає у вікно на весь екран ── */
+.viewer{position:fixed;inset:0;z-index:55;display:flex;flex-direction:column;color:var(--on-stage);
+  background:radial-gradient(70% 55% at 55% 45%,color-mix(in srgb,var(--h1) 50%,var(--stage)),var(--stage) 78%);
+  opacity:0;visibility:hidden;transition:opacity .3s var(--ease-out),visibility .3s}
+.viewer.open{opacity:1;visibility:visible}
+.viewer-top{display:flex;align-items:center;justify-content:space-between;gap:var(--s-4);padding:calc(12px + env(safe-area-inset-top,0px)) clamp(16px,4vw,32px) 8px}
+.viewer-h{min-width:0}
+.viewer-h b{display:block;font:600 var(--t-20)/1.2 var(--f-book);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.viewer-h span{color:var(--on-stage-2);font-size:var(--t-14)}
+.viewer .x{background:rgba(255,255,255,.08);border-color:var(--stage-line);color:var(--on-stage)}
+.viewer-slot{position:relative;flex:1;min-height:0}
+.viewer .stage{position:absolute;inset:0;min-height:0}
+.viewer .stage canvas{left:0;top:0;width:100%;height:100%}
+
+</style>
+
+<div class="present app" id="app" lang="uk">
+  <div class="proto">
+    <div class="wrap">
+      <span>Прототип вітрини. Книжки, ціни й наявність тут для прикладу: справжні дані підтягнемо з каталогу постачальника.</span>
+      <span class="proto-acts"><button class="textbtn" type="button" data-notes>Показати нотатки для команди</button><button class="textbtn" type="button" id="present-on">Режим показу<span class="kbd"> (Shift+P)</span></button></span>
+    </div>
+  </div>
+
+  <header class="top">
+    <div class="wrap">
+      <a class="logo" href="#top" aria-label="Палітурка, на початок">
+        <svg width="30" height="34" viewBox="0 0 30 34" aria-hidden="true"><rect x="3" y="2" width="24" height="30" rx="2.5" fill="var(--buy)"/><rect x="3" y="2" width="5" height="30" rx="2" fill="var(--ink)" opacity=".35"/><path d="M19 2h5v14l-2.5-2.2L19 16z" fill="var(--foil)"/></svg>
+        <span>Палітурка<small>робоча назва</small></span>
+      </a>
+      <nav class="mainnav" aria-label="Розділи">
+        <a href="#collections" data-sec="collections">Добірки</a>
+        <a href="#catalog" data-sec="catalog">Каталог</a>
+        <a href="#delivery" data-sec="delivery">Доставка й оплата</a>
+      </nav>
+      <div class="search">
+        <label class="sr" for="q">Пошук книжок</label>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="Назва, автор або видавництво" autocomplete="off" enterkeyhint="search">
+        <span class="note"><b>Пошук</b> У каталозі десятки чи сотні тисяч позицій, тож знадобиться окремий пошуковий рушій (Meilisearch або Typesense) з підказками й помилками в словах.</span>
+      </div>
+      <div class="actions">
+        <button class="iconbtn press" type="button" id="theme" aria-label="Тема: як у системі" title="Тема"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
+        <button class="iconbtn press hide-sm" type="button" id="notes-toggle" aria-pressed="false" data-notes>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h14v13l-5 5H5z"/><path d="M14 21v-5h5"/></svg>
+          Нотатки
+        </button>
+        <button class="iconbtn cartbtn press" type="button" data-open-cart aria-label="Кошик">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14l-1.2 12.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+          <span>Кошик</span>
+          <span class="badge num" data-cart-count data-n="0">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" id="top">
+    <section class="hero" id="hero" aria-labelledby="hero-h">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <span class="eyebrow">Книгарня · Ніжин і Нова Пошта по всій Україні</span>
+        <h1 id="hero-h">Відкрий <em>наступну</em> книжку</h1>
+        <p class="lede">Сотні тисяч видань від українських і світових видавництв. Забирайте в магазині в Ніжині або отримуйте Новою Поштою.</p>
+        <div class="ctas">
+          <a class="btn btn-light press" href="#catalog">До каталогу</a>
+          <button class="btn btn-ghost press" type="button" id="open-book">Відкрити книжку</button>
+        </div>
+        <div class="onstage" aria-live="polite">
+          <span class="lbl">На сцені</span>
+          <div>
+            <h2 id="hero-title"></h2>
+            <p id="hero-author"></p>
+          </div>
+          <div class="price num" id="hero-price"></div>
+          <div class="row">
+            <p class="avail" id="hero-avail"></p>
+            <button class="btn btn-stagebuy press" type="button" id="hero-add">У кошик</button>
+            <button class="btn btn-stageghost press" type="button" id="hero-more">Детальніше</button>
+          </div>
+        </div>
+      </div>
+      <div class="stage" id="stage">
+        <canvas id="book3d" tabindex="0" aria-label="3D-модель книжки. Перетягніть, щоб покрутити; натисніть, щоб відкрити."></canvas>
+        <img class="fallback" id="stage-fallback" alt="">
+        <span class="hint" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12h16M4 12l4-4M4 12l4 4M20 12l-4-4M20 12l-4 4"/></svg>
+          <span id="hint-t">Покрутіть · торкніться, щоб відкрити</span>
+        </span>
+        <span class="note float"><b>3D</b> Лицьова обкладинка береться з <code>coverImage.url</code>, корінець, задник із штрихкодом ISBN і титульну сторінку генеруємо самі.</span>
+        <div class="stagebar">
+          <div class="glass">
+            <button class="round press" type="button" id="prev" aria-label="Попередня книжка"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+            <span class="pager num" id="pager" aria-live="polite">1 / 6</span>
+            <button class="round press" type="button" id="next" aria-label="Наступна книжка"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+            <span class="sep" aria-hidden="true"></span>
+            <button class="round press" type="button" id="stage-open" aria-pressed="false" aria-label="Відкрити обкладинку"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2zM22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z"/></svg></button>
+            <button class="btn btn-stagebuy press" type="button" id="stage-buy" hidden>У кошик</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="shelf" aria-labelledby="shelf-h">
+      <div class="sec-head">
+        <h2 id="shelf-h">Полиця тижня</h2>
+        <p>Те, що зараз читають найбільше. Торкніться книжки, щоб відкрити.</p>
+      </div>
+      <span class="note"><b>Полиця</b> Добірка збирається сама: стікер <code>ТОП тижня</code>, <code>Хіт продажу</code> чи <code>Популярне</code> з API.</span>
+      <div class="shelf-wrap">
+      <button class="shelf-arrow prev" type="button" id="shelf-prev" aria-label="Гортати полицю назад"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+      <button class="shelf-arrow next" type="button" id="shelf-next" aria-label="Гортати полицю далі"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+      <div class="shelf-scroll">
+        <div class="case" id="shelf-case">
+          <span class="case-wall" aria-hidden="true"></span>
+          <div class="shelf" id="shelf-row"></div>
+          <div class="board" aria-hidden="true"></div>
+        </div>
+      </div>
+      </div>
+      <p class="shelf-cap" id="shelf-cap" aria-hidden="true"></p>
+    </section>
+
+    <section id="collections" aria-labelledby="col-h">
+      <div class="sec-head">
+        <h2 id="col-h">Добірки</h2>
+        <p>Почніть з розділу, який вам ближчий, або подивіться, що можна оплатити єКнигою.</p>
+      </div>
+      <div class="bento" id="bento"></div>
+    </section>
+
+    <section id="catalog" aria-labelledby="cat-h">
+      <div class="sec-head">
+        <h2 id="cat-h">Каталог</h2>
+        <span class="count num" id="count" aria-live="polite"></span>
+      </div>
+      <div class="toolbar">
+        <div class="chips cats collapsed" id="chips" role="group" aria-label="Категорії"></div>
+        <div class="filters">
+          <label class="switch" for="f-stock"><input id="f-stock" type="checkbox"> Є на складі</label>
+          <label class="switch" for="f-ek"><input id="f-ek" type="checkbox"> єКнига</label>
+          <label class="sr" for="sort">Сортування</label>
+          <select class="sort" id="sort">
+            <option value="pop">Спершу популярні</option>
+            <option value="cheap">Спершу дешевші</option>
+            <option value="dear">Спершу дорожчі</option>
+            <option value="az">За назвою</option>
+          </select>
+        </div>
+      </div>
+      <div class="notes-row">
+        <span class="note"><b>Ціна</b> Наша: опт + націнка за правилами з <code>config/pricing.json</code>. Опт до вітрини не потрапляє взагалі.</span>
+        <span class="note"><b>Наявність</b> <code>stockNp &gt; 0</code> означає «відправимо сьогодні». Якщо книжка лише на віртуальному складі, пишемо «під замовлення» з <code>deliveryTime</code>.</span>
+        <span class="note"><b>Фільтри</b> Перебудова сітки анімована: картки пливуть на нові місця, а не стрибають.</span>
+      </div>
+      <div class="grid" id="grid"></div>
+      <nav class="pages" id="grid-pages" aria-label="Сторінки каталогу"></nav>
+      <div class="empty" id="grid-empty" hidden></div>
+    </section>
+
+    <section class="how" id="how" aria-labelledby="how-h">
+      <span class="tag">Для команди</span>
+      <div class="sec-head"><h2 id="how-h">Як це працюватиме</h2><p>Шлях від каталогу постачальника до посилки в руках читача.</p></div>
+      <div class="story">
+        <ol class="steps">
+          <li class="step on" data-step="0">
+            <h3>Каталог постачальника</h3>
+            <p>API BookTicket B2B віддає назви, авторів, ціни опт і роздріб, залишки по складах і посилання на обкладинки. Сторінками по 100 книжок.</p>
+            <div class="viz">
+<pre class="code"><span class="c">GET /commerce/price-list?skip=0&amp;take=100</span>
+{
+  <span class="k">"count"</span>: <span class="c">…  // скільки всього, побачимо після вивантаження</span>
+  <span class="k">"data"</span>: [{
+    <span class="k">"productId"</span>: <span class="n">103398</span>,
+    <span class="k">"name"</span>: <span class="s">"Ми тебе любимо, Зайчику"</span>,
+    <span class="k">"authorName"</span>: <span class="s">"Мона Авад"</span>,
+    <span class="k">"publisherName"</span>: <span class="s">"ЖОРЖ"</span>,
+    <span class="k">"retailPrice"</span>: <span class="s">"570"</span>,
+    <span class="k">"wholesalePrice"</span>: <span class="s">"371"</span>,
+    <span class="k">"stockNp"</span>: <span class="n">411</span>,
+    <span class="k">"stickers"</span>: [<span class="s">"єКнига"</span>, <span class="s">"Хіт Продажу"</span>, …]
+  }, …]
+}</pre>
+              <span class="cap">справжній запис з API, скорочено</span>
+            </div>
+          </li>
+          <li class="step" data-step="1">
+            <h3>Щоденна синхронізація</h3>
+            <p>Скрипт уночі оновлює ціни й залишки, додає нові книжки й ховає ті, що зникли. Якщо щось обірвалось, продовжує з місця зупинки.</p>
+            <div class="viz">
+<pre class="code"><span class="c">$ python bookticket_sync.py catalog</span>
+06:00:01  Токен взято з auth.json
+06:00:01  Нове вивантаження #12
+06:00:02    [ <span class="n">10%</span>]  …
+06:02:31    [ <span class="n">60%</span>]  …
+06:04:40  <span class="n">Каталог готовий</span>
+06:04:40  Сховано 12 книг, яких більше нема
+<span class="c">$ python bookticket_sync.py covers --in-stock</span></pre>
+              <span class="cap">так виглядатиме щоденний запуск, цифри умовні</span>
+            </div>
+          </li>
+          <li class="step" data-step="2">
+            <h3>Вітрина</h3>
+            <p>Пошук, добірки, фільтри, картки книжок і кошик. Покупець бачить лише нашу ціну і зрозумілий термін.</p>
+            <div class="viz">
+              <div class="vcard">
+                <img data-cover="103398" alt="">
+                <div><b>Ми тебе любимо, Зайчику</b><span class="author">Мона Авад</span><span class="price num">570 ₴</span><p class="avail ok">Відправимо сьогодні</p></div>
+              </div>
+              <span class="cap">stockNp: 411 → «відправимо сьогодні»</span>
+            </div>
+          </li>
+          <li class="step" data-step="3">
+            <h3>Щоденне замовлення</h3>
+            <p>Раз на день усі замовлення клієнтів збираються в одне замовлення постачальнику через його API. Книжки приїжджають у магазин у Ніжині: звідти клієнт забирає сам або отримує Новою Поштою.</p>
+            <div class="viz">
+              <div class="parcel">
+                <div class="ttn"><span>ТТН</span><span class="num">2045 0000 0000 00</span></div>
+                <dl><dt>Одержувач</dt><dd>Олена К., Львів, відділення №12</dd><dt>Вміст</dt><dd>Книжки, 1 шт.</dd><dt>Відправник</dt><dd>Палітурка, Ніжин</dd></dl>
+                <div class="flow"><span>Клієнт</span>→<span>Палітурка</span>→<span>BookTicket</span>→<span>Ніжин</span>→<span>самовивіз або НП</span></div>
+              </div>
+              <span class="cap">макет наклейки, номер умовний</span>
+            </div>
+          </li>
+        </ol>
+        <div class="story-panel" id="story-panel" aria-hidden="true"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="delivery">
+    <div class="wrap">
+      <div>
+        <h4>Палітурка</h4>
+        <p>© 2026 Палітурка. Книгарня в Ніжині з доставкою по Україні.</p>
+        <p><a href="offer.html">Публічна оферта</a> · <a href="privacy.html">Конфіденційність</a></p>
+      </div>
+      <div>
+        <h4>Доставка</h4>
+        <p>Нова Пошта: відділення, поштомат, курʼєр.</p>
+        <p>Книжки зі складу постачальника привозимо в Ніжин за 1–2 дні.</p>
+      </div>
+      <div>
+        <h4>Оплата</h4>
+        <p>Картка онлайн, єКнига, післяплата.</p>
+        <p>Безкоштовна доставка від 1 000 ₴.</p>
+      </div>
+    </div>
+  </footer>
+
+  <nav class="tabbar" aria-label="Швидка навігація">
+    <a href="#top" data-tab="hero"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Головна</a>
+    <a href="#collections" data-tab="collections"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="8" height="10" rx="2"/><rect x="13" y="3" width="8" height="6" rx="2"/><rect x="3" y="15" width="8" height="6" rx="2"/><rect x="13" y="11" width="8" height="10" rx="2"/></svg>Добірки</a>
+    <a href="#catalog" data-tab="catalog"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h5v16H4zM10 4h4v16h-4zM15.5 5.2l3.9-1 3.6 15.3-3.9 1z"/></svg>Каталог</a>
+    <button type="button" data-open-cart><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14l-1.2 12.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>Кошик<span class="badge num" data-cart-count data-n="0">0</span></button>
+  </nav>
+
+  <div class="scrim" id="scrim"></div>
+
+  <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-t" inert>
+    <div class="viewer-top">
+      <div class="viewer-h"><b id="viewer-t">Книжка</b><span id="viewer-a"></span></div>
+      <button class="x press" type="button" data-close aria-label="Закрити перегляд"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="viewer-slot" id="viewer-slot"></div>
+  </div>
+  <aside class="sheet wide" id="detail" role="dialog" aria-modal="true" aria-labelledby="detail-h" inert>
+    <span class="grabber" aria-hidden="true"></span>
+    <div class="sheet-head">
+      <h2 id="detail-h">Книжка</h2>
+      <button class="x press" type="button" id="share" aria-label="Поділитися книжкою" style="margin-left:auto"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v14"/></svg></button>
+      <button class="x press" type="button" data-close aria-label="Закрити"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="sheet-body" id="detail-body"></div>
+    <div class="sheet-foot buybar" id="detail-foot"></div>
+  </aside>
+
+  <aside class="sheet" id="cart" role="dialog" aria-modal="true" aria-labelledby="cart-h" inert>
+    <span class="grabber" aria-hidden="true"></span>
+    <div class="sheet-head">
+      <h2 id="cart-h">Кошик</h2>
+      <button class="x press" type="button" data-close aria-label="Закрити"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="sheet-body" id="cart-body"></div>
+    <div class="sheet-foot" id="cart-foot"></div>
+  </aside>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>/* data.js щоразу свіжий, без кешу браузера */ document.write('<script src="data.js?' + Date.now() + '"><\/script>');</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.addEventListener('touchstart', () => {}, {passive:true}); /* щоб :active спрацьовував на iPhone */
+const EASE_OUT = 'cubic-bezier(.2,.8,.2,1)';
+const FREE_SHIP = 1000, SHIP_FROM = 9 * 60, SHIP_CUTOFF = 14 * 60;
+const I = {
+  check:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>',
+  arrow:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  cube:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7z"/><path d="m3 7 9 5 9-5M12 12v10"/></svg>',
+  alert:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" style="flex:none;margin-top:1px"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></svg>',
+};
+
+/* Приклад даних у форматі price-list. Перша книжка: реальний запис з API. */
+const BOOKS = [
+  {id:103398,t:'Ми тебе любимо, Зайчику',a:'Мона Авад',p:'ЖОРЖ',cat:'Сучасна проза',price:570,old:0,np:411,virt:0,days:14,pop:99,st:['Хіт продажу','ТОП тижня','єКнига'],isbn:'9786178412562',
+   d:'Темна кампусна казка про елітну письменницьку програму, чотирьох нерозлучних «Зайчиків» і дівчину, яку несподівано запрошують до їхнього кола.',
+   look:{bg:'#F5C4D6',fg:'#3A0B2B',ac:'#E0457B',motif:'ears',tf:'display'}},
+  {id:98114,t:'Амадока',a:'Софія Андрухович',p:'Видавництво Старого Лева',cat:'Українська проза',price:690,old:780,np:37,virt:0,days:14,pop:93,st:['ТОП тижня','єКнига'],
+   d:'Роман про памʼять: жінка намагається повернути чоловікові, пораненому на війні, його минуле й натрапляє на історію цілого краю.',
+   look:{bg:'#1E4B57',fg:'#F2E8D0',ac:'#7CC3C8',motif:'waves',tf:'serif'}},
+  {id:87231,t:'Інтернат',a:'Сергій Жадан',p:'Meridian Czernowitz',cat:'Українська проза',price:330,old:0,np:64,virt:12,days:14,pop:91,st:['Хіт продажу','єКнига'],
+   d:'Шкільний учитель іде через місто, охоплене війною, щоб забрати племінника з інтернату. Три дні, які все змінюють.',
+   look:{bg:'#2D3036',fg:'#F2F2EE',ac:'#F0B43A',motif:'stripes',tf:'display'}},
+  {id:70412,t:'Гобіт, або Туди і звідти',a:'Дж. Р. Р. Толкін',p:'Астролябія',cat:'Фентезі й фантастика',price:480,old:0,np:22,virt:0,days:14,pop:88,st:['ТОП тижня'],
+   d:'Більбо Торбин вирушає з гномами по драконове золото й повертається зовсім іншим гобітом.',
+   look:{bg:'#2E5A39',fg:'#F4E7C3',ac:'#D9A441',motif:'door',tf:'serif'}},
+  {id:76310,t:'Дюна',a:'Френк Герберт',p:'КСД',cat:'Фентезі й фантастика',price:520,old:0,np:15,virt:40,days:14,pop:90,st:['Популярне'],
+   d:'Пустельна планета Арракіс, прянощі, за які воюють імперії, і юний Пол Атрід, що мусить вижити серед піску.',
+   look:{bg:'#E39A4A',fg:'#2A1407',ac:'#F7D9A2',motif:'dunes',tf:'display'}},
+  {id:65001,t:'Гаррі Поттер і філософський камінь',a:'Дж. К. Ролінґ',p:'А-ба-ба-га-ла-ма-га',cat:'Для дітей',price:420,old:0,np:128,virt:0,days:14,pop:97,st:['Хіт продажу'],
+   d:'Гаррі дізнається, що він чарівник, і вперше їде до Гоґвортсу.',
+   look:{bg:'#7A1F2B',fg:'#F6D77A',ac:'#F6D77A',motif:'stars',tf:'serif'}},
+  {id:91540,t:'Felix Austria',a:'Софія Андрухович',p:'Видавництво Старого Лева',cat:'Українська проза',price:380,old:0,np:9,virt:0,days:14,pop:80,st:['єКнига'],
+   d:'Станиславів на початку ХХ століття, служниця Стефа і її господиня Аделя. Історія про любов, залежність і ціну відданості.',
+   look:{bg:'#E8D6B0',fg:'#3B2416',ac:'#B3452F',motif:'arch',tf:'serif'}},
+  {id:91541,t:'Ворошиловград',a:'Сергій Жадан',p:'Meridian Czernowitz',cat:'Українська проза',price:360,old:0,np:0,virt:25,days:14,pop:77,st:['єКнига'],
+   d:'Герман повертається на схід, щоб розібратися з заправкою зниклого брата, і залишається захищати своє.',
+   look:{bg:'#F2D14B',fg:'#1D1D1B',ac:'#D2472A',motif:'sun',tf:'display'}},
+  {id:99802,t:'Доця',a:'Тамара Горіха Зерня',p:'Білка',cat:'Українська проза',price:350,old:0,np:3,virt:0,days:14,pop:84,st:['Популярне','єКнига'],
+   d:'Роман про війну на Донбасі 2014 року, про вибір, який робить звичайна людина, і про силу, яку вона в собі знаходить.',
+   look:{bg:'#ECEFF3',fg:'#18223F',ac:'#3355D1',motif:'letter',tf:'display'}},
+  {id:70413,t:'Братство Персня',a:'Дж. Р. Р. Толкін',p:'Астролябія',cat:'Фентезі й фантастика',price:620,old:690,np:0,virt:18,days:14,pop:82,st:[],
+   d:'Фродо отримує Перстень Всевладдя, і маленька компанія вирушає в дорогу, від якої залежить доля Середземʼя.',
+   look:{bg:'#17150F',fg:'#E6C36A',ac:'#E6C36A',motif:'ring',tf:'serif'}},
+  {id:65002,t:'Гаррі Поттер і таємна кімната',a:'Дж. К. Ролінґ',p:'А-ба-ба-га-ла-ма-га',cat:'Для дітей',price:440,old:0,np:74,virt:0,days:14,pop:86,st:[],
+   d:'Другий рік у Гоґвортсі: голоси в стінах, напади на учнів і таємниця, яку школа приховує пʼятдесят років.',
+   look:{bg:'#1F4D3F',fg:'#E9F0E6',ac:'#9BD1A8',motif:'stars',tf:'serif'}},
+  {id:65003,t:'Гаррі Поттер і вʼязень Азкабану',a:'Дж. К. Ролінґ',p:'А-ба-ба-га-ла-ма-га',cat:'Для дітей',price:460,old:0,np:0,virt:0,days:14,pop:85,st:[],
+   d:'З вʼязниці Азкабан тікає небезпечний злочинець, і, схоже, він шукає Гаррі.',
+   look:{bg:'#25305F',fg:'#E6E8F5',ac:'#A7B2F0',motif:'moon',tf:'serif'}},
+  {id:88120,t:'Sapiens',a:'Ювал Ной Харарі',p:'BookChef',cat:'Нон-фікшн',price:450,old:0,np:0,virt:60,days:14,pop:87,st:['Популярне'],
+   d:'Як один із видів людей за сімдесят тисяч років підкорив планету. Коротка історія людства.',
+   look:{bg:'#E4DED3',fg:'#141414',ac:'#C23B22',motif:'dots',tf:'display'}},
+  {id:90233,t:'Брама Європи',a:'Сергій Плохій',p:'КСД',cat:'Нон-фікшн',price:410,old:0,np:31,virt:0,days:14,pop:79,st:['єКнига'],
+   d:'Історія України від античності до наших днів: ясно, стисло і в європейському контексті.',
+   look:{bg:'#103A6B',fg:'#F4D35E',ac:'#F4D35E',motif:'blocks',tf:'display'}},
+  {id:60718,t:'Тигролови',a:'Іван Багряний',p:'Фоліо',cat:'Класика',price:260,old:0,np:0,virt:14,days:14,pop:75,st:['єКнига'],
+   d:'Засланий на Далекий Схід Григорій Многогрішний тікає з ешелону й знаходить прихисток у родини мисливців на тигрів.',
+   look:{bg:'#D66A1F',fg:'#1B120C',ac:'#1B120C',motif:'tiger',tf:'display'}},
+];
+/* ── Справжні дані: prototypes/storefront/data.js з tools/build_storefront.py ── */
+const REAL = !!(window.CATALOG && window.CATALOG.books && window.CATALOG.books.length);
+const PAY = new Set(['єКнига', 'Нацкешбек', 'Зимова підтримка']);
+const CLOTH = [['#1F3A5F','#F2E6C9','#D9B45A'], ['#6B1F2A','#F4E3C8','#E0B25C'], ['#24453A','#EFE6CF','#C9A44E'], ['#2B2B33','#EDE7DA','#C7A15A'], ['#3E2A56','#F1E7D6','#D8B36A'], ['#7A4A1E','#FBEFD9','#2B1A0C']];
+if (REAL){
+  BOOKS.splice(0, BOOKS.length, ...window.CATALOG.books.map(b => {
+    const [bg, fg, ac] = CLOTH[Math.abs(b.id) % CLOTH.length];
+    return Object.assign({old:0}, b, {look:{bg, fg, ac, motif:'stripes', tf:'serif'}});
+  }));
+}
+const byId = Object.fromEntries(BOOKS.map(b => [b.id, b]));
+const CURATED = new Set(BOOKS.map(b => b.id));
+/* ── Повний каталог із сервера (tools/catalog.py): пошук і сторінки по всіх книжках постачальника.
+   Без сервера (файл відкрито напряму) чи поки індекс збирається — працюємо на відібраних книжках з data.js ── */
+const API = {on:false, meta:null, seq:0};
+const apiGet = (path, params) => fetch(path + (params ? '?' + new URLSearchParams(Object.entries(params).filter(([, v]) => v !== '' && v != null && v !== false)) : ''))
+  .then(r => r.ok ? r.json() : Promise.reject(r.status));
+function ingest(x){
+  const old = byId[x.id];
+  if (old){ const {cover, ...rest} = x; return Object.assign(old, rest); }
+  const [bg, fg, ac] = CLOTH[Math.abs(x.id) % CLOTH.length];
+  const b = Object.assign({old:0, st:[], look:{bg, fg, ac, motif:'stripes', tf:'serif'}}, x);
+  b.cover = x.cover ? '/img?u=' + encodeURIComponent(x.cover) : '';   // для 3D і кольорів — через наш сервер
+  if (x.cover) covers[x.id] = x.cover;                                  // у сітці — напряму з сайту постачальника
+  return (byId[x.id] = b);
+}
+const FEATURED = REAL ? window.CATALOG.featured.filter(id => byId[id]) : [103398, 98114, 70412, 76310, 65001, 87231];
+const SCR = 'Екранізовані', HAS_SCR = BOOKS.some(b => b.scr);
+const inCat = (b, c) => c === 'Усі' || (c === SCR ? !!b.scr : b.cat === c);
+const CATS = ['Усі', ...(HAS_SCR ? [SCR] : []), ...Object.entries(BOOKS.reduce((m, b) => (m[b.cat] = (m[b.cat] || 0) + 1, m), {})).sort((a, b) => b[1] - a[1]).slice(0, 12).map(x => x[0])];
+
+const PAGE = 30;
+const state = {page:1, 
+  cat:'Усі', q:'', inStock:false, ek:false, sort:'pop', featured:0, cart:loadCart(), view:'list',
+  form:{name:'', phone:'', city:'', branch:'', get:'pickup', ship:'one', pay:'card'}, touched:{},
+};
+function loadCart(){ try { return JSON.parse(localStorage.getItem('palitourka-cart') || '{}') || {}; } catch (e) { return {}; } }
+function saveCart(){
+  try {
+    localStorage.setItem('palitourka-cart', JSON.stringify(state.cart));
+    const keep = {};   // книжки з повного каталогу, яких нема в data.js: щоб кошик пережив перезавантаження
+    Object.keys(state.cart).forEach(id => { const b = byId[id]; if (b && !CURATED.has(+id)) keep[id] = {id:b.id, t:b.t, a:b.a, p:b.p, cat:b.cat, price:b.price, rrp:b.rrp, np:b.np, virt:b.virt, days:b.days, st:b.st, isbn:b.isbn, aid:b.aid, cover:covers[b.id] || ''}; });
+    localStorage.setItem('palitourka-cart-books', JSON.stringify(keep));
+  } catch (e) {}
+}
+
+const money = n => n.toLocaleString('uk-UA') + ' ₴';
+const plural = (n, one, few, many) => { const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many; };
+const books = n => `${n.toLocaleString('uk-UA')} ${plural(n, 'книжка', 'книжки', 'книжок')}`;
+function avail(b){
+  if (b.np > 0) return {k:'ok', short:'Є на складі · 1–2 дні', more:(b.np < 10 ? `Лишилось ${b.np} шт. ` : '') + 'Привеземо в магазин у Ніжині за 1–2 дні або відправимо Новою Поштою.'};
+  if (b.virt > 0) return {k:'wait', short:`Під замовлення · до ${b.days || 14} днів`, more:'Книжка на віддаленому складі постачальника: замовимо її одразу після оформлення.'};
+  return {k:'none', short:'Немає в наявності', more:'Можемо написати, коли зʼявиться.'};
+}
+const priceHTML = b => `${money(b.price)}${b.old ? `<s>${money(b.old)}</s>` : ''}`;
+const mainSticker = b => b.st.find(s => !PAY.has(s));
+const go = id => $('#' + id).scrollIntoView({behavior:reduce ? 'auto' : 'smooth', block:'start'});
+
+/* ── Обкладинки: генеруємо на canvas, спільні для каталогу і 3D ── */
+const covers = {};
+const mk = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
+function mix(a, b, t){
+  const p = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+  const x = p(a), y = p(b);
+  return `rgb(${x.map((v, i) => Math.round(v + (y[i] - v) * t)).join(',')})`;
+}
+function rng(seed){ let s = seed % 2147483647 || 1; return () => (s = (s * 16807) % 2147483647) / 2147483647; }
+function wrapText(c, text, maxW){
+  const words = text.split(' '), lines = []; let cur = '';
+  for (const w of words){
+    const t = cur ? cur + ' ' + w : w;
+    if (c.measureText(t).width > maxW && cur){ lines.push(cur); cur = w; } else cur = t;
+  }
+  if (cur) lines.push(cur);
+  return lines;
+}
+function fitText(c, text, font, maxW, maxLines, start, min){
+  for (let z = start; z >= min; z -= 2){
+    c.font = font(z);
+    const lines = wrapText(c, text, maxW);
+    if (lines.length <= maxLines && lines.every(l => c.measureText(l).width <= maxW)) return {z, lines};
+  }
+  c.font = font(min);
+  return {z:min, lines:wrapText(c, text, maxW)};
+}
+const titleFont = L => L.tf === 'serif' ? z => `italic 500 ${z}px Literata, Georgia, serif` : z => `700 ${z}px Unbounded, "Arial Black", sans-serif`;
+function sparkle(c, x, y, r){
+  c.beginPath(); c.moveTo(x, y - r);
+  c.quadraticCurveTo(x, y, x + r, y); c.quadraticCurveTo(x, y, x, y + r);
+  c.quadraticCurveTo(x, y, x - r, y); c.quadraticCurveTo(x, y, x, y - r); c.fill();
+}
+const MOTIFS = {
+  ears(c, w, h, L){
+    [[.38, -.13], [.63, .12]].forEach(([x, r]) => {
+      c.save(); c.translate(w * x, h * 1.02); c.rotate(r);
+      c.fillStyle = L.ac; c.beginPath(); c.ellipse(0, -h * .25, w * .11, h * .27, 0, 0, Math.PI * 2); c.fill();
+      c.fillStyle = mix(L.bg, '#ffffff', .45); c.beginPath(); c.ellipse(0, -h * .23, w * .05, h * .2, 0, 0, Math.PI * 2); c.fill();
+      c.restore();
+    });
+  },
+  waves(c, w, h, L, s){
+    c.strokeStyle = L.ac; c.lineWidth = 5 * s;
+    for (let i = 0; i < 9; i++){
+      const y = h * .5 + i * h * .05; c.globalAlpha = .3 + i * .075; c.beginPath();
+      for (let x = -10; x <= w + 10; x += 6){ const yy = y + Math.sin(x / w * Math.PI * 3 + i * .7) * 10 * s; x === -10 ? c.moveTo(x, yy) : c.lineTo(x, yy); }
+      c.stroke();
+    }
+    c.globalAlpha = 1;
+  },
+  arch(c, w, h, L){
+    [[.4, L.ac], [.3, L.bg], [.2, L.fg]].forEach(([r, col]) => {
+      const rw = w * r, top = h - h * (.12 + r * .6);
+      c.fillStyle = col; c.beginPath(); c.moveTo(w / 2 - rw, h); c.lineTo(w / 2 - rw, top);
+      c.arc(w / 2, top, rw, Math.PI, 0); c.lineTo(w / 2 + rw, h); c.closePath(); c.fill();
+    });
+  },
+  stripes(c, w, h, L, s){
+    c.save(); c.beginPath(); c.rect(0, h * .46, w, h * .54); c.clip(); c.fillStyle = L.ac;
+    for (let i = -10; i < 12; i++){
+      const x = i * 48 * s; c.beginPath(); c.moveTo(x, h); c.lineTo(x + 24 * s, h);
+      c.lineTo(x + 24 * s + h * .6, h * .4); c.lineTo(x + h * .6, h * .4); c.closePath(); c.fill();
+    }
+    c.restore();
+  },
+  sun(c, w, h, L, s){
+    const cx = w * .5, cy = h * .7, r = w * .34;
+    c.fillStyle = L.ac; c.beginPath(); c.arc(cx, cy, r, 0, Math.PI * 2); c.fill();
+    c.fillStyle = L.bg; for (let i = 0; i < 7; i++) c.fillRect(cx - r - 2, cy + i * r * .15, 2 * r + 4, (i + 1) * 1.8 * s);
+  },
+  letter(c, w, h, L, s, b){
+    c.fillStyle = L.ac; c.font = `800 ${w * 1.05}px Unbounded, "Arial Black", sans-serif`;
+    c.textBaseline = 'alphabetic'; c.fillText(b.t[0], w * .16, h * 1.04);
+  },
+  dunes(c, w, h, L){
+    c.fillStyle = L.ac; c.beginPath(); c.arc(w * .72, h * .46, w * .08, 0, Math.PI * 2); c.fill();
+    [[.56, .12], [.67, .24], [.79, .36]].forEach(([y, a]) => {
+      c.fillStyle = mix(L.bg, L.fg, a); c.beginPath(); c.moveTo(0, h); c.lineTo(0, h * y);
+      c.bezierCurveTo(w * .3, h * (y - .1), w * .55, h * (y + .08), w, h * (y - .05)); c.lineTo(w, h); c.closePath(); c.fill();
+    });
+  },
+  door(c, w, h, L, s){
+    c.fillStyle = mix(L.bg, '#000000', .28); c.beginPath(); c.moveTo(0, h); c.lineTo(0, h * .7);
+    c.quadraticCurveTo(w * .5, h * .5, w, h * .7); c.lineTo(w, h); c.closePath(); c.fill();
+    const cx = w * .5, cy = h * .75, r = w * .2;
+    c.fillStyle = L.ac; c.beginPath(); c.arc(cx, cy, r, 0, Math.PI * 2); c.fill();
+    c.strokeStyle = mix(L.ac, '#000000', .35); c.lineWidth = 3 * s;
+    for (let i = -3; i <= 3; i++){ const dx = i * r * .28, dy = Math.sqrt(r * r - dx * dx); c.beginPath(); c.moveTo(cx + dx, cy - dy); c.lineTo(cx + dx, cy + dy); c.stroke(); }
+    c.fillStyle = L.fg; c.beginPath(); c.arc(cx, cy, r * .09, 0, Math.PI * 2); c.fill();
+  },
+  ring(c, w, h, L, s){
+    const cx = w * .5, cy = h * .66, r = w * .24;
+    const g = c.createLinearGradient(cx - r, cy - r, cx + r, cy + r);
+    g.addColorStop(0, '#FFF1B8'); g.addColorStop(.5, L.ac); g.addColorStop(1, '#7A5A12');
+    c.strokeStyle = g; c.lineWidth = 16 * s; c.beginPath(); c.ellipse(cx, cy, r, r * .9, -.3, 0, Math.PI * 2); c.stroke();
+    c.globalAlpha = .28; c.lineWidth = 1.2 * s; c.strokeStyle = L.ac;
+    [1.45, 1.6].forEach(k => { c.beginPath(); c.arc(cx, cy, r * k, 0, Math.PI * 2); c.stroke(); });
+    c.globalAlpha = 1;
+  },
+  stars(c, w, h, L, s, b){
+    const r = rng(b.id); c.fillStyle = L.ac;
+    for (let i = 0; i < 46; i++){ c.globalAlpha = .45 + r() * .55; c.beginPath(); c.arc(r() * w, h * .42 + r() * h * .5, (r() * 2.2 + .6) * s, 0, Math.PI * 2); c.fill(); }
+    c.globalAlpha = 1; sparkle(c, w * .7, h * .66, 34 * s); sparkle(c, w * .82, h * .56, 14 * s);
+  },
+  moon(c, w, h, L, s, b){
+    MOTIFS.stars(c, w, h, L, s, b);
+    c.fillStyle = L.ac; c.beginPath(); c.arc(w * .34, h * .7, w * .17, 0, Math.PI * 2); c.fill();
+    c.fillStyle = L.bg; c.beginPath(); c.arc(w * .41, h * .66, w * .15, 0, Math.PI * 2); c.fill();
+  },
+  dots(c, w, h, L, s){
+    const n = 9, g = (w - 68 * s) / (n - 1); c.fillStyle = L.fg;
+    for (let i = 0; i < n; i++) for (let j = 0; j < 6; j++){ c.beginPath(); c.arc(34 * s + i * g, h * .47 + j * g, 3.2 * s, 0, Math.PI * 2); c.fill(); }
+    c.fillStyle = L.ac; c.beginPath(); c.arc(34 * s + 6 * g, h * .47 + 3 * g, 16 * s, 0, Math.PI * 2); c.fill();
+  },
+  blocks(c, w, h, L, s, b){
+    const r = rng(b.id), cols = 6, rows = 5, cw = w / cols, ch = h * .46 / rows;
+    for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++){
+      const v = r(); if (v < .42) continue;
+      c.fillStyle = v > .86 ? L.ac : mix(L.bg, '#ffffff', .1 + v * .12);
+      c.fillRect(i * cw + 2 * s, h * .44 + j * ch + 2 * s, cw - 4 * s, ch - 4 * s);
+    }
+  },
+  tiger(c, w, h, L, s){
+    c.fillStyle = L.ac;
+    for (let i = 0; i < 9; i++){
+      const x = i * w / 8 - 10 * s; c.beginPath(); c.moveTo(x, h);
+      for (let y = h; y > h * .44; y -= 10) c.lineTo(x + Math.sin(y / 40 + i) * 14 * s, y);
+      for (let y = h * .44; y <= h; y += 10) c.lineTo(x + 16 * s + Math.sin(y / 40 + i + 1) * 10 * s - (h - y) * .02, y);
+      c.closePath(); c.fill();
+    }
+  },
+};
+
+function drawCover(c, w, h, b){
+  const L = b.look, s = w / 400, pad = 34 * s;
+  c.fillStyle = L.bg; c.fillRect(0, 0, w, h);
+  c.save(); MOTIFS[L.motif](c, w, h, L, s, b); c.restore();
+  c.fillStyle = L.fg; c.textBaseline = 'top';
+  c.font = `600 ${14.5 * s}px Onest, system-ui, sans-serif`; c.globalAlpha = .9;
+  c.fillText(b.a.toUpperCase(), pad, pad); c.globalAlpha = 1;
+  const f = titleFont(L), fit = fitText(c, b.t, f, w - pad * 2, 4, (L.tf === 'serif' ? 54 : 44) * s, 20 * s);
+  c.font = f(fit.z);
+  const lh = fit.z * (L.tf === 'serif' ? 1.08 : 1.14);
+  fit.lines.forEach((ln, i) => c.fillText(ln, pad, pad + 30 * s + i * lh));
+  c.textBaseline = 'alphabetic'; c.font = `700 ${11.5 * s}px Onest, system-ui, sans-serif`;
+  c.fillText(b.p.toUpperCase(), pad, h - pad);
+}
+function coverCanvas(b, w, h){ const cv = mk(w, h); drawCover(cv.getContext('2d'), w, h, b); return cv; }
+function makeCovers(){ BOOKS.forEach(b => { covers[b.id] = b.cover || coverCanvas(b, 400, 600).toDataURL('image/jpeg', .88); }); }
+/* Колір корінця — з лівого краю справжньої обкладинки (працює, коли сторінку віддає локальний сервер) */
+function edgeLook(img){
+  try {
+    const c = mk(8, 32), g = c.getContext('2d');
+    g.drawImage(img, 0, 0, Math.max(1, img.naturalWidth * .06), img.naturalHeight, 0, 0, 8, 32);
+    const d = g.getImageData(0, 0, 8, 32).data; let r = 0, gg = 0, bb = 0;
+    for (let i = 0; i < d.length; i += 4){ r += d[i]; gg += d[i + 1]; bb += d[i + 2]; }
+    const n = d.length / 4, hex = v => Math.round(v / n).toString(16).padStart(2, '0');
+    const light = (.299 * r + .587 * gg + .114 * bb) / n > 150;
+    return {bg:'#' + hex(r) + hex(gg) + hex(bb), fg:light ? '#1B1B22' : '#F4F1EA', ac:light ? '#1B1B22' : '#F4F1EA'};
+  } catch (e) { return null; }
+}
+function sampleLooks(list, done){
+  let left = list.length; if (!left) return done();
+  list.forEach(b => { const img = new Image(); img.onload = () => { const l = edgeLook(img); if (l) Object.assign(b.look, l); if (!--left) done(); }; img.onerror = () => { if (!--left) done(); }; img.src = b.cover3d || b.cover; });
+}
+const coverImg = (b, cls = '') => covers[b.id] ? `<img class="${cls}" src="${covers[b.id]}" alt="" loading="lazy">` : '';
+
+/* Задник зі справжнім штрихкодом EAN-13 */
+const EAN_L = ['0001101','0011001','0010011','0111101','0100011','0110001','0101111','0111011','0110111','0001011'];
+const EAN_R = EAN_L.map(p => p.replace(/./g, ch => ch === '0' ? '1' : '0'));
+const EAN_G = EAN_R.map(p => p.split('').reverse().join(''));
+const EAN_P = ['LLLLLL','LLGLGG','LLGGLG','LLGGGL','LGLLGG','LGGLLG','LGGGLL','LGLGLG','LGLGGL','LGGLGL'];
+function eanFor(b){
+  if (/^\d{13}$/.test(b.isbn || '')) return b.isbn;
+  const body = '978617' + String(100000 + (b.id * 7919) % 900000).slice(0, 6);
+  const sum = body.split('').reduce((a, d, i) => a + (+d) * (i % 2 ? 3 : 1), 0);
+  return body + (10 - sum % 10) % 10;
+}
+function drawEAN(c, code, x, y, w, h){
+  const d = code.split('').map(Number); let bits = '101';
+  for (let i = 1; i < 7; i++) bits += (EAN_P[d[0]][i - 1] === 'L' ? EAN_L : EAN_G)[d[i]];
+  bits += '01010';
+  for (let i = 7; i < 13; i++) bits += EAN_R[d[i]];
+  bits += '101';
+  const m = w / bits.length; c.fillStyle = '#111';
+  for (let i = 0; i < bits.length; i++){
+    if (bits[i] !== '1') continue;
+    const guard = i < 3 || (i >= 45 && i < 50) || i >= 92;
+    c.fillRect(x + i * m, y, m + .3, guard ? h + 10 : h);
+  }
+  c.font = '500 20px Onest, system-ui, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'top';
+  c.fillText(code, x + w / 2, y + h + 12); c.textAlign = 'left';
+}
+function backCanvas(b){
+  const w = 640, h = 960, cv = mk(w, h), c = cv.getContext('2d'), L = b.look;
+  c.fillStyle = mix(L.bg, '#000000', .12); c.fillRect(0, 0, w, h);
+  c.fillStyle = L.fg; c.textBaseline = 'top'; c.font = 'italic 500 34px Literata, Georgia, serif';
+  wrapText(c, b.d, w - 120).slice(0, 10).forEach((ln, i) => c.fillText(ln, 60, 80 + i * 48));
+  c.font = '600 22px Onest, system-ui, sans-serif'; c.globalAlpha = .8; c.fillText(b.p.toUpperCase(), 60, h - 100); c.globalAlpha = 1;
+  const bx = w - 60 - 260, by = h - 60 - 160;
+  c.fillStyle = '#ffffff'; c.fillRect(bx, by, 260, 160);
+  drawEAN(c, eanFor(b), bx + 22, by + 16, 216, 96);
+  return cv;
+}
+function spineCanvas(b, img){
+  const w = 160, h = 960, cv = mk(w, h), c = cv.getContext('2d'), L = b.look;
+  c.fillStyle = L.bg; c.fillRect(0, 0, w, h);
+  if (img && img.naturalWidth){   // корінець продовжує обкладинку: її лівий край, розтягнутий на ширину корінця
+    c.drawImage(img, 0, 0, img.naturalWidth * .07, img.naturalHeight, 0, 0, w, h);
+    const s = c.createLinearGradient(0, 0, w, 0);
+    s.addColorStop(0, 'rgba(0,0,0,.4)'); s.addColorStop(.35, 'rgba(255,255,255,.12)'); s.addColorStop(.6, 'rgba(255,255,255,.03)'); s.addColorStop(1, 'rgba(0,0,0,.35)');
+    c.fillStyle = s; c.fillRect(0, 0, w, h);
+    c.fillStyle = 'rgba(0,0,0,.28)'; c.fillRect(w * .12, h * .3, w * .76, h * .48);   // мʼяка підкладка під назву, щоб читалась
+    c.shadowColor = 'rgba(0,0,0,.5)'; c.shadowBlur = 6;
+  } else { c.fillStyle = L.ac; c.fillRect(0, 44, w, 8); c.fillRect(0, h - 52, w, 8); }
+  c.save(); c.translate(w / 2, h / 2); c.rotate(-Math.PI / 2);
+  c.fillStyle = img && img.naturalWidth ? '#FFFFFF' : L.fg; c.textAlign = 'center'; c.textBaseline = 'middle';
+  const f = titleFont(L); let z = 56; c.font = f(z);
+  while (c.measureText(b.t).width > 540 && z > 20){ z -= 2; c.font = f(z); }
+  c.fillText(b.t, -70, 0);
+  c.font = '600 26px Onest, system-ui, sans-serif'; c.globalAlpha = .85;
+  c.fillText(b.a.split(' ').slice(-1)[0], 300, 0);
+  c.restore();
+  return cv;
+}
+function clothCanvas(b){
+  const w = 640, h = 960, cv = mk(w, h), c = cv.getContext('2d'), L = b.look;
+  c.fillStyle = L.bg; c.fillRect(0, 0, w, h);
+  c.strokeStyle = L.ac; c.globalAlpha = .7; c.lineWidth = 3; c.strokeRect(36, 36, w - 72, h - 72); c.globalAlpha = 1;
+  c.fillStyle = L.ac; c.textAlign = 'center'; c.textBaseline = 'top';
+  const f = z => `italic 500 ${z}px Literata, Georgia, serif`, fit = fitText(c, b.t, f, w - 160, 4, 54, 26);
+  c.font = f(fit.z); fit.lines.forEach((ln, i) => c.fillText(ln, w / 2, h * .36 + i * fit.z * 1.15));
+  c.font = '600 24px Onest, system-ui, sans-serif'; c.fillText(b.a.toUpperCase(), w / 2, h * .36 - 52);
+  return cv;
+}
+function titlePageCanvas(b){
+  /* Права сторінка відкритої книжки: про що вона, факти, ціна, наявність */
+  const w = 768, h = 1152, cv = mk(w, h), c = cv.getContext('2d'), m = 72, ink = '#2B2A33', soft = '#6B6878';
+  c.fillStyle = '#F6F2E8'; c.fillRect(0, 0, w, h);
+  const vg = c.createRadialGradient(w / 2, h / 2, h * .2, w / 2, h / 2, h * .75);
+  vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(80,60,30,.12)'); c.fillStyle = vg; c.fillRect(0, 0, w, h);
+  paperGrain(c, w, h); gutterShade(c, w, h, false);
+  c.textBaseline = 'top'; c.fillStyle = soft; c.font = '600 22px Onest, system-ui, sans-serif';
+  c.fillText((b.a || '').toUpperCase(), m, m);
+  const f = z => `600 ${z}px Literata, Georgia, serif`, fit = fitText(c, b.t, f, w - 2 * m, 3, 54, 34);
+  c.fillStyle = ink; c.font = f(fit.z); let y = m + 44;
+  fit.lines.forEach(ln => { c.fillText(ln, m, y); y += fit.z * 1.15; });
+  c.fillStyle = b.look.ac; c.fillRect(m, y + 14, 64, 4); y += 50;
+  if (b.d){
+    c.fillStyle = ink; c.font = '400 31px Literata, Georgia, serif';
+    const lines = wrapText(c, b.d, w - 2 * m), maxL = Math.max(0, Math.floor((h - m - 190 - y) / 45));
+    lines.slice(0, maxL).forEach((ln, i) => { const cut = i === maxL - 1 && lines.length > maxL; c.fillText(cut ? ln.replace(/\s+\S*$/, '') + '…' : ln, m, y); y += 45; });
+  }
+  let by = h - m - 150;
+  c.fillStyle = 'rgba(43,42,51,.16)'; c.fillRect(m, by, w - 2 * m, 2); by += 26;
+  const facts = [b.year, b.pages && `${b.pages} стор.`, b.binding].filter(Boolean).join(' · ');
+  if (facts){ c.fillStyle = soft; c.font = '500 24px Onest, system-ui, sans-serif'; c.fillText(facts, m, by); }
+  c.fillStyle = ink; c.font = '800 56px Onest, system-ui, sans-serif'; c.fillText(money(b.price), m, by + 44);
+  const av = avail(b); c.font = '600 24px Onest, system-ui, sans-serif'; c.textAlign = 'right';
+  c.fillStyle = av.k === 'ok' ? '#17794A' : av.k === 'wait' ? '#94590A' : soft; c.fillText(av.short, w - m, by + 66); c.textAlign = 'left';
+  return cv;
+}
+function paperGrain(c, w, h){
+  const r = rng(w * 31 + h);
+  for (let i = 0; i < 2600; i++){
+    c.fillStyle = r() < .55 ? `rgba(110,85,45,${.03 + r() * .05})` : `rgba(255,255,255,${.05 + r() * .08})`;
+    c.fillRect(r() * w, r() * h, 1 + r() * 1.6, 1 + r() * 1.6);
+  }
+}
+function gutterShade(c, w, h, isLeft){   // згин біля корінця: різкий темний край і мʼяка тінь
+  const x0 = isLeft ? w : 0, g = c.createLinearGradient(x0, 0, isLeft ? w - 130 : 130, 0);
+  g.addColorStop(0, 'rgba(60,40,15,.38)'); g.addColorStop(.06, 'rgba(60,40,15,.18)'); g.addColorStop(.35, 'rgba(60,40,15,.06)'); g.addColorStop(1, 'rgba(60,40,15,0)');
+  c.fillStyle = g; c.fillRect(0, 0, w, h);
+  const e = c.createLinearGradient(isLeft ? 0 : w, 0, isLeft ? 26 : w - 26, 0);   // світлий обріз зовнішнього краю
+  e.addColorStop(0, 'rgba(255,255,255,.35)'); e.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = e; c.fillRect(0, 0, w, h);
+}
+function endpaperCanvas(b){
+  const w = 256, h = 384, cv = mk(w, h), c = cv.getContext('2d'), L = b.look;
+  c.fillStyle = L.ac; c.fillRect(0, 0, w, h); c.fillStyle = mix(L.ac.length === 7 ? L.ac : '#888888', L.bg, .55);
+  for (let y = 0; y < h + 32; y += 32) for (let x = (y / 32) % 2 ? 16 : 0; x < w + 32; x += 32){ c.beginPath(); c.arc(x, y, 5, 0, Math.PI * 2); c.fill(); }
+  /* наклейка ex libris посередині форзацу */
+  const pw = 150, ph = 104, px = (w - pw) / 2, py = (h - ph) / 2;
+  c.fillStyle = '#F6F2E8'; c.fillRect(px, py, pw, ph); c.strokeStyle = 'rgba(43,42,51,.35)'; c.lineWidth = 1.5; c.strokeRect(px + 6, py + 6, pw - 12, ph - 12);
+  c.fillStyle = '#6B6878'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.font = '700 11px Onest, system-ui, sans-serif'; c.fillText('E X  L I B R I S', w / 2, py + 32);
+  c.fillStyle = '#2B2A33'; c.font = 'italic 500 22px Literata, Georgia, serif'; c.fillText('Палітурка', w / 2, py + 64);
+  return cv;
+}
+function edgeCanvas(vertical){
+  const cv = vertical ? mk(256, 8) : mk(8, 256), c = cv.getContext('2d'), r = rng(7);
+  for (let i = 0; i < 256; i++){
+    const v = 222 + Math.floor(r() * 28); c.fillStyle = `rgb(${v + 6},${v + 1},${v - 10})`;
+    vertical ? c.fillRect(i, 0, 1, 8) : c.fillRect(0, i, 8, 1);
+  }
+  return cv;
+}
+
+/* ── 3D-сцена ── */
+const Stage = (() => {
+  const wrap = $('#stage'), canvas = $('#book3d'), fb = $('#stage-fallback');
+  let impl = null, onOpen = () => {}, pageFn = () => {};
+  function fallback(){
+    wrap.classList.add('no3d');
+    impl = {
+      show(b){ fb.src = covers[b.id] || ''; fb.alt = `Обкладинка: ${b.t}`; },
+      toggle(){ return false; },
+    };
+  }
+  function init(first){
+    if (!window.THREE) { fallback(); impl.show(first); return; }
+    let renderer;
+    try { renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true, powerPreference:'low-power'}); }
+    catch (e) { fallback(); impl.show(first); return; }
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    const lin = hex => new THREE.Color(hex).convertSRGBToLinear();
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(30, 1, .1, 100);
+    scene.add(new THREE.HemisphereLight(0xeef0ff, 0x1a1d4a, .85));
+    const key = new THREE.DirectionalLight(0xffffff, 1.15); key.position.set(3.5, 4, 6); scene.add(key);
+    const rim = new THREE.DirectionalLight(0x9aa6ff, .9); rim.position.set(-5, 2, -4); scene.add(rim);
+    const rimTarget = new THREE.Color(0x9aa6ff);
+    const warm = new THREE.DirectionalLight(0xffe2a8, .35); warm.position.set(-3, -2, 5); scene.add(warm);
+
+    const W = 1.5, H = 2.2, T = .36, C = .04, O = .05;
+    const root = new THREE.Group(), book = new THREE.Group(); scene.add(root); root.add(book);
+    const box = (w, h, d) => new THREE.BoxGeometry(w, h, d);
+    const backM = new THREE.Mesh(box(W, H, C)); backM.position.set(0, 0, -T / 2 + C / 2);
+    const spineM = new THREE.Mesh(box(C, H, T)); spineM.position.set(-W / 2 + C / 2, 0, 0);
+    const pagesM = new THREE.Mesh(box(W - C - O, H - 2 * O, T - 2 * C)); pagesM.position.set((C - O) / 2, 0, 0);
+    const pivot = new THREE.Group(); pivot.position.set(-W / 2, 0, T / 2 - C / 2);
+    const frontM = new THREE.Mesh(box(W, H, C)); frontM.position.set(W / 2, 0, 0); pivot.add(frontM);
+    const shape = new THREE.Group(); book.add(shape); shape.add(backM, spineM, pagesM, pivot);
+
+    const shCv = mk(128, 128), g = shCv.getContext('2d'), grd = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+    grd.addColorStop(0, 'rgba(0,0,10,.6)'); grd.addColorStop(1, 'rgba(0,0,10,0)'); g.fillStyle = grd; g.fillRect(0, 0, 128, 128);
+    const shadow = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 1), new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(shCv), transparent:true, depthWrite:false}));
+    shadow.rotation.x = -Math.PI / 2; shadow.position.y = -H / 2 - .42; root.add(shadow);
+
+    const aniso = renderer.capabilities.getMaxAnisotropy();
+    const tex = cv => { const t = new THREE.CanvasTexture(cv); t.encoding = THREE.sRGBEncoding; t.anisotropy = aniso; return t; };
+    const mat = o => new THREE.MeshStandardMaterial(Object.assign({roughness:.6, metalness:.03}, o));
+    const paper = mat({color:lin('#F3EFE4'), roughness:.95});
+    const fore = mat({map:tex(edgeCanvas(true)), roughness:.95});
+    const top = mat({map:tex(edgeCanvas(false)), roughness:.95});
+    /* ── Магія «легендарного дропу»: пил, промінь, стрічки-закладки, золоті іскри ── */
+    const sprite = (() => { const c = mk(64, 64), g = c.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+      gr.addColorStop(0, 'rgba(255,255,255,1)'); gr.addColorStop(.25, 'rgba(255,255,255,.7)'); gr.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return new THREE.CanvasTexture(c); })();
+    const glowMat = size => new THREE.PointsMaterial({size, map:sprite, vertexColors:true, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending});
+    let palette = ['#FFD43B', '#9AA4FF', '#FFD27A'].map(h => lin(h)), burst = 0, spew = 0, beamT = 0;
+    function setPalette(a){ palette = [a[0], a[1] || a[0], '#FFD27A'].map(h => lin(h)); beamMat.color.copy(lin(a[0])).lerp(new THREE.Color(0xffffff), .35); }
+
+    // Пил: іскорки в кольорах книжки повільно здіймаються спіраллю і мерехтять
+    const DUST = reduce ? 40 : 240, dPos = new Float32Array(DUST * 3), dCol = new Float32Array(DUST * 3), dSeed = [];
+    for (let i = 0; i < DUST; i++) dSeed.push({a:Math.random() * 6.28, r:1.05 + Math.random() * 1.4, y:-1.9 + Math.random() * 3.9, v:.07 + Math.random() * .18, w:(Math.random() - .5) * .35, ph:Math.random() * 6.28, k:Math.random()});
+    const dGeo = new THREE.BufferGeometry();
+    dGeo.setAttribute('position', new THREE.BufferAttribute(dPos, 3)); dGeo.setAttribute('color', new THREE.BufferAttribute(dCol, 3));
+    root.add(new THREE.Points(dGeo, glowMat(.085)));
+    function stepDust(dt, t){
+      const boost = 1 + burst * 7; burst = Math.max(0, burst - dt * .85);
+      for (let i = 0; i < DUST; i++){
+        const s = dSeed[i];
+        if (!reduce){ s.y += s.v * dt * boost; s.a += (s.w + burst * 2.2) * dt; }
+        if (s.y > 2.1){ s.y = -1.9; s.a = Math.random() * 6.28; }
+        const rr = s.r + burst * 1.1;
+        dPos[i * 3] = Math.cos(s.a) * rr; dPos[i * 3 + 1] = s.y; dPos[i * 3 + 2] = Math.sin(s.a) * rr * .55;
+        const tw = .3 + .7 * Math.max(0, Math.sin(t * (1.4 + s.k * 2.4) + s.ph)), fade = Math.max(0, Math.min(1, (2.1 - s.y) * 1.3, (s.y + 1.9) * 1.3));
+        const c = palette[i % 3], k = tw * fade * (.9 + burst * 1.6);
+        dCol[i * 3] = c.r * k; dCol[i * 3 + 1] = c.g * k; dCol[i * 3 + 2] = c.b * k;
+      }
+      dGeo.attributes.position.needsUpdate = true; dGeo.attributes.color.needsUpdate = true;
+    }
+
+    // Золоті іскри, що вириваються зі сторінок, коли відкриваєш обкладинку
+    const SP = 120, sPos = new Float32Array(SP * 3), sCol = new Float32Array(SP * 3), sp = Array.from({length:SP}, () => ({life:0}));
+    const sGeo = new THREE.BufferGeometry();
+    sGeo.setAttribute('position', new THREE.BufferAttribute(sPos, 3)); sGeo.setAttribute('color', new THREE.BufferAttribute(sCol, 3));
+    book.add(new THREE.Points(sGeo, glowMat(.075)));
+    function emitSparks(n){
+      for (let i = 0; i < SP && n > 0; i++){ const s = sp[i]; if (s.life > 0) continue;
+        Object.assign(s, {life:1, x:(Math.random() - .25) * .9, y:(Math.random() - .5) * 1.7, z:T / 2, vx:(Math.random() - .3) * .7, vy:.35 + Math.random() * 1.1, vz:.5 + Math.random() * 1.3}); n--; }
+    }
+    function stepSparks(dt){
+      for (let i = 0; i < SP; i++){ const s = sp[i];
+        if (s.life <= 0){ sCol[i * 3] = sCol[i * 3 + 1] = sCol[i * 3 + 2] = 0; continue; }
+        s.life -= dt * .65; s.x += s.vx * dt; s.y += s.vy * dt; s.z += s.vz * dt; s.vy *= .99;
+        sPos[i * 3] = s.x; sPos[i * 3 + 1] = s.y; sPos[i * 3 + 2] = s.z;
+        const k = Math.max(0, s.life) * 1.5; sCol[i * 3] = k; sCol[i * 3 + 1] = .74 * k; sCol[i * 3 + 2] = .28 * k;
+      }
+      sGeo.attributes.position.needsUpdate = true; sGeo.attributes.color.needsUpdate = true;
+    }
+
+    // Промінь світла з неба, як при «легендарному дропі»
+    const beamTex = (() => { const c = mk(64, 256), g = c.getContext('2d'), hgr = g.createLinearGradient(0, 0, 64, 0);
+      hgr.addColorStop(0, 'rgba(255,255,255,0)'); hgr.addColorStop(.5, 'rgba(255,255,255,1)'); hgr.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = hgr; g.fillRect(0, 0, 64, 256); g.globalCompositeOperation = 'destination-in';
+      const v = g.createLinearGradient(0, 0, 0, 256); v.addColorStop(0, 'rgba(0,0,0,0)'); v.addColorStop(.4, 'rgba(0,0,0,.85)'); v.addColorStop(.85, 'rgba(0,0,0,1)'); v.addColorStop(1, 'rgba(0,0,0,.15)');
+      g.fillStyle = v; g.fillRect(0, 0, 64, 256); return new THREE.CanvasTexture(c); })();
+    const beamMat = new THREE.MeshBasicMaterial({map:beamTex, transparent:true, opacity:0, depthWrite:false, blending:THREE.AdditiveBlending, color:0xffd43b});
+    const beam = new THREE.Mesh(new THREE.PlaneGeometry(1.7, 7.5), beamMat); beam.position.set(0, 1.9, -.7); root.add(beam);
+
+    function magicArrive(){ if (!reduce){ beamT = 1; burst = 1; } }
+    function stepMagic(dt, t){
+      stepDust(dt, t);
+      if (spew > 0){ spew -= dt; emitSparks(Math.ceil(150 * dt)); }
+      stepSparks(dt);
+      if (beamT > 0){ beamT = Math.max(0, beamT - dt / 1.8); const k = Math.sin(Math.PI * (1 - beamT));
+        beamMat.opacity = .85 * k; beam.scale.set(.45 + .75 * k, .25 + .75 * Math.min(1, (1 - beamT) * 2.4), 1); }
+      else beamMat.opacity = 0;
+    }
+    const cache = {};
+    function mats(b){
+      if (cache[b.id]) return cache[b.id];
+      const edge = mat({color:lin(b.look.bg), roughness:.7});
+      const endp = mat({map:tex(endpaperCanvas(b))});
+      return (cache[b.id] = {
+        front:[edge, edge, edge, edge, frontFor(b, edge), endp],
+        back:[edge, edge, edge, edge, endp, mat({map:tex(backCanvas(b))})],
+        spine:[edge, mat({map:tex(spineCanvas(b))}), edge, edge, edge, edge],
+        pages:[fore, paper, top, top, mat({map:tex(titlePageCanvas(b)), roughness:.95}), paper],
+      });
+    }
+    // обкладинка вантажиться так само, як фото сторінок: звичайне <img> з нашого сервера, без crossorigin; не вийшло — ще дві спроби
+    function coverImage(url, ok, tries = 3){
+      if (!/^https?:/.test(location.protocol) && !url.startsWith('data:'))   // файл відкрито напряму: WebGL не прийме таку картинку
+        return void new THREE.TextureLoader().load(url, t => ok(t.image), undefined, () => {});
+      const im = new Image(); im.decoding = 'async';
+      im.onload = () => ok(im);
+      im.onerror = () => { if (tries > 1) setTimeout(() => coverImage(url, ok, tries - 1), 1200); else console.warn('3D: обкладинка не завантажилась', url); };
+      im.src = url;
+    }
+    function frontFor(b, edge){
+      if (!b.cover) return mat({map:tex(coverCanvas(b, 640, 960))});
+      const m = mat({map:tex(clothCanvas(b))});
+      coverImage(b.cover3d || b.cover, img => {
+        const t = new THREE.Texture(img); t.encoding = THREE.sRGBEncoding; t.anisotropy = aniso; t.needsUpdate = true;
+        m.map = t; m.needsUpdate = true;
+        const l = edgeLook(img);
+        const c = cache[b.id];
+        if (l){ Object.assign(b.look, l); edge.color.copy(lin(l.bg)); c.back[5].map = tex(backCanvas(b)); c.back[5].needsUpdate = true; }
+        c.spine[1].map = tex(spineCanvas(b, img)); c.spine[1].needsUpdate = true;   // корінець — з краю обкладинки
+      });
+      return m;
+    }
+    let curBook = null;
+    function apply(b){
+      curBook = b; resetReader(); if (openTo) loadPages(b);
+      const sx = b.size ? (b.size[0] / b.size[1]) / (W / H) : 1, sz = b.pages ? Math.min(1.6, Math.max(.35, +b.pages / 650)) : 1;
+      shape.scale.set(Math.min(1.25, Math.max(.75, sx)), 1, sz);
+      const m = mats(b);
+      frontM.material = m.front; backM.material = m.back; spineM.material = m.spine; pagesM.material = m.pages;
+      canvas.setAttribute('aria-label', `3D-модель книжки «${b.t}». Стрілки крутять, Enter відкриває обкладинку.`);
+    }
+
+    let baseZ = 7.2, inViewer = false, fitZ = 6, liftY = 0;
+    const FOVT = Math.tan(15 * Math.PI / 180);
+    function resize(){
+      const r = canvas.getBoundingClientRect(), w = Math.max(1, r.width), h = Math.max(1, r.height);
+      renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+      inViewer = !!wrap.closest('.viewer');
+      baseZ = inViewer ? Math.max(6.6, 6.8 / camera.aspect)   // у вікні перегляду — ближче, на весь екран
+        : Math.max(8.8, 7.8 / camera.aspect);   // книжка в розмір сцени, лише трохи виходить за край
+      // розгорнута книжка у вікні перегляду заповнює місце між верхом і кнопками; краї сторінок на .4 ближчі за корінець
+      const bar = wrap.querySelector('.stagebar .glass'), top = 28;
+      const bot = bar && bar.offsetHeight ? Math.max(60, r.bottom - bar.getBoundingClientRect().top + 14) : 96;
+      const fH = Math.max(.4, (h - top - bot) / h);
+      fitZ = .4 + Math.max(1.12 / (FOVT * fH), 1.5 / (FOVT * camera.aspect * .9));
+      liftY = (bot - top) / h * FOVT * fitZ;
+    }
+    new ResizeObserver(resize).observe(wrap); resize();
+    let visible = true;
+    new IntersectionObserver(e => { visible = e[0].isIntersecting; }).observe(wrap);
+
+    let rotY = -.55, velY = 0, tiltX = .12, openT = 0, openTo = 0, lastTouch = 0, swap = null, prev = performance.now(), drag = null;
+    const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    const setOpen = v => { openTo = v ? 1 : 0; lastTouch = performance.now(); onOpen(!!openTo); if (v && !reduce) spew = 1.1; if (v && curBook) loadPages(curBook); };
+
+    wrap.addEventListener('pointerdown', e => {
+      if (e.target.closest('button, a, .note')) return;   // кнопки сцени працюють як кнопки
+      drag = {t:performance.now(), lx:e.clientX, ly:e.clientY, moved:0};
+      try { wrap.setPointerCapture(e.pointerId); } catch (err) {}
+      lastTouch = performance.now(); velY = 0;
+    });
+    wrap.addEventListener('pointermove', e => {
+      if (!drag) return;
+      const dx = e.clientX - drag.lx, dy = e.clientY - drag.ly;
+      drag.lx = e.clientX; drag.ly = e.clientY; drag.moved += Math.abs(dx) + Math.abs(dy);
+      if (openTo && reader.pages){   // відкрита книжка: сторінка йде за пальцем
+        const now = performance.now();
+        drag.fx = (drag.fx || 0) + dx; drag.vx = dx / Math.max(8, now - (drag.mt || now - 16)); drag.mt = now;
+        if (!reader.flip && !drag.tried && Math.abs(drag.fx) > 10){ drag.tried = true; startFlip(drag.fx < 0 ? 1 : -1, true); }
+        const f = reader.flip;
+        if (f && f.manual) f.k = Math.max(0, Math.min(1, -drag.fx * f.dir / (pagePx() * 1.5)));
+        return;
+      }
+      rotY += dx * .012; velY = dx * .012; tiltX = Math.max(-.45, Math.min(.6, tiltX + dy * .004));
+      lastTouch = performance.now();
+    });
+    const end = cancel => {
+      if (!drag) return;
+      const d = drag, tap = !cancel && d.moved < 8 && performance.now() - d.t < 400, x = d.lx;
+      drag = null;
+      const f = reader.flip;
+      if (f && f.manual){   // відпустили сторінку: догорнути, якщо протягли далі третини чи кинули, інакше — назад
+        f.manual = false; f.released = true;
+        f.target = !cancel && (f.k > .33 || -(d.vx || 0) * f.dir > .45) ? 1 : 0;
+        return;
+      }
+      if (!tap) return;
+      if (openTo && reader.pages){   // відкрита книжка: права сторінка — далі, ліва — назад, на першому розвороті ліва закриває
+        if (x > screenX(-W / 2, 0)) flip(1); else if (reader.s > 0) flip(-1); else setOpen(false);
+        return;
+      }
+      setOpen(!openTo);
+    };
+    wrap.addEventListener('pointerup', () => end(false));
+    wrap.addEventListener('pointercancel', () => end(true));
+    canvas.addEventListener('keydown', e => {
+      if (openTo && reader.pages && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')){ flip(e.key === 'ArrowRight' ? 1 : -1); e.preventDefault(); return; }
+      if (e.key === 'ArrowLeft'){ velY = -.08; lastTouch = performance.now(); e.preventDefault(); }
+      else if (e.key === 'ArrowRight'){ velY = .08; lastTouch = performance.now(); e.preventDefault(); }
+      else if (e.key === 'Enter' || e.key === ' '){ setOpen(!openTo); e.preventDefault(); }
+    });
+
+
+    /* ── Гортання сторінок, як у справжній книжці.
+       Ліва сторінка лежить на звороті обкладинки, права — на блоці; обидві прогинаються біля корінця.
+       Листок між ними — гнучкий аркуш: спершу піднімається кут, а коли сторінка падає, край відстає;
+       під ним — мʼяка тінь. Сторінку можна тягнути пальцем чи мишкою: відпустив — догорнеться або ляже назад.
+       Фото розворотів — з картки книжки через наш сервер (сайт постачальника не дає їх у 3D напряму) ── */
+    const PW = W - C - O, PH = H - 2 * O, OPEN = -2.5, ARCH = .032;
+    const archZ = d => ARCH * Math.pow(Math.sin(Math.min(1, d / (.3 * PW)) * Math.PI / 2), 1.4) * (1 - .85 * Math.pow(d / PW, 4));
+    function archGeo(segs, dOf, shift = 0){   // площина PW×PH з прогином: d — відстань від корінця
+      const g = new THREE.PlaneGeometry(PW, PH, segs, 1); if (shift) g.translate(shift, 0, 0);
+      const pos = g.attributes.position;
+      for (let i = 0; i < pos.count; i++) pos.setZ(i, archZ(dOf(pos.getX(i))));
+      g.computeVertexNormals(); return g;
+    }
+    const paperMat = () => mat({roughness:.92});
+    const leftP = new THREE.Mesh(archGeo(32, x => PW / 2 - x), paperMat()); leftP.rotation.y = Math.PI; leftP.position.set((C + W - O) / 2, 0, -C / 2 - .003); pivot.add(leftP);
+    const rightP = new THREE.Mesh(archGeo(32, x => x + PW / 2), paperMat()); rightP.position.set((C - O) / 2, 0, T / 2 - C + .002); shape.add(rightP);
+    // тіні від листка на сторінках під ним
+    const shadeTex = darkAtLeft => { const c = mk(256, 4), g = c.getContext('2d'), gr = g.createLinearGradient(0, 0, 256, 0);
+      gr.addColorStop(darkAtLeft ? 0 : 1, 'rgba(25,15,5,.85)'); gr.addColorStop(darkAtLeft ? .55 : .45, 'rgba(25,15,5,.25)'); gr.addColorStop(darkAtLeft ? 1 : 0, 'rgba(25,15,5,0)');
+      g.fillStyle = gr; g.fillRect(0, 0, 256, 4); return new THREE.CanvasTexture(c); };
+    const shadeMat = darkAtLeft => new THREE.MeshBasicMaterial({map:shadeTex(darkAtLeft), transparent:true, depthWrite:false, opacity:0});
+    const shadeR = new THREE.Mesh(archGeo(32, x => x, PW / 2), shadeMat(true)); shadeR.position.set(-W / 2 + C, 0, T / 2 - C + .0035); shape.add(shadeR);
+    const shadeL = new THREE.Mesh(archGeo(32, x => -x, -PW / 2), shadeMat(false)); shadeL.rotation.y = Math.PI; shadeL.position.set(C, 0, -C / 2 - .0045); pivot.add(shadeL);
+    // листок: сітка 32×10, щоб гнутися; зворот — та сама форма з дзеркальними UV
+    const LS = 32, LR = 10;
+    const leafGeo = new THREE.PlaneGeometry(PW, PH, LS, LR); leafGeo.translate(PW / 2, 0, 0);
+    const leafBase = Float32Array.from(leafGeo.attributes.position.array);
+    const leafGeoB = leafGeo.clone(); { const uv = leafGeoB.attributes.uv; for (let i = 0; i < uv.count; i++) uv.setX(i, 1 - uv.getX(i)); }
+    const leafF = new THREE.Mesh(leafGeo, paperMat()), leafB = new THREE.Mesh(leafGeoB, Object.assign(paperMat(), {side:THREE.BackSide}));
+    const leafRoot = new THREE.Group(); leafRoot.add(leafF, leafB); shape.add(leafRoot);
+    // де корінець листка, коли він лежить праворуч (на блоці) і ліворуч (на звороті обкладинки)
+    const R0 = [-W / 2 + C, T / 2 - C + .003], lz = -C / 2 - .004;
+    const L0 = [-W / 2 + C * Math.cos(OPEN) + lz * Math.sin(OPEN), T / 2 - C / 2 - C * Math.sin(OPEN) + lz * Math.cos(OPEN)];
+    [leftP, rightP, leafRoot, shadeR, shadeL].forEach(o => { o.visible = false; });
+
+    function poseLeaf(k, dir){
+      const th = dir > 0 ? OPEN * k : OPEN * (1 - k);                    // кут листка: 0 — праворуч, OPEN — ліворуч
+      const curl = -dir * .9 * Math.sin(2 * Math.PI * k);                  // спершу кут веде, потім край відстає
+      const side = th > OPEN / 2 ? 1 : -1, wA = 1 - Math.sin(Math.PI * k); // прогин біля корінця — лише коли листок лягає
+      const f = th / OPEN, sm = f * f * (3 - 2 * f);
+      leafRoot.position.set(R0[0] + (L0[0] - R0[0]) * sm, 0, R0[1] + (L0[1] - R0[1]) * sm);
+      const pos = leafGeo.attributes.position, cols = LS + 1;
+      for (let r = 0; r <= LR; r++){
+        const lead = .7 + .6 * r / LR;                                      // нижній кут трохи попереду, як під пальцем
+        let x = 0, z = 0, pd = 0;
+        for (let c = 0; c <= LS; c++){
+          const i = r * cols + c, d = leafBase[i * 3], q = d / PW, phi = th + curl * q * q * lead;
+          if (c){ const dd = d - pd; x += Math.cos(phi) * dd; z -= Math.sin(phi) * dd; }
+          pd = d;
+          const lift = archZ(d) * wA * side;
+          pos.setXYZ(i, x + Math.sin(phi) * lift, leafBase[i * 3 + 1], z + Math.cos(phi) * lift);
+        }
+      }
+      pos.needsUpdate = true; leafGeo.computeVertexNormals();
+      leafGeoB.attributes.position.array.set(pos.array); leafGeoB.attributes.position.needsUpdate = true; leafGeoB.computeVertexNormals();
+      const s = Math.sin(Math.PI * k), clamp = v => Math.max(0, Math.min(1, v));
+      shadeR.visible = shadeL.visible = true;
+      shadeR.material.opacity = .5 * s * clamp(1 - th / (OPEN / 2)); shadeR.scale.x = Math.max(.04, Math.cos(th));
+      shadeL.material.opacity = .5 * s * clamp(th / (OPEN / 2) - 1); shadeL.scale.x = Math.max(.04, Math.cos(th - OPEN));
+    }
+
+    const reader = {b:null, pages:null, loading:false, s:0, flip:null, onChange:() => {}};
+    const spreads = () => reader.pages ? 1 + reader.pages.length / 2 : 1;
+    const texCache = new Map();
+    function drawPage(pg, b, isLeft){
+      const w = 640, h = 960, cv = mk(w, h), c = cv.getContext('2d');
+      c.fillStyle = '#F6F2E8'; c.fillRect(0, 0, w, h); paperGrain(c, w, h);
+      if (pg.im){
+        const im = pg.im, m = 34, iw = im.naturalWidth, ih = im.naturalHeight;
+        if (pg.half != null){   // фото розвороту на дві сторінки: вписуємо в 2w×h і беремо свою половину
+          const s = Math.min((2 * w - 2 * m) / iw, (h - 2 * m) / ih);
+          c.drawImage(im, (2 * w - iw * s) / 2 - pg.half * w, (h - ih * s) / 2, iw * s, ih * s);
+        } else {
+          const s = Math.min((w - 2 * m) / iw, (h - 2 * m) / ih);
+          c.drawImage(im, (w - iw * s) / 2, (h - ih * s) / 2, iw * s, ih * s);
+        }
+      } else if (pg.end){
+        c.textAlign = 'center'; c.textBaseline = 'middle';
+        c.fillStyle = '#6B6878'; c.font = 'italic 500 34px Literata, Georgia, serif'; c.fillText('Далі — у вашій книжці', w / 2, h / 2 - 74);
+        c.fillStyle = b.look.ac; c.fillRect(w / 2 - 32, h / 2 - 34, 64, 4);
+        c.fillStyle = '#2B2A33'; c.font = '800 64px Onest, system-ui, sans-serif'; c.fillText(money(b.price), w / 2, h / 2 + 18);
+        const av = avail(b); c.font = '600 26px Onest, system-ui, sans-serif';
+        c.fillStyle = av.k === 'ok' ? '#17794A' : av.k === 'wait' ? '#94590A' : '#6B6878'; c.fillText(av.short, w / 2, h / 2 + 84);
+      }
+      gutterShade(c, w, h, isLeft);
+      return cv;
+    }
+    function pageTex(i){
+      if (texCache.has(i)){ const v = texCache.get(i); texCache.delete(i); texCache.set(i, v); return v; }
+      const v = tex(drawPage(reader.pages[i], reader.b, i % 2 === 0));
+      texCache.set(i, v);
+      if (texCache.size > 8){ const [k, old] = texCache.entries().next().value; texCache.delete(k); old.dispose(); }
+      return v;
+    }
+    const pageL = s => s === 0 ? null : pageTex(2 * (s - 1));
+    const pageR = s => s === 0 ? mats(reader.b).pages[4].map : pageTex(2 * s - 1);
+    const setMap = (m, v) => { m.visible = !!v; if (v && m.material.map !== v){ m.material.map = v; m.material.needsUpdate = true; } };
+    function showSpread(){
+      setMap(leftP, pageL(reader.s));
+      setMap(rightP, pageR(reader.s));   // і на першому розвороті: так права сторінка теж прогинається біля корінця
+      reader.onChange(reader.s, spreads());
+    }
+    function resetReader(){
+      reader.b = null; reader.pages = null; reader.loading = false; reader.s = 0; reader.flip = null;
+      texCache.forEach(v => v.dispose()); texCache.clear();
+      [leftP, rightP, leafRoot, shadeR, shadeL].forEach(o => { o.visible = false; });
+      reader.onChange(0, 1);
+    }
+    function loadPages(b){
+      if (reader.b === b) return;
+      resetReader(); reader.b = b; showSpread();
+      const urls = (b.gal || []).slice(0, 12);   // обкладинку build_storefront.py уже прибрав зі списку
+      if (!/^https?:/.test(location.protocol) || !urls.length) return;
+      reader.loading = true;
+      Promise.all(urls.map(u => new Promise(res => {
+        const im = new Image(); im.decoding = 'async';
+        im.onload = () => res(im); im.onerror = () => res(null); im.src = '/img?u=' + encodeURIComponent(u);
+      }))).then(imgs => {
+        if (reader.b !== b) return;
+        reader.loading = false;
+        const pages = [];
+        imgs.filter(Boolean).forEach(im => {
+          if (im.naturalWidth > im.naturalHeight * 1.15){ if (pages.length % 2) pages.push({}); pages.push({im, half:0}, {im, half:1}); }
+          else pages.push({im});
+        });
+        if (!pages.length) return;
+        if (pages.length % 2 === 0) pages.push({});
+        pages.push({end:true});
+        reader.pages = pages; reader.onChange(reader.s, spreads());
+      });
+    }
+    function startFlip(dir, manual){
+      if (!openTo || openT < .9 || reader.flip || !reader.pages) return false;
+      const s = reader.s, n = s + dir;
+      if (n < 0 || n >= spreads()) return false;
+      if (dir > 0){ setMap(leafF, pageR(s)); setMap(leafB, pageL(n)); setMap(rightP, pageR(n)); }   // під листком уже наступна сторінка
+      else { setMap(leafF, pageR(n)); setMap(leafB, pageL(s)); setMap(leftP, pageL(n)); }
+      reader.flip = {t:0, k:0, dir, n, manual:!!manual, target:manual ? null : 1};
+      leafRoot.visible = true; poseLeaf(0, dir); lastTouch = performance.now();
+      return true;
+    }
+    const flip = dir => startFlip(dir, false);
+    function endFlip(commit){
+      const f = reader.flip; reader.flip = null;
+      [leafRoot, shadeR, shadeL].forEach(o => { o.visible = false; });
+      if (commit) reader.s = f.n;
+      showSpread();
+    }
+    function stepReader(dt){
+      const f = reader.flip;
+      if (f && !f.manual){
+        if (f.target === 1 && f.t < 1 && !f.released){ f.t = Math.min(1, f.t + dt / (reduce ? .05 : .95)); f.k = ease(f.t); }
+        else f.k += (f.target - f.k) * Math.min(1, dt * (reduce ? 60 : 6.5)) + Math.sign(f.target - f.k) * dt * .15;   // відпустили — доводимо
+        if (f.target === 1 ? f.k >= .998 : f.k <= .002){ endFlip(f.target === 1); }
+        else poseLeaf(f.k, f.dir);
+      } else if (f) poseLeaf(f.k, f.dir);
+      if (!openTo && openT < .03 && (reader.s || reader.flip)){ reader.s = 0; if (reader.flip) endFlip(false); else showSpread(); }
+    }
+    const screenX = (x, z) => { const v = new THREE.Vector3(x, 0, z); shape.localToWorld(v); v.project(camera); const r = canvas.getBoundingClientRect(); return r.left + (v.x + 1) / 2 * r.width; };
+    const pagePx = () => Math.max(80, Math.abs(screenX(W / 2 - O, T / 2) - screenX(-W / 2 + C, T / 2)));
+
+    function frame(now){
+      requestAnimationFrame(frame);
+      const dt = Math.min(.05, (now - prev) / 1000); prev = now;
+      if (!visible) return;
+      const t = now / 1000;
+      if (swap){
+        swap.t = Math.min(1, swap.t + dt / .8);
+        rotY = swap.from + swap.dir * Math.PI * 2 * ease(swap.t);
+        if (!swap.applied && swap.t >= .5){ apply(swap.book); swap.applied = true; magicArrive(); }
+        book.scale.setScalar(1 - .12 * Math.sin(Math.PI * swap.t));
+        if (swap.t >= 1){ swap = null; book.scale.setScalar(1); }
+      } else if (!drag){
+        if (Math.abs(velY) > .0005){ rotY += velY; velY *= Math.pow(.92, dt * 60); }
+        // у вікні перегляду розворот стає рівно до нас (-.32 — обидві сторінки під однаковим кутом)
+        const oy = inViewer ? -.32 : .16;
+        if (openTo){ const target = Math.round((rotY - oy) / (Math.PI * 2)) * Math.PI * 2 + oy; rotY += (target - rotY) * Math.min(1, dt * 3); }
+        else if (!reduce && now - lastTouch > 2200) rotY += dt * .42;
+        tiltX += ((inViewer && openTo ? .03 : .12) - tiltX) * Math.min(1, dt * 1.5);
+      }
+      rim.color.lerp(rimTarget, Math.min(1, dt * 1.6));
+      openT += (openTo - openT) * Math.min(1, dt * (reduce ? 20 : 3.4));
+      pivot.rotation.y = -2.5 * openT;
+      if (inViewer){   // читання: корінець по центру, камера підходить, поки книжка розгортається
+        root.position.x = .76 * openT;
+        camera.position.set(0, .25 - (.25 + liftY) * openT, baseZ + (fitZ - baseZ) * openT);
+        camera.lookAt(0, -.05 - (liftY - .05) * openT, 0);
+      } else {
+        root.position.x = .5 * openT;
+        camera.position.set(.25 * openT, .25 - .08 * openT, baseZ + .8 * openT);   // відкрита: трохи відступаємо, щоб розворот вмістився
+        camera.lookAt(root.position.x * .6, -.05, 0);
+      }
+      const bob = reduce ? 0 : Math.sin(t * 1.1) * .07 * (inViewer ? 1 - .75 * openT : 1);   // текст не гойдається, поки читаєш
+      book.rotation.set(tiltX + (reduce ? 0 : Math.sin(t * .7) * .02), rotY, reduce ? 0 : Math.sin(t * .5) * .015);
+      book.position.y = bob;
+      shadow.material.opacity = .85 - bob * 1.5; shadow.scale.setScalar(1 - bob * .6);
+      stepMagic(dt, t); stepReader(dt);
+      renderer.render(scene, camera);
+    }
+
+    reader.onChange = (s, n) => pageFn(s, n);
+    let shown = first.id; apply(first); magicArrive();
+    impl = {
+      show(b, dir){
+        if (b.id === shown) return; shown = b.id; openTo = 0; onOpen(false);
+        if (reduce){ apply(b); return; }
+        swap = {t:0, from:rotY, dir:dir || 1, book:b, applied:false};
+      },
+      toggle(){ setOpen(!openTo); return !!openTo; },
+      open(v){ if (!!openTo !== !!v) setOpen(!!v); },
+      flip,
+      reading: () => !!(openTo && reader.pages),
+      onPage(fn){ reader.onChange = fn; },
+      tint(p){ try { const a = [].concat(p); rimTarget.set(a[0]).lerp(new THREE.Color(0xffffff), .25); setPalette(a); } catch (e) {} },
+    };
+    requestAnimationFrame(frame);
+  }
+  return {
+    init,
+    show: (b, dir) => impl && impl.show(b, dir),
+    toggle: () => impl && impl.toggle(),
+    tint: c => impl && impl.tint && impl.tint(c),
+    flip: d => !!(impl && impl.flip && impl.flip(d)),
+    open: v => impl && impl.open && impl.open(v),
+    reading: () => !!(impl && impl.reading && impl.reading()),
+    onPage: fn => { pageFn = fn; if (impl && impl.onPage) impl.onPage(fn); },
+    onOpenChange: fn => { onOpen = fn; },
+  };
+})();
+
+/* ── Сцена ── */
+function renderHero(){
+  const b = byId[FEATURED[state.featured]], av = avail(b);
+  $('#hero-title').textContent = b.t;
+  $('#hero-author').textContent = `${b.a} · ${b.p}`;
+  $('#hero-price').innerHTML = priceHTML(b);
+  const el = $('#hero-avail'); el.className = 'avail ' + av.k; el.textContent = av.short;
+  $('#hero-add').dataset.id = b.id; $('#hero-more').dataset.id = b.id;
+  $('#pager').textContent = `${state.featured + 1} / ${FEATURED.length}`;
+  tintHero(b);
+}
+/* Три головні кольори обкладинки: грубе квантування пікселів, далі найчастіший «живий» колір
+   і ще два помітно інших. Якщо картинку прочитати не можна — кольори палітурки з look. */
+const heroPal = {};
+function paletteOf(b, cb){
+  if (heroPal[b.id]) return cb(heroPal[b.id]);
+  const src = b.cover3d || b.cover;
+  if (!src) return cb(null);
+  const img = new Image();
+  img.onload = () => {
+    try {
+      const c = mk(36, 54), g = c.getContext('2d'); g.drawImage(img, 0, 0, 36, 54);
+      const d = g.getImageData(0, 0, 36, 54).data, bins = new Map();
+      for (let i = 0; i < d.length; i += 4){
+        const key = (d[i] >> 5) << 6 | (d[i + 1] >> 5) << 3 | (d[i + 2] >> 5), e = bins.get(key) || {n:0, r:0, g:0, b:0};
+        e.n++; e.r += d[i]; e.g += d[i + 1]; e.b += d[i + 2]; bins.set(key, e);
+      }
+      const cols = [...bins.values()].map(e => { const c = {n:e.n, r:e.r / e.n, g:e.g / e.n, b:e.b / e.n}, mx = Math.max(c.r, c.g, c.b), mn = Math.min(c.r, c.g, c.b); c.s = mx ? (mx - mn) / mx : 0; c.v = mx / 255; return c; })
+        .filter(c => c.v > .14);
+      const vivid = [...cols].sort((a, z) => z.n * (z.s + .2) - a.n * (a.s + .2)), often = [...cols].sort((a, z) => z.n - a.n);
+      const far = (a, z) => Math.hypot(a.r - z.r, a.g - z.g, a.b - z.b) > 64, pick = [];
+      for (const c of vivid.concat(often)){ if (pick.length === 3) break; if (pick.every(p => far(p, c))) pick.push(c); }
+      while (pick.length < 3) pick.push(pick[pick.length - 1] || {r:42, g:51, b:160});
+      /* темні обкладинки висвітлюємо до помітного сяйва, відтінок той самий */
+      const hex = c => { const k = Math.max(1, 150 / Math.max(c.r, c.g, c.b, 1)); return '#' + [c.r, c.g, c.b].map(v => Math.min(255, Math.round(v * k)).toString(16).padStart(2, '0')).join(''); };
+      cb(heroPal[b.id] = pick.map(hex));
+    } catch (e) { cb(null); }
+  };
+  img.onerror = () => cb(null);
+  img.src = src;
+}
+function tintHero(b){
+  paletteOf(b, pal => {
+    if (byId[FEATURED[state.featured]] !== b) return;   // поки рахували, вже перемкнули
+    const p = pal || [b.look.bg, b.look.ac, b.look.bg], h = $('#hero');
+    [h, document.documentElement].forEach(el => { el.style.setProperty('--h1', p[0]); el.style.setProperty('--h2', p[1]); el.style.setProperty('--h3', p[2]); });
+    Stage.tint(p);
+  });
+}
+function feature(i, dir){
+  state.featured = (i + FEATURED.length) % FEATURED.length;
+  renderHero(); Stage.show(byId[FEATURED[state.featured]], dir);
+}
+$('#prev').addEventListener('click', () => Stage.reading() ? Stage.flip(-1) : feature(state.featured - 1, -1));
+$('#next').addEventListener('click', () => Stage.reading() ? Stage.flip(1) : feature(state.featured + 1, 1));
+let pageAt = [0, 1];
+function stageLabels(){
+  const read = Stage.reading(), open = $('#hero').classList.contains('is-open');
+  if (read) $('#pager').textContent = `стор. ${pageAt[0] + 1} / ${pageAt[1]}`;
+  $('#prev').setAttribute('aria-label', read ? 'Попередній розворот' : 'Попередня книжка');
+  $('#next').setAttribute('aria-label', read ? 'Наступний розворот' : 'Наступна книжка');
+  $('#hint-t').textContent = read ? 'Гортайте: тягніть сторінку або стрілки' : open ? 'Натисніть на книжку, щоб закрити' : 'Покрутіть · торкніться, щоб відкрити';
+  if (!read) $('#pager').textContent = `${state.featured + 1} / ${FEATURED.length}`;
+}
+Stage.onPage((s, n) => { pageAt = [s, n]; stageLabels(); });
+$('#open-book').addEventListener('click', () => Stage.toggle());
+$('#stage-open').addEventListener('click', () => Stage.toggle());
+Stage.onOpenChange(open => {
+  $('#hero').classList.toggle('is-open', open);
+  const sb = $('#stage-buy'); sb.hidden = !open;
+  if (open) sb.textContent = `У кошик · ${money(byId[FEATURED[state.featured]].price)}`;
+  stageLabels();
+  $('#open-book').textContent = open ? 'Закрити книжку' : 'Відкрити книжку';
+  const s = $('#stage-open'); s.setAttribute('aria-pressed', open); s.setAttribute('aria-label', open ? 'Закрити обкладинку' : 'Відкрити обкладинку');
+});
+$('#stage-buy').addEventListener('click', () => addToCart(FEATURED[state.featured], null));
+$('#hero-add').addEventListener('click', e => addToCart(+e.currentTarget.dataset.id, null));
+$('#hero-more').addEventListener('click', e => openDetail(+e.currentTarget.dataset.id));
+
+/* ── Полиця ── */
+const shelfCap = el => {   // назва книжки, на яку навели, — одним рядком під полицею; за нею на стінці — світло
+  const b = el && byId[el.dataset.open], i = el ? [...el.parentNode.children].indexOf(el) + 1 : 0, cs = $('#shelf-case');
+  if (el) cs.style.setProperty('--gx', `${el.offsetLeft + el.offsetWidth / 2 + 18}px`);
+  cs.style.setProperty('--go', el ? 1 : 0);
+  $('#shelf-cap').innerHTML = b ? `<span class="num">№${i}</span><b>${esc(b.t)}</b>${b.a ? ` — ${esc(b.a)}` : ''}` : '';
+};
+/* стрілки полиці: гортаємо на дві третини видимого; на краях стрілка гасне */
+const shelfScroll = $('.shelf-scroll');
+const shelfArrows = () => {
+  const max = shelfScroll.scrollWidth - shelfScroll.clientWidth - 2;
+  $('#shelf-prev').disabled = shelfScroll.scrollLeft <= 2; $('#shelf-next').disabled = shelfScroll.scrollLeft >= max;
+};
+$('#shelf-prev').addEventListener('click', () => shelfScroll.scrollBy({left:-shelfScroll.clientWidth * .66, behavior:reduce ? 'auto' : 'smooth'}));
+$('#shelf-next').addEventListener('click', () => shelfScroll.scrollBy({left:shelfScroll.clientWidth * .66, behavior:reduce ? 'auto' : 'smooth'}));
+shelfScroll.addEventListener('scroll', shelfArrows, {passive:true});
+new ResizeObserver(shelfArrows).observe(shelfScroll);
+$('#shelf-row').addEventListener('pointerover', e => shelfCap(e.target.closest('.sp')));
+$('#shelf-row').addEventListener('pointerleave', () => shelfCap(null));
+$('#shelf-row').addEventListener('focusin', e => shelfCap(e.target.closest('.sp')));
+$('#shelf-row').addEventListener('focusout', () => shelfCap(null));
+function renderShelf(){
+  const picks = BOOKS.filter(b => avail(b).k !== 'none' && b.st.some(s => /популярне|новинка|хіт|топ/i.test(s))).slice(0, 15);
+  // природні розміри: висота — з розміру книжки, товщина — зі сторінок, ширина — з пропорцій
+  const dims = picks.map(b => ({
+    h:Math.min(254, Math.max(170, (b.size && b.size[1] ? (b.size[1] - 160) * 1.25 + 170 : 196) + (b.id % 7 - 3) * 4)),
+    d:Math.min(54, Math.max(32, (+b.pages || 320) / 9)),
+    r:b.size && b.size[0] && b.size[1] ? Math.min(.78, Math.max(.6, b.size[0] / b.size[1])) : .68,
+  }));
+  // книжка стоїть під кутом 30°: на полиці займає 0,87·товщини + 0,5·ширини; між книжками — зазор
+  const GAP = 18, foot = x => .866 * x.d + .5 * x.h * x.r, k = matchMedia('(max-width:640px)').matches ? .8 : 1.06;
+  $('#shelf-row').innerHTML = picks.map((b, i) => {
+    const x = dims[i], h = Math.round(x.h * k), d = Math.round(x.d * k), w = Math.round(h * x.r), src = covers[b.id] || '';
+    const m = Math.round(i ? (foot(dims[i - 1]) * k + foot(x) * k) / 2 - (dims[i - 1].d * k + d) / 2 + GAP : (foot(x) * k - d) / 2 + 12);
+    return `<button class="sp" type="button" data-open="${b.id}" style="--h:${h}px;--d:${d}px;--w:${w}px;--m:${m}px;--bg:${b.look.bg};--img:url('${src}')" aria-label="${i + 1}. ${esc(b.t)}, ${esc(b.a)}">
+      <span class="sp-book"><span class="sp-spine"></span><span class="sp-top"></span>${src ? `<img class="sp-cover" src="${src}" alt="" loading="lazy" decoding="async">` : '<span class="sp-cover"></span>'}</span>
+    </button>`;
+  }).join('');
+}
+
+/* ── Добірки ── */
+function catCell(cat, cls){
+  const list = BOOKS.filter(b => inCat(b, cat)).sort((x, y) => y.pop - x.pop);
+  const authors = [...new Set(list.map(b => b.a.split(' ').slice(-1)[0]))].slice(0, 3).join(', ');
+  return `<button class="cell ${cls || ''}" type="button" data-cat-go="${esc(cat)}">
+    <span class="cell-k num">${books(list.length)}</span>
+    <h3>${esc(cat).replace(/-/g, '\u2011')}</h3>
+    <p>${esc(authors)}</p>
+    <span class="go" aria-hidden="true">${I.arrow}</span>
+    <span class="fan" aria-hidden="true">${list.slice(0, 3).map(b => `<span class="fan-b" style="--bg:${b.look.bg}">${covers[b.id] ? `<img src="${covers[b.id]}" alt="">` : ''}</span>`).join('')}</span>
+  </button>`;
+}
+const TOPCATS = (() => { const m = {}; BOOKS.forEach(b => { m[b.cat] = (m[b.cat] || 0) + 1; }); return Object.entries(m).sort((a, b) => b[1] - a[1]).map(x => x[0]).concat(['', '', '', '', '']).slice(0, 5); })();
+function renderBento(){
+  const ekN = BOOKS.filter(b => b.st.includes('єКнига')).length;
+  $('#bento').innerHTML =
+    catCell(TOPCATS[0], 'big') + catCell(TOPCATS[1]) + catCell(TOPCATS[2]) + catCell(TOPCATS[3]) +
+    `<div class="cell ekc">
+      <span class="cell-k">Оплата</span>
+      <span class="ek-word">єКнига</span>
+      <p>${books(ekN)} з каталогу можна оплатити сертифікатом.</p>
+      <button class="textbtn" type="button" data-ek-go>Показати ${ekN}</button>
+      <span class="note"><b>єКнига</b> Щоб приймати сертифікати, магазин має стати учасником програми. Треба зʼясувати умови.</span>
+    </div>
+    <div class="cell wide ship">
+      <span class="cell-k">Щоденна поставка</span>
+      <span class="clock num" id="ship-clock">…</span>
+      <p id="ship-text"></p>
+      <div class="dayline" aria-hidden="true"><i id="ship-mark"></i><span>9:00</span><span>14:00</span></div>
+      <span class="note"><b>Поставка</b> 14:00 тут лише припущення. Треба уточнити, до котрої години постачальник приймає щоденне замовлення.</span>
+    </div>` +
+    (HAS_SCR ? catCell(SCR, 'film') : catCell(TOPCATS[4])) +
+    `<div class="cell free">
+      <span class="cell-k">Доставка</span>
+      <h3>Безкоштовно від 1 000 ₴</h3>
+      <p id="free-text"></p>
+      <div class="meter" aria-hidden="true"><i id="free-meter"></i></div>
+    </div>`;
+  updateShip(); updateFree();
+}
+function kyivMinutes(){
+  try {
+    const parts = new Intl.DateTimeFormat('uk-UA', {timeZone:'Europe/Kyiv', hour:'2-digit', minute:'2-digit', hourCycle:'h23'}).formatToParts(new Date());
+    const get = t => +parts.find(p => p.type === t).value;
+    return get('hour') * 60 + get('minute');
+  } catch (e) { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); }
+}
+function updateShip(){
+  const clock = $('#ship-clock'); if (!clock) return;
+  const now = kyivMinutes(), left = SHIP_CUTOFF - now;
+  if (left > 0){
+    clock.textContent = `${Math.floor(left / 60)} год ${String(left % 60).padStart(2, '0')} хв`;
+    $('#ship-text').textContent = 'До сьогоднішнього замовлення постачальнику. Встигнете, і книжка зі складу завтра буде в Ніжині.';
+  } else {
+    clock.textContent = 'Завтра зранку';
+    $('#ship-text').textContent = 'Сьогоднішнє замовлення вже поїхало. Оформите зараз, і книжка поїде з наступним.';
+  }
+  const x = Math.max(0, Math.min(1, (now - SHIP_FROM) / (SHIP_CUTOFF - SHIP_FROM)));
+  $('#ship-mark').style.setProperty('--x', (x * 100).toFixed(1) + '%');
+}
+function updateFree(){
+  const t = $('#free-text'); if (!t) return;
+  const sum = total(), left = Math.max(0, FREE_SHIP - sum);
+  t.textContent = !sum ? 'Кошик поки порожній. Від 1 000 ₴ доставку оплачуємо ми.' : left ? `У кошику ${money(sum)}, ще ${money(left)} до безкоштовної.` : `У кошику ${money(sum)}: доставка безкоштовна.`;
+  $('#free-meter').style.setProperty('--p', Math.min(1, sum / FREE_SHIP).toFixed(3));
+}
+setInterval(updateShip, 30000);
+
+/* ── Каталог: картки живуть між перерисовками, фільтри анімуються FLIP ── */
+const cardEls = new Map();
+function cardHTML(b){
+  const av = avail(b), stk = mainSticker(b), out = av.k === 'none';
+  return `<article class="card${out ? ' out' : ''}" data-id="${b.id}">
+    <button class="cover" type="button" data-open="${b.id}" style="--bg:${b.look.bg}" aria-label="Детальніше: ${esc(b.t)}">
+      <span class="skel" aria-hidden="true"></span>${stk ? `<span class="sticker${stk.length > 11 ? ' long' : ''}">${esc(stk)}</span>` : ''}${b.st.includes('єКнига') ? '<span class="ek">єКнига</span>' : ''}
+    </button>
+    <div><h3><button type="button" data-open="${b.id}">${esc(b.t)}</button></h3><p class="author">${esc(b.a)}</p></div>
+    <div class="buy"><span class="price">${priceHTML(b)}</span>${out
+      ? `<button class="add alt press" type="button" data-notify="${b.id}">Повідомити</button>`
+      : `<button class="add press" type="button" data-add="${b.id}">У кошик</button>`}</div>
+    <p class="avail ${av.k}">${av.short}</p>
+  </article>`;
+}
+function fillCardCover(el, b){
+  const c = el.querySelector('.cover');
+  if (c.classList.contains('ready') || !covers[b.id]) return;
+  c.insertAdjacentHTML('afterbegin', `<img src="${covers[b.id]}" alt="" loading="lazy">`);
+  c.classList.add('ready');
+}
+function cardEl(b){
+  let el = cardEls.get(b.id);
+  if (!el){
+    const t = document.createElement('template'); t.innerHTML = cardHTML(b).trim();
+    el = t.content.firstElementChild; cardEls.set(b.id, el);
+  }
+  fillCardCover(el, b);
+  return el;
+}
+const GENRES = [[/^Усі$/, 'all'], [/^Екранізовані$/, 'film'], [/манґ|манга|комікс/i, 'manga'], [/фентезі|фантаст|роментезі/i, 'fantasy'],
+  [/детектив|трилер|жах/i, 'noir'], [/роман/i, 'romance'], [/казк|дитяч|для дітей|педагог/i, 'kids'], [/класич|антолог|поезі/i, 'classic'],
+  [/мемуар|біограф|історі/i, 'history'], [/пригод|подорож|путівник|мап/i, 'adventure'], [/україн/i, 'ua'], [/іноземн/i, 'world'],
+  [/навчан|посібник|пізнавал/i, 'study'], [/наук|техн/i, 'science'], [/філософ|соціолог|релігі|езотер|психолог/i, 'mind'],
+  [/військ/i, 'military'], [/мод|мистецтв|хобі|дозвілл/i, 'art'], [/їжа|напої|кулінар/i, 'food'], [/спорт|здоров/i, 'sport'],
+  [/менеджмент|лідерств|бізнес|економ|фінанс/i, 'business']];
+const genreOf = c => (GENRES.find(([r]) => r.test(c)) || [0, 'base'])[1];
+function catInfo(c){
+  if (API.on){
+    const m = API.meta, x = c === 'Усі' ? {n:m.total, covers:m.covers} : c === SCR ? m.scr : (m.cats.find(k => k.name === c) || {n:0, covers:[]});
+    return {n:x.n, pics:x.covers};
+  }
+  const all = BOOKS.filter(b => inCat(b, c));
+  return {n:all.length, pics:all.sort((x, y) => y.pop - x.pop).filter(b => covers[b.id]).slice(0, 3).map(b => covers[b.id])};
+}
+function renderChips(){
+  const box = $('#chips');
+  box.innerHTML = CATS.map(c => {
+    const k = catInfo(c);
+    return `<button class="cat-tile" type="button" data-cat="${esc(c)}" data-g="${genreOf(c)}" aria-pressed="${c === state.cat}">
+      <span class="ct-name">${esc(c)}</span><span class="ct-n num">${books(k.n)}</span>
+      <span class="ct-fan" aria-hidden="true">${k.pics.map(src => `<img src="${esc(src)}" alt="" loading="lazy" decoding="async">`).join('')}</span>
+    </button>`;
+  }).join('') + `<button class="cats-more" type="button" data-more>${box.classList.contains('collapsed') ? `Усі категорії · ${CATS.length}` : 'Згорнути'}</button>`;
+}
+function filtered(){
+  const q = state.q.trim().toLowerCase();
+  const sorts = {pop:(x, y) => y.pop - x.pop, cheap:(x, y) => x.price - y.price, dear:(x, y) => y.price - x.price, az:(x, y) => x.t.localeCompare(y.t, 'uk')};
+  return BOOKS.filter(b =>
+    inCat(b, state.cat) &&
+    (!state.inStock || b.np > 0) &&
+    (!state.ek || b.st.includes('єКнига')) &&
+    (!q || `${b.t} ${b.a} ${b.p}`.toLowerCase().includes(q))
+  ).sort(sorts[state.sort]);
+}
+const GLASS = '.btn,.add';
+const glassLight = e => {
+  const b = e.target.closest ? e.target.closest(GLASS) : null; if (!b) return;
+  const r = b.getBoundingClientRect();
+  b.style.setProperty('--mx', (e.clientX - r.left) + 'px'); b.style.setProperty('--my', (e.clientY - r.top) + 'px');
+};
+document.addEventListener('pointermove', glassLight, {passive:true});
+document.addEventListener('pointerdown', glassLight, {passive:true});
+$('#grid-pages').addEventListener('click', e => {
+  const b = e.target.closest('[data-page]'); if (!b || b.disabled) return;
+  state.page = +b.dataset.page; renderGrid('page'); $('#catalog').scrollIntoView({behavior:'instant', block:'start'});
+});
+function pagesHTML(cur, total){
+  if (total <= 1) return '';
+  const nums = [...new Set([1, total, cur - 1, cur, cur + 1].filter(p => p >= 1 && p <= total))].sort((a, b) => a - b);
+  let prev = 0, out = '';
+  nums.forEach(p => { if (p - prev > 1) out += '<span class="pg-gap" aria-hidden="true">…</span>';
+    out += `<button type="button" class="pg${p === cur ? ' on' : ''}" data-page="${p}"${p === cur ? ' aria-current="page"' : ''} aria-label="Сторінка ${p}">${p}</button>`; prev = p; });
+  return `<button type="button" class="pg" data-page="${cur - 1}"${cur === 1 ? ' disabled' : ''} aria-label="Попередня сторінка">‹</button>${out}`
+    + `<button type="button" class="pg" data-page="${cur + 1}"${cur === total ? ' disabled' : ''} aria-label="Наступна сторінка">›</button>`;
+}
+function renderGrid(animate){
+  const key = `${state.cat}|${state.q}|${state.inStock}|${state.ek}|${state.sort}`;
+  if (renderGrid.lastKey !== key){ state.page = 1; renderGrid.lastKey = key; }
+  if (!API.on){
+    const list = filtered(), pages = Math.max(1, Math.ceil(list.length / PAGE));
+    state.page = Math.min(state.page, pages);
+    return drawGrid(list.slice((state.page - 1) * PAGE, state.page * PAGE), list.length, animate);
+  }
+  const my = ++API.seq, grid = $('#grid');
+  grid.classList.add('loading');
+  apiGet('/api/books', {q:state.q.trim(), cat:state.cat, stock:state.inStock ? 1 : '', ek:state.ek ? 1 : '', sort:state.sort, page:state.page})
+    .then(r => { if (my === API.seq){ grid.classList.remove('loading'); drawGrid(r.items.map(ingest), r.total, animate); } })
+    .catch(() => { if (my === API.seq){ grid.classList.remove('loading'); API.on = false; renderGrid(animate); } });   // сервер не відповів — назад на data.js
+}
+function drawGrid(shown, count, animate){
+  const grid = $('#grid'), flip = animate === true && !reduce;
+  const first = new Map();
+  if (flip) cardEls.forEach((el, id) => { if (el.isConnected) first.set(id, el.getBoundingClientRect()); });
+  const total = Math.max(1, Math.ceil(count / PAGE));
+  grid.replaceChildren(...shown.map(cardEl));
+  $('#count').textContent = books(count) + (total > 1 ? ` · сторінка ${state.page.toLocaleString('uk-UA')} з ${total.toLocaleString('uk-UA')}` : '');
+  $('#grid-pages').innerHTML = pagesHTML(state.page, total);
+  const empty = $('#grid-empty');
+  empty.hidden = count > 0;
+  if (!count) empty.innerHTML = `<b>Нічого не знайшли${state.q ? ` за «${esc(state.q)}»` : ''}</b>Спробуйте іншу назву чи автора або скиньте фільтри.<br><button class="btn btn-line press" type="button" data-reset>Скинути фільтри</button>`;
+  if (!flip) return;
+  let n = 0;
+  shown.forEach(b => {
+    const el = cardEls.get(b.id), last = el.getBoundingClientRect(), f = first.get(b.id);
+    if (f){
+      const dx = f.left - last.left, dy = f.top - last.top;
+      if (dx || dy) el.animate([{transform:`translate(${dx}px,${dy}px)`}, {transform:'none'}], {duration:280, easing:EASE_OUT});
+    } else {
+      el.animate([{opacity:0, transform:'translateY(14px) scale(.97)'}, {opacity:1, transform:'none'}], {duration:260, delay:Math.min(n++, 10) * 35, easing:EASE_OUT, fill:'backwards'});
+    }
+  });
+}
+function resetFilters(){
+  Object.assign(state, {cat:'Усі', q:'', inStock:false, ek:false});
+  $('#q').value = ''; $('#f-stock').checked = false; $('#f-ek').checked = false;
+  renderChips(); renderGrid(true);
+}
+$('#chips').addEventListener('click', e => {
+  if (e.target.closest('[data-more]')){ $('#chips').classList.toggle('collapsed'); renderChips(); return; }
+  const b = e.target.closest('[data-cat]'); if (!b) return; state.cat = b.dataset.cat; renderChips(); renderGrid(true); });
+$('#f-stock').addEventListener('change', e => { state.inStock = e.target.checked; renderGrid(true); });
+$('#f-ek').addEventListener('change', e => { state.ek = e.target.checked; renderGrid(true); });
+$('#sort').addEventListener('change', e => { state.sort = e.target.value; renderGrid(true); });
+let qTimer;
+$('#q').addEventListener('input', e => { clearTimeout(qTimer); qTimer = setTimeout(() => { state.q = e.target.value; renderGrid(true); }, 140); });
+$('#q').addEventListener('keydown', e => { if (e.key === 'Enter'){ clearTimeout(qTimer); state.q = e.target.value; renderGrid(true); go('catalog'); } });
+
+document.addEventListener('click', e => {
+  const t = e.target.closest('[data-add],[data-open],[data-notify],[data-reset],[data-notes],[data-close],[data-3d],[data-cat-go],[data-ek-go],[data-open-cart]');
+  if (!t) return;
+  const d = t.dataset;
+  if (d.add) addToCart(+d.add, t);
+  else if (d.open) openDetail(+d.open);
+  else if (d.notify) toast(`Повідомимо, коли «${byId[d.notify].t}» зʼявиться (демо)`);
+  else if ('reset' in d) resetFilters();
+  else if ('notes' in d) setNotes(!$('#app').classList.contains('notes-on'));
+  else if ('close' in d) requestClose();
+  else if (d['3d']) show3d(+d['3d']);
+  else if (d.catGo){ state.cat = d.catGo; state.ek = false; $('#f-ek').checked = false; renderChips(); renderGrid(false); go('catalog'); }
+  else if ('ekGo' in d){ state.cat = 'Усі'; state.ek = true; $('#f-ek').checked = true; renderChips(); renderGrid(false); go('catalog'); }
+  else if ('openCart' in d){ state.view = 'list'; renderCart(); openSheet($('#cart')); }
+});
+
+/* ── Режим показу: чистий сайт для партнера; вхід і вихід — Shift+P ── */
+function setPresent(on){
+  $('#app').classList.toggle('present', on);
+  if (on) toast(matchMedia('(hover:none)').matches ? 'Режим показу. Вийти: оновіть сторінку' : 'Режим показу. Вийти: Shift+P');
+}
+$('#present-on').addEventListener('click', () => setPresent(true));
+if (/[?&]dev\b/.test(location.search)) $('#app').classList.remove('present');
+document.addEventListener('keydown', e => { if (e.shiftKey && (e.key === 'P' || e.key === 'З') && !(e.target.closest && e.target.closest('input, textarea'))) setPresent(!$('#app').classList.contains('present')); });
+/* ── Тема: як у системі → світла → темна (запамʼятовується в цьому браузері) ── */
+const THEMES = [['auto', 'як у системі', '<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/>'],
+  ['light', 'світла', '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'],
+  ['dark', 'темна', '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>']];
+function setTheme(name){
+  const [key, label, icon] = THEMES.find(x => x[0] === name) || THEMES[0];
+  if (key === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', key);
+  const b = $('#theme'); b.setAttribute('aria-label', `Тема: ${label}`); b.title = `Тема: ${label}`;
+  b.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">${icon}</svg>`;
+  try { key === 'auto' ? localStorage.removeItem('pal-theme') : localStorage.setItem('pal-theme', key); } catch (e) {}
+}
+$('#theme').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme') || 'auto', i = THEMES.findIndex(x => x[0] === cur);
+  const next = THEMES[(i + 1) % THEMES.length][0]; setTheme(next);
+  toast(`Тема: ${THEMES.find(x => x[0] === next)[1]}`);
+});
+try { const saved = localStorage.getItem('pal-theme'); if (saved) setTheme(saved); } catch (e) {}
+/* ── Нотатки ── */
+function setNotes(on){
+  $('#app').classList.toggle('notes-on', on);
+  $('#notes-toggle').setAttribute('aria-pressed', on);
+  $$('.proto [data-notes]').forEach(b => { b.textContent = on ? 'Сховати нотатки' : 'Показати нотатки для команди'; });
+}
+
+/* ── Де я: підсвічуємо розділ у навігації ── */
+const SEC_TAB = {hero:'hero', shelf:'hero', collections:'collections', catalog:'catalog', how:'', delivery:'delivery'};
+function setCurrent(sec){
+  const tab = SEC_TAB[sec];
+  $$('[data-tab]').forEach(a => a.setAttribute('aria-current', a.dataset.tab === tab));
+  $$('[data-sec]').forEach(a => a.setAttribute('aria-current', a.dataset.sec === tab));
+}
+const secObs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) setCurrent(e.target.id); }), {rootMargin:'-50% 0px -49% 0px'});
+Object.keys(SEC_TAB).forEach(id => { const el = document.getElementById(id); if (el) secObs.observe(el); });
+setCurrent('hero');
+
+/* ── Панелі ── */
+let openEl = null, lastFocus = null;
+function openSheet(el){
+  if (openEl && openEl !== el) closeSheet(true);
+  if (!(history.state && history.state.sheet)){ try { history.pushState({sheet:el.id}, ''); } catch (e) {} }
+  lastFocus = document.activeElement; openEl = el;
+  el.removeAttribute('inert'); el.classList.add('open'); $('#scrim').classList.add('on'); document.body.classList.add('locked');
+  setTimeout(() => (el.querySelector('[data-close]') || el.querySelector('.x')).focus(), 60);
+}
+/* Закрити з інтерфейсу: якщо шторка додала запис в історію — крок назад (як кнопка «Назад» на телефоні) */
+function requestClose(){
+  if (history.state && history.state.sheet) history.back();
+  else closeSheet();
+}
+try { history.scrollRestoration = 'manual'; } catch (e) {}   // прокруткою керуємо самі, щоб «Назад» не смикав сторінку
+window.addEventListener('popstate', () => { if (openEl) closeSheet(); });
+function closeSheet(keepScrim){
+  if (!openEl) return;
+  if (openEl.id === 'detail') unBookLink();
+  if (openEl.id === 'viewer'){
+    stageBackHome();
+    const from = viewerFrom; viewerFrom = null;
+    if (from && !keepScrim){   // закрили перегляд — повертаємо картку книжки, з якої його відкрили
+      openEl.classList.remove('open'); openEl.setAttribute('inert', ''); openEl = null;
+      openDetail(from.id); $('#detail-body').scrollTop = from.scroll; lastFocus = from.focus;
+      return;
+    }
+  }
+  openEl.classList.remove('open'); openEl.setAttribute('inert', ''); openEl = null;
+  if (!keepScrim){ $('#scrim').classList.remove('on'); document.body.classList.remove('locked'); if (lastFocus && lastFocus.isConnected) lastFocus.focus({preventScroll:true}); }
+}
+$('#scrim').addEventListener('click', () => requestClose());
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') return openEl && requestClose();
+  if (e.key !== 'Tab' || !openEl) return;
+  const f = $$('button:not([disabled]),[href],input:not([disabled]),select,[tabindex]:not([tabindex="-1"])', openEl).filter(x => x.offsetParent !== null);
+  if (!f.length) return;
+  const a = f[0], z = f[f.length - 1];
+  if (e.shiftKey && document.activeElement === a){ z.focus(); e.preventDefault(); }
+  else if (!e.shiftKey && document.activeElement === z){ a.focus(); e.preventDefault(); }
+});
+
+let detailId = 0, relPool = null;
+function openDetail(id){
+  const b = byId[id];
+  if (!b){   // книжка з повного каталогу, якої ще не бачили (посилання …#book-ID)
+    if (API.on) apiGet('/api/book', {id}).then(x => { ingest(x); openDetail(id); }).catch(() => toast('Не вдалося відкрити книжку'));
+    return;
+  }
+  detailId = id;
+  renderDetail(b);
+  $('#detail-body').scrollTop = 0;
+  openSheet($('#detail'));
+  bookLink(b);
+  if (!API.on) return;
+  if (!b.full) apiGet('/api/book', {id}).then(x => { ingest(x); if (detailId === id && openEl && openEl.id === 'detail') renderDetail(b); }).catch(() => {});
+  Promise.all([b.aid ? apiGet('/api/books', {aid:b.aid, per:12}) : null, apiGet('/api/books', {cat:b.cat, stock:1, per:12})].map(pr => pr && pr.catch(() => null)))
+    .then(rs => {
+      if (detailId !== id) return;
+      relPool = {id, pool:rs.filter(Boolean).flatMap(r => r.items.map(ingest))};
+      $$('#detail-body .more').forEach(el => el.remove());
+      $('#detail-body').insertAdjacentHTML('beforeend', relatedHTML(b, relPool.pool));
+    });
+}
+function renderDetail(b){
+  const av = avail(b);
+  $('#detail-h').textContent = b.cat;
+  $('#detail-body').innerHTML = `<div class="detail">
+    <div class="cover-col">
+      ${galleryHTML(b)}
+      <button class="d-3d press" type="button" data-3d="${b.id}">${I.cube}${(b.gal || []).length ? 'Гортати в 3D' : 'Покрутити в 3D'}</button>
+    </div>
+    <div>
+      <div class="d-stickers">${b.st.map(s => `<span class="pill${s === 'єКнига' ? ' ink' : ''}">${esc(s)}</span>`).join('')}</div>
+      <h3>${esc(b.t)}</h3>
+      <p class="d-author">${esc(b.a)}</p>
+      <p class="d-desc">${b.d ? esc(b.d) : API.on && !b.full ? '<span class="d-wait">Завантажуємо опис…</span>' : ''}</p>
+      <span class="note"><b>Опис</b> У <code>price-list</code> опису немає. Його віддає окремий запит картки товару, який ще треба знайти в DevTools.</span>
+      <dl class="facts">
+        <dt>Видавництво</dt><dd>${esc(b.p)}</dd>
+        <dt>Мова</dt><dd>${esc(b.lang || 'Українська')}</dd>${b.year ? `<dt>Рік</dt><dd class="num">${b.year}</dd>` : ''}${b.pages ? `<dt>Сторінок</dt><dd class="num">${esc(b.pages)}</dd>` : ''}${b.binding ? `<dt>Палітурка</dt><dd>${esc(b.binding)}</dd>` : ''}${b.size ? `<dt>Формат</dt><dd class="num">${b.size[0]}×${b.size[1]} см</dd>` : ''}
+        <dt>ISBN</dt><dd class="num">${b.isbn || '—'}</dd>
+      </dl>
+      <p class="avail ${av.k}" style="margin-bottom:var(--s-4)">${av.short}. <span style="font-weight:400;color:var(--ink-2)">${av.more}</span></p>
+      <span class="note"><b>Склади</b> Приклад з API: <code>WMS · НП · 411 шт · 0 днів</code>, <code>Елект-К · віртуальний · 0 шт · 14 днів</code>. Клієнту показуємо лише термін.</span>
+    </div>
+  </div>`;
+  $('#detail-body').insertAdjacentHTML('beforeend', relatedHTML(b, relPool && relPool.id === b.id ? relPool.pool : BOOKS));
+  initGallery($('#detail .gallery'));
+  const ref = b.rrp || b.old, save = ref && b.price < ref * .97 ? Math.round((1 - b.price / ref) * 100) : 0;
+  const pays = (b.st || []).filter(s => PAY.has(s));
+  $('#detail-foot').innerHTML = `<div class="bb-price"><b>${money(b.price)}</b>${save ? `<small>Рекомендована <s>${money(ref)}</s> · у нас на ${save}% дешевше</small>` : ''}${pays.length ? `<span class="paychips" aria-label="Можна оплатити">${pays.map(x => `<span>${esc(x)}</span>`).join('')}</span>` : ''}</div>
+    ${av.k === 'none'
+      ? `<button class="btn btn-line press" type="button" data-notify="${b.id}">Повідомити</button>`
+      : `<button class="btn btn-buy press" type="button" data-add="${b.id}">У кошик</button>`}
+    <p class="eta avail ${av.k}">${esc(eta(b))}</p>`;
+}
+/* Адреса …#book-ID відкриває книжку; назва вкладки й дані schema.org — для превʼю й пошуковиків */
+const BASE_TITLE = document.title;
+function bookLink(b){
+  try { history.replaceState(history.state, '', '#book-' + b.id); } catch (e) {}
+  document.title = `${b.t} — ${b.a} | Палітурка`;
+  let ld = document.getElementById('ld-book');
+  if (!ld){ ld = document.createElement('script'); ld.type = 'application/ld+json'; ld.id = 'ld-book'; document.head.appendChild(ld); }
+  ld.textContent = JSON.stringify({'@context':'https://schema.org', '@type':'Book', name:b.t, author:{'@type':'Person', name:b.a}, publisher:b.p || undefined,
+    isbn:b.isbn || undefined, inLanguage:'uk', offers:{'@type':'Offer', price:b.price, priceCurrency:'UAH',
+    availability:avail(b).k === 'none' ? 'https://schema.org/OutOfStock' : avail(b).k === 'ok' ? 'https://schema.org/InStock' : 'https://schema.org/PreOrder'}});
+}
+function unBookLink(){
+  if (!/^#book-/.test(location.hash)) return;
+  try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) {}
+  document.title = BASE_TITLE;
+}
+$('#share').addEventListener('click', () => {
+  const b = byId[(location.hash.match(/^#book-(\d+)/) || [])[1]], url = location.href;
+  if (navigator.share && b) navigator.share({title:b.t, text:`${b.t} — ${b.a}, ${money(b.price)}`, url}).catch(() => {});
+  else if (navigator.clipboard) navigator.clipboard.writeText(url).then(() => toast('Посилання скопійовано'), () => toast(url));
+  else toast(url);
+});
+/* Галерея: обкладинка + до 8 фото з картки постачальника (вантажаться ліниво) */
+function galleryHTML(b){
+  const pics = [covers[b.id], ...(b.gal || [])].filter(Boolean);
+  const arrow = d => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${d}"/></svg>`;
+  return `<div class="gallery" aria-label="Фото книжки «${esc(b.t)}»">
+    <div class="g-track">${pics.map((src, i) => `<figure class="g-slide${i ? '' : ' is-cover'}" style="--bg:${b.look.bg}"><img src="${src}" alt="${i ? `Фото ${i + 1}` : `Обкладинка: ${esc(b.t)}`}"${i ? ' loading="lazy"' : ''}></figure>`).join('')}</div>
+    ${pics.length > 1 ? `<span class="g-count num">1 / ${pics.length}</span>
+      <button class="g-nav prev" type="button" aria-label="Попереднє фото">${arrow('m15 18-6-6 6-6')}</button>
+      <button class="g-nav next" type="button" aria-label="Наступне фото">${arrow('m9 18 6-6-6-6')}</button>
+      ${pics.length <= 12 ? `<div class="g-dots">${pics.map((_, i) => `<button type="button" aria-label="Фото ${i + 1}"${i ? '' : ' aria-current="true"'}></button>`).join('')}</div>` : ''}` : ''}
+  </div>`;
+}
+function initGallery(g){
+  if (!g) return;
+  const track = $('.g-track', g), dots = $$('.g-dots button', g), count = $('.g-count', g), n = track.children.length;
+  if (n < 2) return;
+  const go = i => track.scrollTo({left:Math.max(0, Math.min(n - 1, i)) * track.clientWidth, behavior:reduce ? 'auto' : 'smooth'});
+  const cur = () => Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+  track.addEventListener('scroll', () => { const i = cur(); dots.forEach((d, k) => d.setAttribute('aria-current', k === i)); count.textContent = `${i + 1} / ${n}`; }, {passive:true});
+  dots.forEach((d, k) => d.addEventListener('click', () => go(k)));
+  $('.g-nav.prev', g).addEventListener('click', () => go(cur() - 1));
+  $('.g-nav.next', g).addEventListener('click', () => go(cur() + 1));
+}
+/* «Ще від автора», «Серія», «Схожі»: спершу те, що є на складі, далі популярніше */
+function relatedHTML(b, pool = BOOKS){
+  const pick = (f, n = 10) => pool.filter(x => x.id !== b.id && f(x))
+    .sort((x, y) => (avail(y).k === 'ok') - (avail(x).k === 'ok') || y.pop - x.pop).slice(0, n);
+  const rows = [], used = new Set();
+  const add = (title, list) => { const l = list.filter(x => !used.has(x.id)); if (l.length){ l.forEach(x => used.add(x.id)); rows.push([title, l]); } };
+  if (b.aid) add(`Ще від автора: ${b.a}`, pick(x => x.aid === b.aid));
+  if (b.ser) add(`Серія «${b.ser.name}»`, pick(x => x.ser && x.ser.id === b.ser.id));
+  add(`Схожі: ${b.cat}`, pick(x => x.cat === b.cat && avail(x).k !== 'none', 12));
+  return rows.map(([h, l]) => `<section class="more"><h4>${esc(h)}</h4><div class="mini-row">${l.map(x => `<button class="mini" type="button" data-open="${x.id}" aria-label="${esc(x.t)}, ${money(x.price)}">
+      <span class="mini-cover" style="--bg:${x.look.bg}">${covers[x.id] ? `<img src="${covers[x.id]}" alt="" loading="lazy">` : ''}</span>
+      <span class="mini-t">${esc(x.t)}</span><span class="mini-p">${money(x.price)}</span></button>`).join('')}</div></section>`).join('');
+}
+/* Конкретна дата замість «1–2 дні» (Baymard: дата доставки знімає сумнів). Умовно: замовлення до 14:00, будні. */
+function eta(b){
+  const tz = 'Europe/Kyiv', d1 = new Intl.DateTimeFormat('uk-UA', {weekday:'short', day:'numeric', month:'short', timeZone:tz});
+  const part = (d, o) => new Intl.DateTimeFormat('uk-UA', {...o, timeZone:tz}).format(d);
+  const range = (a, z) => part(a, {month:'short'}) === part(z, {month:'short'})
+    ? `${part(a, {weekday:'short'})}–${part(z, {weekday:'short'})}, ${part(a, {day:'numeric'})}–${part(z, {day:'numeric'})} ${part(z, {month:'short'})}`
+    : `${d1.format(a)} – ${d1.format(z)}`;
+  const work = (n) => { const x = new Date(); while (n > 0){ x.setDate(x.getDate() + 1); const wd = x.getDay(); if (wd && wd !== 6) n--; } return x; };
+  const late = kyivMinutes() >= SHIP_CUTOFF;
+  if (b.np > 0) return `У Ніжині ${range(work(late ? 2 : 1), work(late ? 3 : 2))} · Новою Поштою +1–2 дні`;
+  if (b.virt > 0){ const z = new Date(); z.setDate(z.getDate() + (b.days || 14)); return `Під замовлення, орієнтовно до ${new Intl.DateTimeFormat('uk-UA', {day:'numeric', month:'long', timeZone:tz}).format(z)}`; }
+  return 'Зараз немає в наявності. Напишемо, коли зʼявиться';
+}
+/* Свайп униз закриває шторку: з ручки й шапки завжди, з вмісту — коли він прокручений до верху */
+function enableSwipe(sheet){
+  const body = $('.sheet-body', sheet), scrim = $('#scrim'); let s = null;
+  sheet.addEventListener('touchstart', e => {
+    if (!matchMedia('(max-width:700px)').matches || e.touches.length !== 1) return;
+    s = {y:e.touches[0].clientY, t:performance.now(), dy:0, head:!!e.target.closest('.grabber, .sheet-head'), top:body.scrollTop <= 0, drag:false};
+  }, {passive:true});
+  sheet.addEventListener('touchmove', e => {
+    if (!s) return;
+    const dy = e.touches[0].clientY - s.y;
+    if (!s.drag){
+      if (dy > 6 && (s.head || (s.top && body.scrollTop <= 0))) s.drag = true;
+      else { if (Math.abs(dy) > 6) s = null; return; }
+    }
+    e.preventDefault();
+    s.dy = Math.max(0, dy);
+    sheet.classList.add('dragging'); sheet.style.transform = `translateY(${s.dy}px)`;
+    scrim.style.opacity = String(Math.max(0, 1 - s.dy / 420));
+  }, {passive:false});
+  const end = () => {
+    if (!s) return;
+    const {dy, t, drag} = s; s = null;
+    if (!drag) return;
+    const v = dy / Math.max(1, performance.now() - t);
+    sheet.classList.remove('dragging'); sheet.style.transform = ''; scrim.style.opacity = '';
+    if (dy > 110 || (dy > 30 && v > .6)) requestClose();
+  };
+  sheet.addEventListener('touchend', end); sheet.addEventListener('touchcancel', end);
+}
+enableSwipe($('#detail')); enableSwipe($('#cart'));
+/* Перегляд 3D: переносимо ту саму сцену у вікно поверх сторінки — прокручувати нікуди не треба.
+   Закрили (хрестик, Esc, «Назад») — сцена повертається на своє місце вгорі */
+const stageHome = [$('#stage').parentNode, $('#stage').nextSibling];
+let viewerFrom = null;   // з якої картки відкрили перегляд — після закриття повертаємось у неї
+function show3d(id){
+  const b = byId[id]; if (!b) return;
+  viewerFrom = openEl && openEl.id === 'detail' ? {id:detailId, scroll:$('#detail-body').scrollTop, focus:lastFocus} : null;
+  let i = FEATURED.indexOf(id);
+  if (i < 0){ FEATURED.push(id); i = FEATURED.length - 1; }
+  const same = i === state.featured;
+  $('#viewer-t').textContent = b.t;
+  $('#viewer-a').textContent = [b.a, money(b.price)].filter(Boolean).join(' · ');
+  const st = $('#stage');
+  if (!$('#stage-ph')){   // заглушка того ж розміру, щоб сторінка під вікном не зсувалась
+    const ph = document.createElement('div'); ph.id = 'stage-ph'; ph.style.cssText = `min-height:${st.offsetHeight}px;min-width:0`;
+    st.parentNode.insertBefore(ph, st);
+  }
+  $('#viewer-slot').appendChild(st);
+  openSheet($('#viewer'));
+  if (!same) feature(i, 1);
+  setTimeout(() => Stage.open(true), same ? 60 : 900);
+}
+function stageBackHome(){
+  Stage.open(false);
+  stageHome[0].insertBefore($('#stage'), stageHome[1]);
+  const ph = $('#stage-ph'); if (ph) ph.remove();
+}
+
+/* ── Кошик ── */
+const lines = () => Object.entries(state.cart).map(([id, q]) => ({b:byId[id], q})).filter(x => x.b && x.q > 0);
+const total = () => lines().reduce((s, x) => s + x.b.price * x.q, 0);
+function renderBadges(){
+  const n = lines().reduce((s, x) => s + x.q, 0);
+  $$('[data-cart-count]').forEach(el => { el.textContent = n; el.dataset.n = n; });
+  updateFree();
+}
+function bump(){
+  if (reduce) return;
+  $$('[data-cart-count]').forEach(el => { if (el.offsetParent) el.animate([{transform:'scale(1)'}, {transform:'scale(1.4)'}, {transform:'scale(1)'}], {duration:320, easing:EASE_OUT}); });
+}
+function cartTarget(){ return $$('[data-open-cart]').find(el => el.offsetParent !== null); }
+function flyToCart(src, done){
+  const img = src && (src.closest('.card') || src.closest('#detail'));
+  const from = img && img.querySelector('.cover img'), to = cartTarget();
+  if (reduce || !from || !to){ done(); return; }
+  const a = from.getBoundingClientRect(), b = to.getBoundingClientRect();
+  const ghost = from.cloneNode(); ghost.className = 'ghost'; ghost.removeAttribute('loading');
+  Object.assign(ghost.style, {left:a.left + 'px', top:a.top + 'px', width:a.width + 'px', height:a.height + 'px'});
+  document.body.appendChild(ghost);
+  const dx = b.left + b.width / 2 - (a.left + a.width / 2), dy = b.top + b.height / 2 - (a.top + a.height / 2);
+  const anim = ghost.animate([
+    {transform:'none', opacity:1},
+    {transform:`translate(${dx * .45}px,${dy * .45 - 90}px) scale(.55) rotate(-8deg)`, opacity:1, offset:.45},
+    {transform:`translate(${dx}px,${dy}px) scale(.12) rotate(-16deg)`, opacity:.4},
+  ], {duration:620, easing:'cubic-bezier(.45,0,.55,1)'});
+  anim.onfinish = () => { ghost.remove(); done(); };
+}
+function markAdded(btn){
+  if (!btn.classList.contains('add') || btn.classList.contains('added')) return;
+  const html = btn.innerHTML;
+  btn.classList.add('added'); btn.innerHTML = I.check + 'Додано';
+  setTimeout(() => { btn.classList.remove('added'); btn.innerHTML = html; }, 1400);
+}
+function addToCart(id, src){
+  const b = byId[id]; if (!b || avail(b).k === 'none') return;
+  state.cart[id] = (state.cart[id] || 0) + 1; saveCart();
+  if (src) markAdded(src);
+  flyToCart(src, () => { renderBadges(); bump(); });
+  toast(`Додано: «${b.t}»`, {label:'Оформити', fn:() => { state.view = 'list'; renderCart(); openSheet($('#cart')); }});
+  if (openEl === $('#cart') && state.view === 'list') renderCart();
+}
+function removeLine(id){
+  const q = state.cart[id], b = byId[id]; delete state.cart[id]; saveCart(); renderBadges(); renderCart();
+  toast(`Прибрано «${b.t}»`, {label:'Повернути', fn:() => { state.cart[id] = q; saveCart(); renderBadges(); if (openEl === $('#cart')){ state.view = 'list'; renderCart(); } }});
+}
+function setQty(id, q){ if (q <= 0) return removeLine(id); state.cart[id] = q; saveCart(); renderBadges(); renderCart(); }
+
+const FIELDS = [
+  {id:'name', label:'Імʼя та прізвище', ac:'name', ph:'Олена Коваленко', help:'Як у документі: за ним видадуть посилку.',
+    check:v => v.trim().split(/\s+/).filter(Boolean).length >= 2 ? '' : 'Вкажіть імʼя та прізвище через пробіл.'},
+  {id:'phone', label:'Телефон', type:'tel', ac:'tel', ph:'+380 67 123 45 67', help:'Сюди прийде SMS з номером ТТН.',
+    check:v => /^(\+?38)?0\d{9}$/.test(v.replace(/[\s()-]/g, '')) ? '' : 'Номер має бути у форматі +380 XX XXX XX XX.'},
+  {id:'city', label:'Місто', ac:'address-level2', ph:'Львів', check:v => v.trim() ? '' : 'Вкажіть місто доставки.'},
+  {id:'branch', label:'Відділення чи поштомат НП', ph:'Відділення №12', check:v => v.trim() ? '' : 'Вкажіть номер відділення або поштомата.'},
+];
+function fieldHTML(f){
+  const v = state.form[f.id], err = state.touched[f.id] ? f.check(v) : '';
+  const desc = (f.help ? `co-${f.id}-help ` : '') + `co-${f.id}-err`;
+  return `<div class="field${err ? ' bad' : ''}">
+    <label for="co-${f.id}">${f.label}</label>
+    <input id="co-${f.id}" name="${f.id}"${f.type ? ` type="${f.type}"` : ''} autocomplete="${f.ac || 'off'}" placeholder="${esc(f.ph)}" value="${esc(v)}" aria-invalid="${!!err}" aria-describedby="${desc}">
+    ${f.help ? `<small class="help" id="co-${f.id}-help">${f.help}</small>` : ''}
+    <small class="err" id="co-${f.id}-err"${err ? '' : ' hidden'}>${I.alert}<span>${esc(err)}</span></small>
+  </div>`;
+}
+function validate(f){
+  const input = $('#co-' + f.id), err = f.check(input.value), box = $('#co-' + f.id + '-err');
+  box.hidden = !err; box.querySelector('span').textContent = err;
+  input.closest('.field').classList.toggle('bad', !!err); input.setAttribute('aria-invalid', !!err);
+  return !err;
+}
+
+function renderCart(){
+  const body = $('#cart-body'), foot = $('#cart-foot'), L = lines(), sum = total();
+  if (state.view === 'done') return;
+  if (!L.length){
+    state.view = 'list';
+    $('#cart-h').textContent = 'Кошик';
+    body.innerHTML = `<div class="cart-empty"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/></svg><b>Поки порожньо</b>Додайте книжку з каталогу або просто зі сцени нагорі.</div>`;
+    foot.innerHTML = `<button class="btn btn-line press" type="button" data-close>До каталогу</button>`;
+    return;
+  }
+  const hasWait = L.some(x => avail(x.b).k === 'wait'), hasOk = L.some(x => avail(x.b).k === 'ok');
+  const allEk = L.every(x => x.b.st.includes('єКнига')), left = Math.max(0, FREE_SHIP - sum);
+  if (!allEk && state.form.pay === 'ek') state.form.pay = 'card';
+  if (state.view === 'list'){
+    $('#cart-h').textContent = 'Кошик';
+    body.innerHTML = L.map(({b, q}) => { const av = avail(b); return `<div class="line">
+        ${covers[b.id] ? `<img src="${covers[b.id]}" alt="">` : `<span class="ph" style="background:${b.look.bg}"></span>`}
+        <div><h4>${esc(b.t)}</h4><p>${esc(b.a)}</p><p class="avail ${av.k}">${av.short}</p>
+          <div class="qty"><button class="press" type="button" data-q="${b.id}" data-d="-1" aria-label="Менше: ${esc(b.t)}">−</button><span class="num" aria-live="polite">${q}</span><button class="press" type="button" data-q="${b.id}" data-d="1" aria-label="Більше: ${esc(b.t)}">+</button></div></div>
+        <div><span class="price">${money(b.price * q)}</span><button class="rm" type="button" data-rm="${b.id}">Прибрати</button></div>
+      </div>`; }).join('') +
+      (hasWait && hasOk ? `<div class="callout" style="margin-top:16px"><b>Частина книжок під замовлення.</b> Відправимо все однією посилкою, щойно надійде, або розділимо на дві. Виберете під час оформлення.</div>
+        <span class="note"><b>Питання</b> Чи може постачальник відправити частинами, і хто платить за другу посилку?</span>` : '');
+    foot.innerHTML = `<div class="meter" aria-hidden="true"><i style="--p:${Math.min(1, sum / FREE_SHIP).toFixed(3)}"></i></div>
+      <div class="sumrow"><span>${left ? `До безкоштовної доставки ще ${money(left)}` : 'Доставка безкоштовна'}</span></div>
+      <div class="sumrow total"><span>Разом</span><span class="num">${money(sum)}</span></div>
+      <button class="btn btn-buy press" type="button" id="to-checkout">Оформити замовлення</button>`;
+    $('#to-checkout').addEventListener('click', () => { state.view = 'form'; renderCart(); setTimeout(() => $('#co-name').focus(), 50); });
+    return;
+  }
+  /* view === 'form' */
+  $('#cart-h').textContent = 'Оформлення';
+  const opt = (name, val, title, sub, dis) => `<label class="opt" for="${name}-${val}"><input type="radio" id="${name}-${val}" name="${name}" value="${val}"${state.form[name] === val ? ' checked' : ''}${dis ? ' disabled' : ''}><span>${title}</span><small>${sub}</small></label>`;
+  body.innerHTML = `<form class="form" id="co" novalidate>
+    <div class="two">${fieldHTML(FIELDS[0])}${fieldHTML(FIELDS[1])}</div>
+    <fieldset class="pay"><legend class="legend">Як отримати</legend>
+      ${opt('get', 'pickup', 'Забрати в магазині в Ніжині', 'Безкоштовно. Напишемо в SMS, коли книжки приїдуть')}
+      ${opt('get', 'np', 'Нова Пошта', 'Відділення або поштомат, за тарифом НП')}
+    </fieldset>
+    ${state.form.get === 'np' ? `<div class="two">${fieldHTML(FIELDS[2])}${fieldHTML(FIELDS[3])}</div>` : ''}
+    <span class="note"><b>Нова Пошта</b> Міста й відділення підтягуємо з API Нової Пошти з підказками, а ТТН створюємо автоматично.</span>
+    ${hasWait && hasOk ? `<fieldset class="pay"><legend class="legend">Як відправити</legend>
+      ${opt('ship', 'one', 'Однією посилкою', 'Коли надійдуть усі книжки, до 14 днів')}
+      ${opt('ship', 'two', 'Двома посилками', 'Що є на складі, поїде сьогодні, решта пізніше')}
+    </fieldset>` : ''}
+    <fieldset class="pay"><legend class="legend">Оплата</legend>
+      ${opt('pay', 'card', 'Карткою онлайн', 'Apple Pay, Google Pay, Visa, Mastercard')}
+      ${opt('pay', 'ek', 'єКнига', allEk ? 'Усі книжки в кошику підходять' : 'Не всі книжки в кошику беруть участь у програмі', !allEk)}
+      ${opt('pay', 'cod', 'Післяплата', 'Оплата у відділенні, комісія за тарифом НП')}
+    </fieldset>
+    <p class="callout" id="co-err" role="alert" hidden></p>
+  </form>`;
+  foot.innerHTML = `<div class="sumrow total"><span>До сплати</span><span class="num">${money(sum)}</span></div>
+    <div style="display:flex;gap:10px"><button class="btn btn-line press" type="button" id="back-cart">Назад</button>
+    <button class="btn btn-buy press" type="submit" form="co" id="co-submit" style="flex:1">Підтвердити замовлення</button></div>`;
+  $('#back-cart').addEventListener('click', () => { state.view = 'list'; renderCart(); });
+  const form = $('#co');
+  const active = FIELDS.filter(f => state.form.get === 'np' || (f.id !== 'city' && f.id !== 'branch'));
+  active.forEach(f => {
+    const input = $('#co-' + f.id);
+    input.addEventListener('input', () => { state.form[f.id] = input.value; if (state.touched[f.id]) validate(f); });
+    input.addEventListener('blur', () => { if (input.value.trim() || state.touched[f.id]){ state.touched[f.id] = true; validate(f); } });
+  });
+  form.addEventListener('change', e => { if (e.target.type !== 'radio') return; state.form[e.target.name] = e.target.value; if (e.target.name === 'get') renderCart(); });
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    let firstBad = null;
+    active.forEach(f => { state.touched[f.id] = true; if (!validate(f) && !firstBad) firstBad = $('#co-' + f.id); });
+    if (firstBad){ firstBad.focus(); return; }
+    const btn = $('#co-submit'), err = $('#co-err'); btn.disabled = true; err.hidden = true;
+    btn.innerHTML = '<span class="spin" aria-hidden="true"></span>Оформлюємо…';
+    const f = state.form, body = {items:L.map(x => ({id:x.b.id, q:x.q})), name:f.name, phone:f.phone, get:f.get, city:f.city, branch:f.branch, pay:f.pay, ship:f.ship};
+    fetch('/api/orders', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)})
+      .then(r => r.json().then(d => ({ok:r.ok, d})))
+      .then(({ok, d}) => {
+        if (!ok){ btn.disabled = false; btn.textContent = 'Підтвердити замовлення'; err.textContent = d.error || 'Не вдалось оформити. Спробуйте ще раз.'; err.hidden = false; return; }
+        state.view = 'done'; renderDone(d.total, d.no, true);
+      })
+      .catch(() => { state.view = 'done'; renderDone(sum, null, false); });   /* сайт без сервера замовлень — демо */
+  });
+}
+function renderDone(sum, serverNo, real){
+  $('#cart-h').textContent = 'Готово';
+  const no = serverNo || 'П-' + (1040 + Math.floor(Math.random() * 60));
+  $('#cart-body').innerHTML = `<div class="done">
+    <div class="seal"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></div>
+    <h3>Замовлення ${no} прийнято</h3>
+    <p>Сума ${money(sum)}. ${real ? 'Ми отримали замовлення і скоро зателефонуємо, щоб підтвердити.' : 'Це сайт для перегляду: замовлення нікуди не надіслано.'}</p>
+    <ol>
+      <li>Клієнт отримує SMS з номером замовлення.</li>
+      <li>Замовлення автоматично йде постачальнику.</li>
+      <li>${state.form.get === 'np' ? 'Книжки приїжджають у Ніжин і їдуть далі Новою Поштою, ТТН приходить у SMS.' : 'Книжки приїжджають у магазин у Ніжині, і ми пишемо в SMS, що можна забирати.'}</li>
+    </ol>
+    <span class="note"><b>Фаза 4</b> Передачу замовлення постачальнику робимо через API розділу «Замовлення» в порталі. Поки його немає, замовлення формуємо вручну.</span>
+  </div>`;
+  $('#cart-foot').innerHTML = `<button class="btn btn-buy press" type="button" id="finish">Повернутися до каталогу</button>`;
+  $('#finish').addEventListener('click', () => { state.cart = {}; saveCart(); renderBadges(); state.view = 'list'; requestClose(); });
+  $('#cart .x').focus();
+}
+$('#cart-body').addEventListener('click', e => {
+  const q = e.target.closest('[data-q]'), rm = e.target.closest('[data-rm]');
+  if (q) setQty(q.dataset.q, (state.cart[q.dataset.q] || 0) + (+q.dataset.d));
+  else if (rm) removeLine(rm.dataset.rm);
+});
+
+/* ── Тост ── */
+let toastTimer;
+function toast(msg, action){
+  const el = $('#toast');
+  el.innerHTML = `<span>${esc(msg)}</span>${action ? `<button class="toast-act press" type="button">${esc(action.label)}</button>` : ''}`;
+  el.classList.toggle('interactive', !!action);
+  if (action) el.querySelector('.toast-act').addEventListener('click', () => { action.fn(); el.classList.remove('on'); });
+  el.classList.add('on'); clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('on'), action ? 5000 : 2200);
+}
+
+/* ── Історія «як це працює»: липка панель на широкому екрані ── */
+(function story(){
+  const panel = $('#story-panel'), steps = $$('.step');
+  steps.forEach(s => { const v = s.querySelector('.viz').cloneNode(true); panel.appendChild(v); });
+  const vizzes = $$('.viz', panel);
+  const set = i => { steps.forEach((s, j) => s.classList.toggle('on', j === i)); vizzes.forEach((v, j) => v.classList.toggle('on', j === i)); };
+  set(0);
+  const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) set(+e.target.dataset.step); }), {rootMargin:'-45% 0px -50% 0px'});
+  steps.forEach(s => obs.observe(s));
+})();
+
+/* ── Старт ── */
+try { Object.values(JSON.parse(localStorage.getItem('palitourka-cart-books') || '{}')).forEach(x => byId[x.id] || ingest(x)); } catch (e) {}
+renderHero(); renderShelf(); renderBento(); renderChips(); renderGrid(false); renderBadges();
+if (location.hash === '#notes') setNotes(true);
+if (location.hash === '#present') $('#app').classList.add('present');
+{
+  const q = new URLSearchParams(location.search).get('q');
+  if (q){ state.q = q; $('#q').value = q; renderGrid(false); setTimeout(() => go('catalog'), 300); }
+  const m = location.hash.match(/^#book-(\d+)/);
+  if (m && byId[m[1]]) setTimeout(() => openDetail(+m[1]), 400);
+  const waitBook = m && !byId[m[1]] ? +m[1] : 0;
+  const connect = (tries = 0) => apiGet('/api/catalog/meta').then(meta => {
+    API.on = true; API.meta = meta;
+    CATS.splice(0, CATS.length, 'Усі', ...(meta.scr.n ? [SCR] : []), ...meta.cats.map(c => c.name));
+    renderChips(); renderGrid(false);
+    if (waitBook) openDetail(waitBook);
+  }).catch(code => { if (code === 503 && tries < 12) setTimeout(() => connect(tries + 1), 5000); });   // індекс ще збирається
+  if (/^https?:/.test(location.protocol)) connect();
+}
+const faces = ['700 40px Unbounded', '800 40px Unbounded', 'italic 500 40px Literata', '600 40px Literata', '600 20px Onest', '700 20px Onest'];
+const fontsReady = document.fonts && document.fonts.load
+  ? Promise.race([Promise.all(faces.map(f => document.fonts.load(f, 'АБВгдєїґʼ Abc 0123'))), new Promise(r => setTimeout(r, 3000))]).catch(() => {})
+  : Promise.resolve();
+fontsReady.then(() => {
+  makeCovers();
+  renderChips();
+  cardEls.forEach((el, id) => fillCardCover(el, byId[id]));
+  if (REAL){
+    const fb = byId[FEATURED[0]], vc = $('.vcard');
+    $$('img[data-cover]').forEach(img => { img.src = covers[fb.id]; });
+    if (vc){ vc.querySelector('b').textContent = fb.t; vc.querySelector('.author').textContent = fb.a; vc.querySelector('.price').textContent = money(fb.price); }
+    const C = window.CATALOG;
+    $('.proto .wrap > span').textContent = `Прототип на справжніх даних постачальника: ${BOOKS.length} книжок, ціни — наша націнка +${C.rules.global_markup_pct}%. Дані від ${C.generated}.`;
+    sampleLooks(BOOKS.filter(b => /популярне|новинка|хіт|топ/i.test(b.st.join(' '))).slice(0, 12), renderShelf);
+  } else $$('img[data-cover]').forEach(img => { img.src = covers[img.dataset.cover]; });
+  renderBento();
+  Stage.init(byId[FEATURED[state.featured]]);
+  tintHero(byId[FEATURED[state.featured]]);
+});
+})();
+</script>
+
+</body></html>
