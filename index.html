@@ -1,4 +1,4 @@
-<!doctype html><html lang="uk"><head><meta name="robots" content="noindex"><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!doctype html><html lang="uk" data-theme="dark"><head><meta name="robots" content="noindex"><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Палітурка — книгарня в Ніжині з доставкою по Україні</title>
 <meta name="description" content="Книжки українських і світових видавництв за нашими цінами. Забирайте в магазині в Ніжині або отримуйте Новою Поштою. Оплата єКнигою і Нацкешбеком.">
 <meta name="theme-color" content="#161B52">
@@ -714,7 +714,6 @@ body::before{
         <span class="note"><b>Пошук</b> У каталозі десятки чи сотні тисяч позицій, тож знадобиться окремий пошуковий рушій (Meilisearch або Typesense) з підказками й помилками в словах.</span>
       </div>
       <div class="actions">
-        <button class="iconbtn press" type="button" id="theme" aria-label="Тема: як у системі" title="Тема"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg></button>
         <button class="iconbtn press hide-sm" type="button" id="notes-toggle" aria-pressed="false" data-notes>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h14v13l-5 5H5z"/><path d="M14 21v-5h5"/></svg>
           Нотатки
@@ -2197,23 +2196,6 @@ function setPresent(on){
 $('#present-on').addEventListener('click', () => setPresent(true));
 if (/[?&]dev\b/.test(location.search)) $('#app').classList.remove('present');
 document.addEventListener('keydown', e => { if (e.shiftKey && (e.key === 'P' || e.key === 'З') && !(e.target.closest && e.target.closest('input, textarea'))) setPresent(!$('#app').classList.contains('present')); });
-/* ── Тема: як у системі → світла → темна (запамʼятовується в цьому браузері) ── */
-const THEMES = [['auto', 'як у системі', '<circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/>'],
-  ['light', 'світла', '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>'],
-  ['dark', 'темна', '<path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/>']];
-function setTheme(name){
-  const [key, label, icon] = THEMES.find(x => x[0] === name) || THEMES[0];
-  if (key === 'auto') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme', key);
-  const b = $('#theme'); b.setAttribute('aria-label', `Тема: ${label}`); b.title = `Тема: ${label}`;
-  b.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">${icon}</svg>`;
-  try { key === 'auto' ? localStorage.removeItem('pal-theme') : localStorage.setItem('pal-theme', key); } catch (e) {}
-}
-$('#theme').addEventListener('click', () => {
-  const cur = document.documentElement.getAttribute('data-theme') || 'auto', i = THEMES.findIndex(x => x[0] === cur);
-  const next = THEMES[(i + 1) % THEMES.length][0]; setTheme(next);
-  toast(`Тема: ${THEMES.find(x => x[0] === next)[1]}`);
-});
-try { const saved = localStorage.getItem('pal-theme'); if (saved) setTheme(saved); } catch (e) {}
 /* ── Нотатки ── */
 function setNotes(on){
   $('#app').classList.toggle('notes-on', on);
