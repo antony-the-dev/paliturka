@@ -186,6 +186,8 @@ main > section{scroll-margin-top:100px}
 .onstage p{margin:0;color:var(--on-stage-2);font-size:var(--t-14)}
 .onstage .price{font-size:var(--t-25);color:var(--on-stage)}
 .onstage .price s{color:var(--on-stage-2)}
+.onstage .lbl.picked{color:var(--foil)}
+.onstage .pick{grid-column:1/-1;margin:var(--s-2) 0 0;padding-left:12px;border-left:2px solid var(--foil);color:var(--on-stage);font-size:var(--t-14);line-height:1.5;max-width:52ch}
 .onstage .row{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:var(--s-2) var(--s-4);align-items:center;margin-top:var(--s-2)}
 .hero .avail.ok{color:var(--stage-ok)}.hero .avail.wait{color:var(--stage-wait)}.hero .avail.none{color:var(--on-stage-2)}
 .btn-stagebuy{background:var(--stage-buy);color:var(--on-stage-buy);min-height:44px;font-size:var(--t-14)}
@@ -739,12 +741,13 @@ body::before{
           <button class="btn btn-ghost press" type="button" id="open-book">Відкрити книжку</button>
         </div>
         <div class="onstage" aria-live="polite">
-          <span class="lbl">На сцені</span>
+          <span class="lbl" id="hero-lbl">На сцені</span>
           <div>
             <h2 id="hero-title"></h2>
             <p id="hero-author"></p>
           </div>
           <div class="price num" id="hero-price"></div>
+          <p class="pick" id="hero-pick" hidden></p>
           <div class="row">
             <p class="avail" id="hero-avail"></p>
             <button class="btn btn-stagebuy press" type="button" id="hero-add">У кошик</button>
@@ -1852,6 +1855,9 @@ function renderHero(){
   const b = byId[FEATURED[state.featured]], av = avail(b);
   $('#hero-title').textContent = b.t;
   $('#hero-author').textContent = `${b.a} · ${b.p}`;
+  const pick = $('#hero-pick'), lbl = $('#hero-lbl');   // «Вибір Палітурки» — з config/storefront.json
+  pick.hidden = !b.pick; pick.textContent = b.pick || '';
+  lbl.textContent = b.pick ? 'Вибір Палітурки' : 'На сцені'; lbl.classList.toggle('picked', !!b.pick);
   $('#hero-price').innerHTML = priceHTML(b);
   const el = $('#hero-avail'); el.className = 'avail ' + av.k; el.textContent = av.short;
   $('#hero-add').dataset.id = b.id; $('#hero-more').dataset.id = b.id;
