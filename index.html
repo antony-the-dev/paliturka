@@ -1541,7 +1541,7 @@ const Stage = (() => {
       canvas.setAttribute('aria-label', `3D-модель книжки «${b.t}». Стрілки крутять, Enter відкриває обкладинку.`);
     }
 
-    let baseZ = 7.2, inViewer = false, fitZ = 6, liftY = 0;
+    let baseZ = 7.2, inViewer = false, fitH = 5.6, fitW = 2, liftK = 0;
     const FOVT = Math.tan(15 * Math.PI / 180);
     function resize(){
       const r = canvas.getBoundingClientRect(), w = Math.max(1, r.width), h = Math.max(1, r.height);
@@ -1553,8 +1553,7 @@ const Stage = (() => {
       const bar = wrap.querySelector('.stagebar .glass'), top = 28;
       const bot = bar && bar.offsetHeight ? Math.max(60, r.bottom - bar.getBoundingClientRect().top + 14) : 96;
       const fH = Math.max(.4, (h - top - bot) / h);
-      fitZ = .4 + Math.max(1.12 / (FOVT * fH), 1.5 / (FOVT * camera.aspect * .9));
-      liftY = (bot - top) / h * FOVT * fitZ;
+      fitH = 1.12 / (FOVT * fH); fitW = 1 / (FOVT * camera.aspect * .9); liftK = (bot - top) / h * FOVT;
     }
     new ResizeObserver(resize).observe(wrap); resize();
     let visible = true;
@@ -1674,7 +1673,9 @@ const Stage = (() => {
     }
 
     const reader = {b:null, pages:null, loading:false, s:0, flip:null, onChange:() => {}};
-    const spreads = () => reader.pages ? 1 + reader.pages.length / 2 : 1;
+    /* Є фото сторінок — книжка відкривається одразу на першому: [форзац | фото 1], [2 | 3], [4 | 5]…
+       Сторінка з назвою й описом (як у картці) — лише для книжок без фото. */
+    const spreads = () => reader.pages ? 1 + (reader.pages.length - 1) / 2 : 1;
     const texCache = new Map();
     function drawPage(pg, b, isLeft){
       const w = 640, h = 960, cv = mk(w, h), c = cv.getContext('2d');
@@ -1701,13 +1702,15 @@ const Stage = (() => {
     }
     function pageTex(i){
       if (texCache.has(i)){ const v = texCache.get(i); texCache.delete(i); texCache.set(i, v); return v; }
-      const v = tex(drawPage(reader.pages[i], reader.b, i % 2 === 0));
+      const v = tex(drawPage(reader.pages[i], reader.b, i % 2 === 1));
       texCache.set(i, v);
       if (texCache.size > 8){ const [k, old] = texCache.entries().next().value; texCache.delete(k); old.dispose(); }
       return v;
     }
-    const pageL = s => s === 0 ? null : pageTex(2 * (s - 1));
-    const pageR = s => s === 0 ? mats(reader.b).pages[4].map : pageTex(2 * s - 1);
+    let paperT = null;   // чистий аркуш, поки вантажаться фото, — щоб не мигала сторінка з описом
+    const paper0 = () => paperT || (paperT = tex(drawPage({}, null, false)));
+    const pageL = s => s === 0 ? null : pageTex(2 * s - 1);
+    const pageR = s => s === 0 ? (reader.pages ? pageTex(0) : reader.loading ? paper0() : mats(reader.b).pages[4].map) : pageTex(2 * s);
     const setMap = (m, v) => { m.visible = !!v; if (v && m.material.map !== v){ m.material.map = v; m.material.needsUpdate = true; } };
     function showSpread(){
       setMap(leftP, pageL(reader.s));
@@ -1722,10 +1725,11 @@ const Stage = (() => {
     }
     function loadPages(b){
       if (reader.b === b) return;
-      resetReader(); reader.b = b; showSpread();
+      resetReader(); reader.b = b;
       const urls = (b.gal || []).slice(0, 12);   // обкладинку build_storefront.py уже прибрав зі списку
-      if (!/^https?:/.test(location.protocol) || !urls.length) return;
-      reader.loading = true;
+      reader.loading = /^https?:/.test(location.protocol) && urls.length > 0;
+      showSpread();
+      if (!reader.loading) return;
       Promise.all(urls.map(u => new Promise(res => {
         const im = new Image(); im.decoding = 'async';
         im.onload = () => res(im); im.onerror = () => res(null);
@@ -1735,13 +1739,12 @@ const Stage = (() => {
         reader.loading = false;
         const pages = [];
         imgs.filter(Boolean).forEach(im => {
-          if (im.naturalWidth > im.naturalHeight * 1.15){ if (pages.length % 2) pages.push({}); pages.push({im, half:0}, {im, half:1}); }
+          // фото розвороту — на ліву (непарну) і праву сторінку одного розвороту
+          if (im.naturalWidth > im.naturalHeight * 1.15){ if (pages.length % 2 === 0) pages.push({}); pages.push({im, half:0}, {im, half:1}); }
           else pages.push({im});
         });
-        if (!pages.length) return;
-        if (pages.length % 2 === 0) pages.push({});
-        pages.push({end:true});
-        reader.pages = pages; reader.onChange(reader.s, spreads());
+        if (pages.length){ pages.push({end:true}); if (pages.length % 2 === 0) pages.push({}); reader.pages = pages; }
+        showSpread();
       });
     }
     function startFlip(dir, manual){
@@ -1797,7 +1800,9 @@ const Stage = (() => {
       openT += (openTo - openT) * Math.min(1, dt * (reduce ? 20 : 3.4));
       pivot.rotation.y = -2.5 * openT;
       if (inViewer){   // читання: корінець по центру, камера підходить, поки книжка розгортається
-        root.position.x = .76 * openT;
+        const sx = shape.scale.x, near = .48 * sx - .08;   // ширші книжки (розмір з картки) — ширший розворот
+        const fitZ = near + Math.max(fitH, 1.5 * sx * fitW), liftY = liftK * fitZ;
+        root.position.x = (.712 * sx + .05 * shape.scale.z) * openT;   // корінець рівно по центру
         camera.position.set(0, .25 - (.25 + liftY) * openT, baseZ + (fitZ - baseZ) * openT);
         camera.lookAt(0, -.05 - (liftY - .05) * openT, 0);
       } else {
