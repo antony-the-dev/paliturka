@@ -121,9 +121,15 @@ p{text-wrap:pretty}
 .badge{min-width:22px;height:22px;border-radius:11px;background:var(--foil);color:var(--on-foil);font:800 var(--t-12)/22px var(--f-ui);padding:0 6px;text-align:center;display:inline-block}
 .badge[data-n="0"]{display:none}
 @media (max-width:760px){
-  .search{order:3;flex-basis:100%;max-width:none}
-  .hide-sm{display:none}
-  .actions{margin-left:auto}
+  .top{transition:transform .26s var(--ease-out)}
+  .top.hid{transform:translateY(-100%)}
+  .top .wrap{flex-wrap:nowrap;gap:10px;padding-block:8px}
+  .logo{font-size:var(--t-16);gap:8px;min-height:40px;flex:none}
+  .logo svg{width:22px;height:26px}
+  .search{flex:1 1 auto;max-width:none;margin:0;min-width:0}
+  .search input{height:40px;font-size:15px;padding-left:38px}
+  .search > svg{left:13px;width:15px;height:15px}
+  .hide-sm,.actions{display:none}
 }
 
 /* Нотатки для команди */
@@ -131,7 +137,7 @@ p{text-wrap:pretty}
 
 main{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(48px,7vw,88px);padding-block:var(--s-5) var(--s-8)}
 main > section{scroll-margin-top:100px}
-@media (max-width:760px){main > section{scroll-margin-top:136px}}
+@media (max-width:760px){main > section{scroll-margin-top:72px}}
 
 /* Сцена */
 .hero{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);border-radius:var(--r-xl);color:var(--on-stage);
@@ -1845,6 +1851,19 @@ const shelfArrows = () => {
 $('#shelf-prev').addEventListener('click', () => shelfScroll.scrollBy({left:-shelfScroll.clientWidth * .66, behavior:reduce ? 'auto' : 'smooth'}));
 $('#shelf-next').addEventListener('click', () => shelfScroll.scrollBy({left:shelfScroll.clientWidth * .66, behavior:reduce ? 'auto' : 'smooth'}));
 shelfScroll.addEventListener('scroll', shelfArrows, {passive:true});
+/* Шапка на телефоні: ховається, коли гортаєш униз, і одразу повертається, щойно гортаєш угору */
+{
+  const top = $('.top'), small = matchMedia('(max-width:760px)'), q = $('#q');
+  const place = () => { q.placeholder = small.matches ? 'Назва або автор' : 'Назва, автор або видавництво'; };
+  place(); small.addEventListener('change', place);
+  let lastY = scrollY, acc = 0;
+  addEventListener('scroll', () => {
+    const y = Math.max(0, scrollY), dy = y - lastY; lastY = y;
+    if (!small.matches || document.activeElement === q || y < 80){ top.classList.remove('hid'); acc = 0; return; }
+    acc = Math.sign(dy) === Math.sign(acc) ? acc + dy : dy;
+    if (acc > 24) top.classList.add('hid'); else if (acc < -12) top.classList.remove('hid');
+  }, {passive:true});
+}
 new ResizeObserver(shelfArrows).observe(shelfScroll);
 $('#shelf-row').addEventListener('pointerover', e => shelfCap(e.target.closest('.sp')));
 $('#shelf-row').addEventListener('pointerleave', () => shelfCap(null));
