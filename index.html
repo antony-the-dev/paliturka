@@ -501,7 +501,19 @@ footer p{margin:0 0 4px}
 .d-buy .avail{flex-basis:100%}
 .d-buy .avail span{font-weight:400;color:var(--ink-2)}
 .d-3d{margin-top:var(--s-3);width:100%;min-height:44px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:600;font-size:var(--t-14);display:inline-flex;align-items:center;justify-content:center;gap:var(--s-2)}
-@media (max-width:700px){.detail{grid-template-columns:1fr}.detail .cover-col{max-width:340px;margin-inline:auto;width:100%}.g-slide{aspect-ratio:3/4}}
+.detail .cover-col{grid-row:1/3}
+.detail .d-more{grid-column:2}
+/* телефон: маленька обкладинка ліворуч, назва й ціна поруч, опис під ними на всю ширину — щоб усе головне було видно без прокрутки */
+@media (max-width:700px){
+  .detail{grid-template-columns:124px minmax(0,1fr);gap:var(--s-3) var(--s-4);align-items:start}
+  .detail .cover-col{grid-row:auto}
+  .detail .d-more{grid-column:1/-1}
+  .g-slide{aspect-ratio:2/3}
+  .g-dots{display:none}
+  .detail h3{font-size:var(--t-20)}
+  .d-stickers .pill{font-size:11px;padding:4px 7px}
+  .d-3d{font-size:var(--t-12);min-height:38px;padding:0 6px;gap:4px}
+}
 
 /* Кошик */
 .line{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:var(--s-3) var(--s-4);align-items:start;padding-block:var(--s-4);border-bottom:1px solid var(--line)}
@@ -2211,10 +2223,12 @@ function renderDetail(b){
       ${galleryHTML(b)}
       <button class="d-3d press" type="button" data-3d="${b.id}">${I.cube}${(b.gal || []).length ? 'Гортати в 3D' : 'Покрутити в 3D'}</button>
     </div>
-    <div>
+    <div class="d-head">
       <div class="d-stickers">${b.st.map(s => `<span class="pill${s === 'єКнига' ? ' ink' : ''}">${esc(s)}</span>`).join('')}</div>
       <h3>${esc(b.t)}</h3>
       <p class="d-author">${esc(b.a)}</p>
+    </div>
+    <div class="d-more">
       <p class="d-desc">${b.d ? esc(b.d) : API.on && !b.full ? '<span class="d-wait">Завантажуємо опис…</span>' : ''}</p>
       <dl class="facts">
         <dt>Видавництво</dt><dd>${esc(b.p)}</dd>
