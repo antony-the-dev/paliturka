@@ -590,8 +590,14 @@ body::before{
 .btn:active:not(:disabled)::before,.add:active::before{clip-path:circle(150% at var(--mx,50%) var(--my,50%));transition-duration:.3s}
 .add.added{--b-fill:var(--ok);--b-on:#fff;background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px var(--ok)}
 .add.added::before{clip-path:circle(150% at var(--mx,50%) var(--my,50%))}
+.btn-buy.added{background:var(--ok);color:#fff;box-shadow:none;--b-fill:var(--ok);--b-on:#fff}
 .pg.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 @media (prefers-reduced-motion: reduce){.btn::before,.add::before{transition:none}}
+.btn-buy{background:color-mix(in srgb,var(--buy) 14%,transparent)}
+@media (hover:none){
+  .btn-buy{background:var(--buy);color:var(--on-buy);box-shadow:none;--b-fill:var(--buy-hover);--b-on:var(--on-buy)}
+  .btn-buy:disabled{opacity:.6}
+}
 
 /* ── Категорії картою: усе видно одразу. Фон під жанр (манґа — півтон і лінії швидкості, фентезі — зорі,
    детективи — нуарний дощ, екранізовані — кіноплівка…) + віяло з трьох справжніх обкладинок ── */
@@ -2388,9 +2394,9 @@ function flyToCart(src, done){
   anim.onfinish = () => { ghost.remove(); done(); };
 }
 function markAdded(btn){
-  if (!btn.classList.contains('add') || btn.classList.contains('added')) return;
+  if (!(btn.classList.contains('add') || btn.classList.contains('btn-buy')) || btn.classList.contains('added')) return;
   const html = btn.innerHTML;
-  btn.classList.add('added'); btn.innerHTML = I.check + 'Додано';
+  btn.classList.add('added'); btn.innerHTML = I.check + (btn.classList.contains('add') ? 'Додано' : 'У кошику');
   setTimeout(() => { btn.classList.remove('added'); btn.innerHTML = html; }, 1400);
 }
 function addToCart(id, src){
@@ -2398,7 +2404,8 @@ function addToCart(id, src){
   state.cart[id] = (state.cart[id] || 0) + 1; saveCart();
   if (src) markAdded(src);
   flyToCart(src, () => { renderBadges(); bump(); });
-  toast(`Додано: «${b.t}»`, {label:'Оформити', fn:() => { state.view = 'list'; renderCart(); openSheet($('#cart')); }});
+  const n = Object.values(state.cart).reduce((a, q) => a + q, 0);
+  toast(`У кошику: «${b.t}»` + (n > 1 ? ` · разом ${n}` : ''), {label:'До кошика', fn:() => { state.view = 'list'; renderCart(); openSheet($('#cart')); }});
   if (openEl === $('#cart') && state.view === 'list') renderCart();
 }
 function removeLine(id){
@@ -2457,7 +2464,8 @@ function renderCart(){
     foot.innerHTML = `<div class="meter" aria-hidden="true"><i style="--p:${Math.min(1, sum / FREE_SHIP).toFixed(3)}"></i></div>
       <div class="sumrow"><span>${left ? `До безкоштовної доставки ще ${money(left)}` : 'Доставка безкоштовна'}</span></div>
       <div class="sumrow total"><span>Разом</span><span class="num">${money(sum)}</span></div>
-      <button class="btn btn-buy press" type="button" id="to-checkout">Оформити замовлення</button>`;
+      <button class="btn btn-buy press" type="button" id="to-checkout">Оформити замовлення</button>
+      <button class="btn btn-line press" type="button" data-close>Продовжити покупки</button>`;
     $('#to-checkout').addEventListener('click', () => { state.view = 'form'; renderCart(); setTimeout(() => $('#co-name').focus(), 50); });
     return;
   }
@@ -2482,7 +2490,7 @@ function renderCart(){
     <p class="callout" id="co-err" role="alert" hidden></p>
   </form>`;
   foot.innerHTML = `<div class="sumrow total"><span>До сплати</span><span class="num">${money(sum)}</span></div>
-    <div class="co-acts"><button class="btn btn-line press" type="button" id="back-cart">Назад</button>
+    <div class="co-acts"><button class="btn btn-line press" type="button" id="back-cart">Назад до кошика</button>
     <button class="btn btn-buy press" type="submit" form="co" id="co-submit">Підтвердити замовлення</button></div>`;
   $('#back-cart').addEventListener('click', () => { state.view = 'list'; renderCart(); });
   const form = $('#co');
@@ -2516,13 +2524,10 @@ function renderDone(sum, serverNo, real){
   $('#cart-body').innerHTML = `<div class="done">
     <div class="seal"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></div>
     <h3>Замовлення ${no} прийнято</h3>
-    <p>Сума ${money(sum)}. ${real ? 'Ми отримали замовлення і скоро зателефонуємо, щоб підтвердити.' : 'Це сайт для перегляду: замовлення нікуди не надіслано.'}</p>
-    ${real ? `<ol>
-      <li>Зателефонуємо, щоб підтвердити замовлення.</li>
-      <li>${state.form.get === 'np' ? 'Відправимо книжки Новою Поштою і надішлемо номер накладної.' : 'Повідомимо, коли книжки можна забрати в магазині в Ніжині.'}</li>
-    </ol>` : ''}
+    <p>Сума ${money(sum)}. ${real ? 'Скоро зателефонуємо, щоб підтвердити замовлення.' : 'Це сайт для перегляду: замовлення нікуди не надіслано.'}</p>
+    ${real ? `<p>${state.form.get === 'np' ? 'Потім відправимо книжки Новою Поштою і надішлемо номер накладної.' : 'Потім повідомимо, коли книжки можна забрати в магазині в Ніжині.'}</p>` : ''}
   </div>`;
-  $('#cart-foot').innerHTML = `<button class="btn btn-buy press" type="button" id="finish">Повернутися до каталогу</button>`;
+  $('#cart-foot').innerHTML = `<button class="btn btn-buy press" type="button" id="finish">Продовжити покупки</button>`;
   $('#finish').addEventListener('click', () => { state.cart = {}; saveCart(); renderBadges(); state.view = 'list'; requestClose(); });
   $('#cart .x').focus();
 }
@@ -2540,7 +2545,7 @@ function toast(msg, action){
   el.classList.toggle('interactive', !!action);
   if (action) el.querySelector('.toast-act').addEventListener('click', () => { action.fn(); el.classList.remove('on'); });
   el.classList.add('on'); clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('on'), action ? 5000 : 2200);
+  toastTimer = setTimeout(() => el.classList.remove('on'), action ? 3500 : 2200);
 }
 
 /* ── Старт ── */
