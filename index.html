@@ -468,6 +468,22 @@ footer p{margin:0 0 4px}
 .paychips span{font:700 11.5px/1 var(--f-ui);padding:4px 6px;border-radius:5px;background:var(--ink);color:var(--paper)}
 /* Галерея в картці: свайп між обкладинкою й фото, крапки, стрілки на десктопі */
 .gallery{position:relative}
+.g-slide{cursor:zoom-in}
+/* фото на весь екран */
+.lb{position:fixed;inset:0;z-index:70;background:#06071A;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .22s var(--ease-out),visibility .22s}
+.lb.open{opacity:1;visibility:visible}
+.lb-top{display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top,0px)) 14px 8px;color:#fff;font:600 var(--t-14)/1 var(--f-ui)}
+.lb-x{width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;display:grid;place-items:center}
+.lb-track{flex:1;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none}
+.lb-track::-webkit-scrollbar{display:none}
+.lb-slide{flex:0 0 100%;height:100%;scroll-snap-align:center;overflow:auto;display:grid;place-items:center;min-width:0;scrollbar-width:none}
+.lb-slide img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;cursor:zoom-in;user-select:none;-webkit-user-drag:none}
+.lb-slide.zoomed{display:block}
+.lb-slide.zoomed img{max-width:none;max-height:none;width:250%;cursor:zoom-out}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.12);color:#fff;font:400 28px/1 var(--f-ui);display:none;place-items:center}
+.lb-nav.prev{left:12px}.lb-nav.next{right:12px}
+@media (hover:hover){.lb-nav{display:grid}}
+.lb-hint{padding:8px 14px calc(10px + env(safe-area-inset-bottom,0px));text-align:center;color:rgba(255,255,255,.6);font-size:var(--t-12)}
 .g-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border-radius:6px;overscroll-behavior-x:contain}
 .g-track::-webkit-scrollbar{display:none}
 .g-slide{flex:0 0 100%;margin:0;scroll-snap-align:center;aspect-ratio:2/3;display:grid;place-items:center;background:var(--sunk);border-radius:6px;overflow:hidden}
@@ -706,6 +722,7 @@ body::before{
 .viewer-slot{position:relative;flex:1;min-height:0}
 .viewer .stage{position:absolute;inset:0;min-height:0}
 .viewer .stage canvas{left:0;top:0;width:100%;height:100%}
+.viewer .stage{touch-action:none}
 
 </style>
 
@@ -776,6 +793,7 @@ body::before{
             <button class="round press" type="button" id="next" aria-label="Наступна книжка"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
             <span class="sep" aria-hidden="true"></span>
             <button class="round press" type="button" id="stage-open" aria-pressed="false" aria-label="Відкрити обкладинку"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linejoin="round" aria-hidden="true"><path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2zM22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z"/></svg></button>
+            <button class="round press" type="button" id="stage-zoom" aria-pressed="false" aria-label="Наблизити сторінку" hidden><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M8 11h6M11 8v6"/></svg></button>
             <button class="btn btn-stagebuy press" type="button" id="stage-buy" hidden>У кошик</button>
           </div>
         </div>
@@ -1476,11 +1494,17 @@ const Stage = (() => {
     }
 
     let baseZ = 7.2, inViewer = false, fitH = 5.6, fitW = 2, liftK = 0;
+    /* Наближення сторінки у вікні перегляду: щипок, подвійний тап, коліщатко або кнопка-лупа. Наближено — палець тягне сторінку. */
+    let openTo = 0, zoom = 1, zoomTo = 1, zoomX = 1, panX = 0, panY = 0, pinch = null, lastTap = 0, tapTimer = 0;
+    const pts = new Map();
+    const zoomBtn = () => { const zb = $('#stage-zoom'); if (zb){ zb.hidden = !(inViewer && openTo); zb.setAttribute('aria-pressed', zoomTo > 1); } };
+    const resetZoom = () => { zoomTo = 1; panX = panY = 0; zoomBtn(); };
     const FOVT = Math.tan(15 * Math.PI / 180);
     function resize(){
       const r = canvas.getBoundingClientRect(), w = Math.max(1, r.width), h = Math.max(1, r.height);
       renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
       inViewer = !!wrap.closest('.viewer');
+      if (!inViewer) resetZoom(); else zoomBtn();
       baseZ = inViewer ? Math.max(6.6, 4.6 / camera.aspect)   // у вікні перегляду — ближче, на весь екран
         : Math.max(8.8, 7.8 / camera.aspect);   // книжка в розмір сцени, лише трохи виходить за край
       // розгорнута книжка у вікні перегляду заповнює місце між верхом і кнопками; краї сторінок на .4 ближчі за корінець
@@ -1493,20 +1517,38 @@ const Stage = (() => {
     let visible = true;
     new IntersectionObserver(e => { visible = e[0].isIntersecting; }).observe(wrap);
 
-    let rotY = -.55, velY = 0, tiltX = .12, openT = 0, openTo = 0, lastTouch = 0, swap = null, prev = performance.now(), drag = null;
+    let rotY = -.55, velY = 0, tiltX = .12, openT = 0, lastTouch = 0, swap = null, prev = performance.now(), drag = null;
     const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    const setOpen = v => { openTo = v ? 1 : 0; lastTouch = performance.now(); onOpen(!!openTo); if (v && !reduce) spew = 1.1; if (v && curBook) loadPages(curBook); };
+    const setOpen = v => { openTo = v ? 1 : 0; if (!v) resetZoom(); lastTouch = performance.now(); onOpen(!!openTo); zoomBtn(); if (v && !reduce) spew = 1.1; if (v && curBook) loadPages(curBook); };
 
+    const canZoom = () => inViewer && openTo && reader.pages;
+    const clampPan = () => { const sx = shape.scale.x, mx = PW * sx * (1 - 1 / zoomTo) * .55, my = PH * (1 - 1 / zoomTo) * .5; panX = Math.max(-mx, Math.min(mx, panX)); panY = Math.max(-my, Math.min(my, panY)); };
+    const setZoom = (z, x) => { zoomTo = Math.max(1, Math.min(3.2, z)); if (x != null) zoomX = x; if (zoomTo === 1) panX = panY = 0; clampPan(); zoomBtn(); };
+    const sideOf = clientX => { const r = canvas.getBoundingClientRect(); return clientX > r.left + r.width / 2 ? 1 : -1; };
     wrap.addEventListener('pointerdown', e => {
-      if (e.target.closest('button, a, .note')) return;   // кнопки сцени працюють як кнопки
-      drag = {t:performance.now(), lx:e.clientX, ly:e.clientY, moved:0};
+      if (e.target.closest('button, a')) return;   // кнопки сцени працюють як кнопки
+      pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
       try { wrap.setPointerCapture(e.pointerId); } catch (err) {}
+      if (pts.size === 2 && canZoom()){   // щипок: наближаємо сторінку, на якій пальці
+        const [a, b] = [...pts.values()];
+        pinch = {d0:Math.max(10, Math.hypot(a.x - b.x, a.y - b.y)), z0:zoomTo};
+        if (zoomTo === 1) zoomX = sideOf((a.x + b.x) / 2);
+        const f = reader.flip; if (f && f.manual){ f.manual = false; f.released = true; f.target = 0; }
+        drag = null; return;
+      }
+      if (pts.size > 1) return;
+      drag = {t:performance.now(), lx:e.clientX, ly:e.clientY, moved:0};
       lastTouch = performance.now(); velY = 0;
     });
     wrap.addEventListener('pointermove', e => {
+      const pt = pts.get(e.pointerId); if (pt){ pt.x = e.clientX; pt.y = e.clientY; }
+      if (pinch){ if (pts.size >= 2){ const [a, b] = [...pts.values()]; setZoom(pinch.z0 * Math.hypot(a.x - b.x, a.y - b.y) / pinch.d0); } return; }
       if (!drag) return;
       const dx = e.clientX - drag.lx, dy = e.clientY - drag.ly;
       drag.lx = e.clientX; drag.ly = e.clientY; drag.moved += Math.abs(dx) + Math.abs(dy);
+      if (canZoom() && zoom > 1.05){   // наближено: палець тягне сторінку, а не гортає
+        const k = PW * shape.scale.x / pagePx(); panX -= dx * k; panY += dy * k; clampPan(); return;
+      }
       if (openTo && reader.pages){   // відкрита книжка: сторінка йде за пальцем
         const now = performance.now();
         drag.fx = (drag.fx || 0) + dx; drag.vx = dx / Math.max(8, now - (drag.mt || now - 16)); drag.mt = now;
@@ -1518,7 +1560,9 @@ const Stage = (() => {
       rotY += dx * .012; velY = dx * .012; tiltX = Math.max(-.45, Math.min(.6, tiltX + dy * .004));
       lastTouch = performance.now();
     });
-    const end = cancel => {
+    const end = (e, cancel) => {
+      if (e) pts.delete(e.pointerId);
+      if (pinch){ if (pts.size < 2) pinch = null; return; }
       if (!drag) return;
       const d = drag, tap = !cancel && d.moved < 8 && performance.now() - d.t < 400, x = d.lx;
       drag = null;
@@ -1529,14 +1573,24 @@ const Stage = (() => {
         return;
       }
       if (!tap) return;
+      if (canZoom()){   // подвійний тап наближає сторінку; одинарний гортає (із затримкою, щоб відрізнити)
+        const now = performance.now();
+        if (now - lastTap < 320){ clearTimeout(tapTimer); lastTap = 0; setZoom(zoomTo > 1 ? 1 : 2.2, sideOf(x)); return; }
+        lastTap = now;
+        if (zoom > 1.05) return;
+        clearTimeout(tapTimer);
+        tapTimer = setTimeout(() => { if (x > screenX(-W / 2, 0)) flip(1); else if (reader.s > 0) flip(-1); else setOpen(false); }, 300);
+        return;
+      }
       if (openTo && reader.pages){   // відкрита книжка: права сторінка — далі, ліва — назад, на першому розвороті ліва закриває
         if (x > screenX(-W / 2, 0)) flip(1); else if (reader.s > 0) flip(-1); else setOpen(false);
         return;
       }
       setOpen(!openTo);
     };
-    wrap.addEventListener('pointerup', () => end(false));
-    wrap.addEventListener('pointercancel', () => end(true));
+    wrap.addEventListener('pointerup', e => end(e, false));
+    wrap.addEventListener('pointercancel', e => end(e, true));
+    canvas.addEventListener('wheel', e => { if (!canZoom()) return; e.preventDefault(); setZoom(zoomTo * (e.deltaY < 0 ? 1.15 : 1 / 1.15), zoomTo === 1 ? sideOf(e.clientX) : null); }, {passive:false});
     canvas.addEventListener('keydown', e => {
       if (openTo && reader.pages && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')){ flip(e.key === 'ArrowRight' ? 1 : -1); e.preventDefault(); return; }
       if (e.key === 'ArrowLeft'){ velY = -.08; lastTouch = performance.now(); e.preventDefault(); }
@@ -1735,10 +1789,12 @@ const Stage = (() => {
       pivot.rotation.y = -2.5 * openT;
       if (inViewer){   // читання: корінець по центру, камера підходить, поки книжка розгортається
         const sx = shape.scale.x, near = .48 * sx - .08;   // ширші книжки (розмір з картки) — ширший розворот
-        const fitZ = near + Math.max(fitH, 1.5 * sx * fitW), liftY = liftK * fitZ;
+        zoom += (zoomTo - zoom) * Math.min(1, dt * 7);
+        const fitZ = (near + Math.max(fitH, 1.5 * sx * fitW)) / zoom, liftY = liftK * fitZ;
         root.position.x = (.712 * sx + .05 * shape.scale.z) * openT;   // корінець рівно по центру
-        camera.position.set(0, .25 - (.25 + liftY) * openT, baseZ + (fitZ - baseZ) * openT);
-        camera.lookAt(0, -.05 - (liftY - .05) * openT, 0);
+        const cx = (zoomX * .5 * PW * sx * (1 - 1 / zoom) + panX) * openT, cy = panY * openT;   // наближено — дивимось на потрібну сторінку
+        camera.position.set(cx, .25 - (.25 + liftY) * openT + cy, baseZ + (fitZ - baseZ) * openT);
+        camera.lookAt(cx, -.05 - (liftY - .05) * openT + cy, 0);
       } else {
         root.position.x = .5 * openT;
         camera.position.set(.25 * openT, .25 - .08 * openT, baseZ + .8 * openT);   // відкрита: трохи відступаємо, щоб розворот вмістився
@@ -1755,8 +1811,9 @@ const Stage = (() => {
     reader.onChange = (s, n) => pageFn(s, n);
     let shown = first.id; apply(first); magicArrive();
     impl = {
+      toggleZoom(){ setZoom(zoomTo > 1 ? 1 : 2.2, 1); },
       show(b, dir){
-        if (b.id === shown) return; shown = b.id; openTo = 0; onOpen(false);
+        if (b.id === shown) return; shown = b.id; openTo = 0; onOpen(false); resetZoom();
         if (reduce){ apply(b); return; }
         swap = {t:0, from:rotY, dir:dir || 1, book:b, applied:false};
       },
@@ -1778,6 +1835,7 @@ const Stage = (() => {
     open: v => impl && impl.open && impl.open(v),
     reading: () => !!(impl && impl.reading && impl.reading()),
     onPage: fn => { pageFn = fn; if (impl && impl.onPage) impl.onPage(fn); },
+    toggleZoom: () => { if (impl && impl.toggleZoom) impl.toggleZoom(); },
     onOpenChange: fn => { onOpen = fn; },
   };
 })();
@@ -1846,12 +1904,13 @@ function stageLabels(){
   if (read) $('#pager').textContent = `стор. ${pageAt[0] + 1} / ${pageAt[1]}`;
   $('#prev').setAttribute('aria-label', read ? 'Попередній розворот' : 'Попередня книжка');
   $('#next').setAttribute('aria-label', read ? 'Наступний розворот' : 'Наступна книжка');
-  $('#hint-t').textContent = read ? 'Гортайте: тягніть сторінку або стрілки' : open ? 'Натисніть на книжку, щоб закрити' : 'Покрутіть · торкніться, щоб відкрити';
+  $('#hint-t').textContent = read ? 'Гортайте: тягніть або стрілки · наблизити: подвійний тап чи щипок' : open ? 'Натисніть на книжку, щоб закрити' : 'Покрутіть · торкніться, щоб відкрити';
   if (!read) $('#pager').textContent = `${state.featured + 1} / ${FEATURED.length}`;
 }
 Stage.onPage((s, n) => { pageAt = [s, n]; stageLabels(); });
 $('#open-book').addEventListener('click', () => Stage.toggle());
 $('#stage-open').addEventListener('click', () => Stage.toggle());
+$('#stage-zoom').addEventListener('click', () => Stage.toggleZoom());
 Stage.onOpenChange(open => {
   $('#hero').classList.toggle('is-open', open);
   const sb = $('#stage-buy'); sb.hidden = !open;
@@ -2284,6 +2343,10 @@ function galleryHTML(b){
 function initGallery(g){
   if (!g) return;
   const track = $('.g-track', g), dots = $$('.g-dots button', g), count = $('.g-count', g), n = track.children.length;
+  g.addEventListener('click', e => {   // тап по фото — на весь екран
+    const fig = e.target.closest('.g-slide'); if (!fig || e.target.closest('button')) return;
+    const slides = [...track.children]; openLightbox(slides.map(f => f.querySelector('img').src), slides.indexOf(fig));
+  });
   if (n < 2) return;
   const go = i => track.scrollTo({left:Math.max(0, Math.min(n - 1, i)) * track.clientWidth, behavior:reduce ? 'auto' : 'smooth'});
   const cur = () => Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
@@ -2292,6 +2355,41 @@ function initGallery(g){
   $('.g-nav.prev', g).addEventListener('click', () => go(cur() - 1));
   $('.g-nav.next', g).addEventListener('click', () => go(cur() + 1));
 }
+/* Фото на весь екран: гортання вбік, тап збільшує (і можна тягнути), Esc або хрестик закриває */
+let lb = null;
+function openLightbox(srcs, i){
+  if (!lb){
+    lb = document.createElement('div'); lb.className = 'lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-label', 'Фото книжки');
+    lb.innerHTML = `<div class="lb-top"><span class="lb-count num"></span><button class="lb-x" type="button" aria-label="Закрити"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+      <div class="lb-track"></div>
+      <button class="lb-nav prev" type="button" aria-label="Попереднє фото">‹</button><button class="lb-nav next" type="button" aria-label="Наступне фото">›</button>
+      <div class="lb-hint">Гортайте вбік · тап збільшує</div>`;
+    document.body.appendChild(lb);
+    const track = $('.lb-track', lb), count = $('.lb-count', lb);
+    const n = () => track.children.length, cur = () => Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+    const go = k => track.scrollTo({left:Math.max(0, Math.min(n() - 1, k)) * track.clientWidth, behavior:reduce ? 'auto' : 'smooth'});
+    track.addEventListener('scroll', () => { count.textContent = `${cur() + 1} / ${n()}`; }, {passive:true});
+    track.addEventListener('click', e => {
+      const img = e.target.closest('img'), slide = e.target.closest('.lb-slide');
+      if (!img){ if (slide) closeLightbox(); return; }
+      const r = img.getBoundingClientRect(), rx = (e.clientX - r.left) / r.width, ry = (e.clientY - r.top) / r.height;
+      if (slide.classList.toggle('zoomed')) requestAnimationFrame(() => { slide.scrollLeft = rx * slide.scrollWidth - slide.clientWidth / 2; slide.scrollTop = ry * slide.scrollHeight - slide.clientHeight / 2; });
+    });
+    $('.lb-x', lb).addEventListener('click', closeLightbox);
+    $('.lb-nav.prev', lb).addEventListener('click', () => go(cur() - 1));
+    $('.lb-nav.next', lb).addEventListener('click', () => go(cur() + 1));
+    document.addEventListener('keydown', e => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape'){ closeLightbox(); e.stopPropagation(); } else if (e.key === 'ArrowRight') go(cur() + 1); else if (e.key === 'ArrowLeft') go(cur() - 1);
+    }, true);
+  }
+  const track = $('.lb-track', lb);
+  track.innerHTML = srcs.map((src, k) => `<div class="lb-slide"><img src="${esc(src)}" alt="Фото ${k + 1}" draggable="false"></div>`).join('');
+  lb.classList.add('open');
+  requestAnimationFrame(() => { track.scrollTo({left:i * track.clientWidth, behavior:'auto'}); $('.lb-count', lb).textContent = `${i + 1} / ${srcs.length}`; });
+  $('.lb-x', lb).focus();
+}
+function closeLightbox(){ if (lb) lb.classList.remove('open'); }
 /* «Ще від автора», «Серія», «Схожі»: спершу те, що є на складі, далі популярніше */
 function relatedHTML(b, pool = BOOKS){
   const pick = (f, n = 10) => pool.filter(x => x.id !== b.id && f(x))
