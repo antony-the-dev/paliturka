@@ -99,14 +99,11 @@ p{text-wrap:pretty}
 
 
 /* Прототип-смужка */
-.proto{background:var(--sunk);color:var(--ink-2);font-size:var(--t-14)}
-.proto .wrap{display:flex;flex-wrap:wrap;gap:0 var(--s-4);align-items:center;justify-content:space-between;padding-block:var(--s-1)}
 
 /* Шапка: скло над контентом, що прокручується під нею */
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bar-glass);backdrop-filter:saturate(1.5) blur(14px);-webkit-backdrop-filter:saturate(1.5) blur(14px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s-3) var(--s-5);padding-block:var(--s-3)}
 .logo{display:flex;align-items:center;gap:10px;font:700 var(--t-20)/1 var(--f-display);letter-spacing:-.01em;color:var(--ink);text-decoration:none;min-height:44px}
-.logo small{display:block;font:600 var(--t-12)/1 var(--f-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);margin-top:4px}
 .mainnav{display:none;gap:var(--s-1)}
 .mainnav a{min-height:44px;display:inline-flex;align-items:center;padding:0 14px;border-radius:999px;color:var(--ink-2);text-decoration:none;font-weight:600;font-size:var(--t-14)}
 .mainnav a:hover{color:var(--ink);background:var(--sunk)}
@@ -130,15 +127,7 @@ p{text-wrap:pretty}
 }
 
 /* Нотатки для команди */
-.note{display:none}
-.present .proto,.present .note,.present #notes-toggle,.present #how,.present .logo small{display:none!important}
-.proto-acts{display:flex;gap:0 16px;flex-wrap:wrap}
 @media (hover:none){.kbd{display:none}}
-.notes-on .note{display:flex;gap:var(--s-2);align-items:flex-start;background:var(--note);color:var(--on-note);font:500 var(--t-14)/1.45 var(--f-ui);padding:10px 12px;border-radius:10px;margin-top:var(--s-2);max-width:52ch;box-shadow:0 6px 16px -8px rgba(0,0,0,.35);text-align:left}
-.note b{font-weight:700;flex:none}
-.note code{font:600 var(--t-12)/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.08);padding:0 4px;border-radius:4px}
-.note.float{position:absolute;z-index:3;margin:0}
-.notes-row{display:flex;flex-wrap:wrap;gap:0 var(--s-3);margin-bottom:var(--s-4)}
 
 main{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(48px,7vw,88px);padding-block:var(--s-5) var(--s-8)}
 main > section{scroll-margin-top:100px}
@@ -212,12 +201,10 @@ main > section{scroll-margin-top:100px}
 .pager{font:600 var(--t-14)/1 var(--f-ui);color:var(--on-stage-2);min-width:48px;text-align:center}
 .sep{width:1px;height:24px;background:var(--glass-border);margin-inline:var(--s-1)}
 .hint{position:absolute;top:var(--s-4);right:var(--s-5);font-size:var(--t-12);color:var(--on-stage-2);display:flex;gap:6px;align-items:center}
-.stage .note.float{left:var(--s-4);top:var(--s-4)}
 @media (max-width:860px){
   .hero{grid-template-columns:1fr;min-height:0}
   .stage{order:-1;min-height:400px}
   .hint{right:auto;left:50%;transform:translateX(-50%);white-space:nowrap}
-  .stage .note.float{top:44px}
 }
 
 /* Секції */
@@ -377,17 +364,7 @@ button.cell:hover .fan-b:nth-child(3){transform:translateX(60%) rotate(14deg)}
 .empty .btn{margin-top:var(--s-4)}
 
 /* Як це працюватиме: липка історія */
-.how{background:var(--surface);border-radius:var(--r-xl);padding:clamp(24px,4vw,48px);box-shadow:inset 0 0 0 1px var(--line)}
 .tag{display:inline-block;background:var(--note);color:var(--on-note);font:700 var(--t-12)/1 var(--f-ui);letter-spacing:.08em;text-transform:uppercase;padding:6px 8px;border-radius:6px;margin-bottom:var(--s-3)}
-.story{display:grid;gap:var(--s-6)}
-.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;gap:var(--s-4)}
-.step{counter-increment:s;padding:var(--s-4) 0 var(--s-4) 52px;position:relative;min-width:0}
-.step::before{content:counter(s);position:absolute;left:0;top:var(--s-4);display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--sunk);color:var(--ink);font:700 var(--t-14)/1 var(--f-display);transition:background var(--d),color var(--d)}
-.step h3{margin:0 0 6px;font:600 var(--t-20)/1.25 var(--f-book)}
-.step p{margin:0;color:var(--ink-2);max-width:48ch}
-.step.on::before{background:var(--ink);color:var(--paper)}
-.viz{margin-top:var(--s-4)}
-.story-panel{display:none}
 .cap{display:block;margin-top:var(--s-2);font:600 var(--t-12)/1.4 ui-monospace,Menlo,monospace;color:var(--ink-2)}
 .code{margin:0;background:var(--code-bg);color:var(--code-fg);border-radius:var(--r-m);padding:var(--s-4) var(--s-5);font:500 13px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;overflow-x:auto;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
 .code .k{color:var(--code-key)}.code .s{color:var(--code-str)}.code .n{color:var(--code-num)}.code .c{color:var(--code-dim)}
@@ -402,14 +379,6 @@ button.cell:hover .fan-b:nth-child(3){transform:translateX(60%) rotate(14deg)}
 .flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:var(--t-12);font-weight:600}
 .flow span{padding:4px 8px;border-radius:6px;background:var(--sunk)}
 @media (min-width:961px){
-  .story{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:start}
-  .step{padding-block:9vh}
-  .step:not(.on){opacity:.5}
-  .step{transition:opacity var(--d)}
-  .step .viz{display:none}
-  .story-panel{display:block;position:sticky;top:120px;height:400px}
-  .story-panel .viz{position:absolute;inset:0;margin:0;opacity:0;transform:translateY(10px);transition:opacity var(--d-exit) var(--ease-in),transform var(--d-exit) var(--ease-in);display:flex;flex-direction:column;justify-content:center}
-  .story-panel .viz.on{opacity:1;transform:none;transition:opacity var(--d) var(--ease-out),transform var(--d) var(--ease-out)}
 }
 
 /* Підвал */
@@ -705,19 +674,12 @@ body::before{
 
 </style>
 
-<div class="present app" id="app" lang="uk">
-  <div class="proto">
-    <div class="wrap">
-      <span>Прототип вітрини. Книжки, ціни й наявність тут для прикладу: справжні дані підтягнемо з каталогу постачальника.</span>
-      <span class="proto-acts"><button class="textbtn" type="button" data-notes>Показати нотатки для команди</button><button class="textbtn" type="button" id="present-on">Режим показу<span class="kbd"> (Shift+P)</span></button></span>
-    </div>
-  </div>
-
+<div class="app" id="app" lang="uk">
   <header class="top">
     <div class="wrap">
       <a class="logo" href="#top" aria-label="Палітурка, на початок">
         <svg width="30" height="34" viewBox="0 0 30 34" aria-hidden="true"><rect x="3" y="2" width="24" height="30" rx="2.5" fill="var(--buy)"/><rect x="3" y="2" width="5" height="30" rx="2" fill="var(--ink)" opacity=".35"/><path d="M19 2h5v14l-2.5-2.2L19 16z" fill="var(--foil)"/></svg>
-        <span>Палітурка<small>робоча назва</small></span>
+        <span>Палітурка</span>
       </a>
       <nav class="mainnav" aria-label="Розділи">
         <a href="#collections" data-sec="collections">Добірки</a>
@@ -728,13 +690,8 @@ body::before{
         <label class="sr" for="q">Пошук книжок</label>
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         <input id="q" type="search" placeholder="Назва, автор або видавництво" autocomplete="off" enterkeyhint="search">
-        <span class="note"><b>Пошук</b> У каталозі десятки чи сотні тисяч позицій, тож знадобиться окремий пошуковий рушій (Meilisearch або Typesense) з підказками й помилками в словах.</span>
       </div>
       <div class="actions">
-        <button class="iconbtn press hide-sm" type="button" id="notes-toggle" aria-pressed="false" data-notes>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h14v13l-5 5H5z"/><path d="M14 21v-5h5"/></svg>
-          Нотатки
-        </button>
         <button class="iconbtn cartbtn press" type="button" data-open-cart aria-label="Кошик">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7h14l-1.2 12.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
           <span>Кошик</span>
@@ -777,7 +734,6 @@ body::before{
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 12h16M4 12l4-4M4 12l4 4M20 12l-4-4M20 12l-4 4"/></svg>
           <span id="hint-t">Покрутіть · торкніться, щоб відкрити</span>
         </span>
-        <span class="note float"><b>3D</b> Лицьова обкладинка береться з <code>coverImage.url</code>, корінець, задник із штрихкодом ISBN і титульну сторінку генеруємо самі.</span>
         <div class="stagebar">
           <div class="glass">
             <button class="round press" type="button" id="prev" aria-label="Попередня книжка"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
@@ -796,7 +752,6 @@ body::before{
         <h2 id="shelf-h">Полиця тижня</h2>
         <p>Те, що зараз читають найбільше. Торкніться книжки, щоб відкрити.</p>
       </div>
-      <span class="note"><b>Полиця</b> Добірка збирається сама: стікер <code>ТОП тижня</code>, <code>Хіт продажу</code> чи <code>Популярне</code> з API.</span>
       <div class="shelf-wrap">
       <button class="shelf-arrow prev" type="button" id="shelf-prev" aria-label="Гортати полицю назад"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
       <button class="shelf-arrow next" type="button" id="shelf-next" aria-label="Гортати полицю далі"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
@@ -838,84 +793,11 @@ body::before{
           </select>
         </div>
       </div>
-      <div class="notes-row">
-        <span class="note"><b>Ціна</b> Наша: опт + націнка за правилами з <code>config/pricing.json</code>. Опт до вітрини не потрапляє взагалі.</span>
-        <span class="note"><b>Наявність</b> <code>stockNp &gt; 0</code> означає «відправимо сьогодні». Якщо книжка лише на віртуальному складі, пишемо «під замовлення» з <code>deliveryTime</code>.</span>
-        <span class="note"><b>Фільтри</b> Перебудова сітки анімована: картки пливуть на нові місця, а не стрибають.</span>
-      </div>
       <div class="grid" id="grid"></div>
       <nav class="pages" id="grid-pages" aria-label="Сторінки каталогу"></nav>
       <div class="empty" id="grid-empty" hidden></div>
     </section>
 
-    <section class="how" id="how" aria-labelledby="how-h">
-      <span class="tag">Для команди</span>
-      <div class="sec-head"><h2 id="how-h">Як це працюватиме</h2><p>Шлях від каталогу постачальника до посилки в руках читача.</p></div>
-      <div class="story">
-        <ol class="steps">
-          <li class="step on" data-step="0">
-            <h3>Каталог постачальника</h3>
-            <p>API BookTicket B2B віддає назви, авторів, ціни опт і роздріб, залишки по складах і посилання на обкладинки. Сторінками по 100 книжок.</p>
-            <div class="viz">
-<pre class="code"><span class="c">GET /commerce/price-list?skip=0&amp;take=100</span>
-{
-  <span class="k">"count"</span>: <span class="c">…  // скільки всього, побачимо після вивантаження</span>
-  <span class="k">"data"</span>: [{
-    <span class="k">"productId"</span>: <span class="n">103398</span>,
-    <span class="k">"name"</span>: <span class="s">"Ми тебе любимо, Зайчику"</span>,
-    <span class="k">"authorName"</span>: <span class="s">"Мона Авад"</span>,
-    <span class="k">"publisherName"</span>: <span class="s">"ЖОРЖ"</span>,
-    <span class="k">"retailPrice"</span>: <span class="s">"570"</span>,
-    <span class="k">"wholesalePrice"</span>: <span class="s">"371"</span>,
-    <span class="k">"stockNp"</span>: <span class="n">411</span>,
-    <span class="k">"stickers"</span>: [<span class="s">"єКнига"</span>, <span class="s">"Хіт Продажу"</span>, …]
-  }, …]
-}</pre>
-              <span class="cap">справжній запис з API, скорочено</span>
-            </div>
-          </li>
-          <li class="step" data-step="1">
-            <h3>Щоденна синхронізація</h3>
-            <p>Скрипт уночі оновлює ціни й залишки, додає нові книжки й ховає ті, що зникли. Якщо щось обірвалось, продовжує з місця зупинки.</p>
-            <div class="viz">
-<pre class="code"><span class="c">$ python bookticket_sync.py catalog</span>
-06:00:01  Токен взято з auth.json
-06:00:01  Нове вивантаження #12
-06:00:02    [ <span class="n">10%</span>]  …
-06:02:31    [ <span class="n">60%</span>]  …
-06:04:40  <span class="n">Каталог готовий</span>
-06:04:40  Сховано 12 книг, яких більше нема
-<span class="c">$ python bookticket_sync.py covers --in-stock</span></pre>
-              <span class="cap">так виглядатиме щоденний запуск, цифри умовні</span>
-            </div>
-          </li>
-          <li class="step" data-step="2">
-            <h3>Вітрина</h3>
-            <p>Пошук, добірки, фільтри, картки книжок і кошик. Покупець бачить лише нашу ціну і зрозумілий термін.</p>
-            <div class="viz">
-              <div class="vcard">
-                <img data-cover="103398" alt="">
-                <div><b>Ми тебе любимо, Зайчику</b><span class="author">Мона Авад</span><span class="price num">570 ₴</span><p class="avail ok">Відправимо сьогодні</p></div>
-              </div>
-              <span class="cap">stockNp: 411 → «відправимо сьогодні»</span>
-            </div>
-          </li>
-          <li class="step" data-step="3">
-            <h3>Щоденне замовлення</h3>
-            <p>Раз на день усі замовлення клієнтів збираються в одне замовлення постачальнику через його API. Книжки приїжджають у магазин у Ніжині: звідти клієнт забирає сам або отримує Новою Поштою.</p>
-            <div class="viz">
-              <div class="parcel">
-                <div class="ttn"><span>ТТН</span><span class="num">2045 0000 0000 00</span></div>
-                <dl><dt>Одержувач</dt><dd>Олена К., Львів, відділення №12</dd><dt>Вміст</dt><dd>Книжки, 1 шт.</dd><dt>Відправник</dt><dd>Палітурка, Ніжин</dd></dl>
-                <div class="flow"><span>Клієнт</span>→<span>Палітурка</span>→<span>BookTicket</span>→<span>Ніжин</span>→<span>самовивіз або НП</span></div>
-              </div>
-              <span class="cap">макет наклейки, номер умовний</span>
-            </div>
-          </li>
-        </ol>
-        <div class="story-panel" id="story-panel" aria-hidden="true"></div>
-      </div>
-    </section>
   </main>
 
   <footer id="delivery">
@@ -927,12 +809,12 @@ body::before{
       </div>
       <div>
         <h4>Доставка</h4>
-        <p>Нова Пошта: відділення, поштомат, курʼєр.</p>
+        <p>Самовивіз у Ніжині або Нова Пошта: відділення чи поштомат.</p>
         <p>Книжки зі складу постачальника привозимо в Ніжин за 1–2 дні.</p>
       </div>
       <div>
         <h4>Оплата</h4>
-        <p>Картка онлайн, єКнига, післяплата.</p>
+        <p>При отриманні або єКнигою. Оплата карткою онлайн — незабаром.</p>
         <p>Безкоштовна доставка від 1 000 ₴.</p>
       </div>
     </div>
@@ -2009,14 +1891,12 @@ function renderBento(){
       <span class="ek-word">єКнига</span>
       <p>${books(ekN)} з каталогу можна оплатити сертифікатом.</p>
       <button class="textbtn" type="button" data-ek-go>Показати ${ekN}</button>
-      <span class="note"><b>єКнига</b> Щоб приймати сертифікати, магазин має стати учасником програми. Треба зʼясувати умови.</span>
     </div>
     <div class="cell wide ship">
       <span class="cell-k">Щоденна поставка</span>
       <span class="clock num" id="ship-clock">…</span>
       <p id="ship-text"></p>
       <div class="dayline" aria-hidden="true"><i id="ship-mark"></i><span>9:00</span><span>14:00</span></div>
-      <span class="note"><b>Поставка</b> 14:00 тут лише припущення. Треба уточнити, до котрої години постачальник приймає щоденне замовлення.</span>
     </div>` +
     (HAS_SCR ? catCell(SCR, 'film') : catCell(TOPCATS[4])) +
     `<div class="cell free">
@@ -2165,7 +2045,7 @@ function drawGrid(shown, count, animate){
   $('#grid-pages').innerHTML = pagesHTML(state.page, total);
   const empty = $('#grid-empty');
   empty.hidden = count > 0;
-  if (!count) empty.innerHTML = `<b>Нічого не знайшли${state.q ? ` за «${esc(state.q)}»` : ''}</b>Спробуйте іншу назву чи автора або скиньте фільтри.<br><button class="btn btn-line press" type="button" data-reset>Скинути фільтри</button>`;
+  if (!count) empty.innerHTML = `<b>Нічого не знайшли${state.q ? ` за «${esc(state.q)}»` : ''}</b>${API.on ? '' : 'У цій версії для перегляду лише ' + BOOKS.length + ' книжок, у повному магазині — близько 290 тисяч. '}Спробуйте іншу назву чи автора або скиньте фільтри.<br><button class="btn btn-line press" type="button" data-reset>Скинути фільтри</button>`;
   if (!flip) return;
   let n = 0;
   shown.forEach(b => {
@@ -2194,14 +2074,13 @@ $('#q').addEventListener('input', e => { clearTimeout(qTimer); qTimer = setTimeo
 $('#q').addEventListener('keydown', e => { if (e.key === 'Enter'){ clearTimeout(qTimer); state.q = e.target.value; renderGrid(true); go('catalog'); } });
 
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-add],[data-open],[data-notify],[data-reset],[data-notes],[data-close],[data-3d],[data-cat-go],[data-ek-go],[data-open-cart]');
+  const t = e.target.closest('[data-add],[data-open],[data-notify],[data-reset],[data-close],[data-3d],[data-cat-go],[data-ek-go],[data-open-cart]');
   if (!t) return;
   const d = t.dataset;
   if (d.add) addToCart(+d.add, t);
   else if (d.open) openDetail(+d.open);
   else if (d.notify) toast(`Повідомимо, коли «${byId[d.notify].t}» зʼявиться (демо)`);
   else if ('reset' in d) resetFilters();
-  else if ('notes' in d) setNotes(!$('#app').classList.contains('notes-on'));
   else if ('close' in d) requestClose();
   else if (d['3d']) show3d(+d['3d']);
   else if (d.catGo){ state.cat = d.catGo; state.ek = false; $('#f-ek').checked = false; renderChips(); renderGrid(false); go('catalog'); }
@@ -2209,20 +2088,6 @@ document.addEventListener('click', e => {
   else if ('openCart' in d){ state.view = 'list'; renderCart(); openSheet($('#cart')); }
 });
 
-/* ── Режим показу: чистий сайт для партнера; вхід і вихід — Shift+P ── */
-function setPresent(on){
-  $('#app').classList.toggle('present', on);
-  if (on) toast(matchMedia('(hover:none)').matches ? 'Режим показу. Вийти: оновіть сторінку' : 'Режим показу. Вийти: Shift+P');
-}
-$('#present-on').addEventListener('click', () => setPresent(true));
-if (/[?&]dev\b/.test(location.search)) $('#app').classList.remove('present');
-document.addEventListener('keydown', e => { if (e.shiftKey && (e.key === 'P' || e.key === 'З') && !(e.target.closest && e.target.closest('input, textarea'))) setPresent(!$('#app').classList.contains('present')); });
-/* ── Нотатки ── */
-function setNotes(on){
-  $('#app').classList.toggle('notes-on', on);
-  $('#notes-toggle').setAttribute('aria-pressed', on);
-  $$('.proto [data-notes]').forEach(b => { b.textContent = on ? 'Сховати нотатки' : 'Показати нотатки для команди'; });
-}
 
 /* ── Де я: підсвічуємо розділ у навігації ── */
 const SEC_TAB = {hero:'hero', shelf:'hero', collections:'collections', catalog:'catalog', how:'', delivery:'delivery'};
@@ -2312,14 +2177,12 @@ function renderDetail(b){
       <h3>${esc(b.t)}</h3>
       <p class="d-author">${esc(b.a)}</p>
       <p class="d-desc">${b.d ? esc(b.d) : API.on && !b.full ? '<span class="d-wait">Завантажуємо опис…</span>' : ''}</p>
-      <span class="note"><b>Опис</b> У <code>price-list</code> опису немає. Його віддає окремий запит картки товару, який ще треба знайти в DevTools.</span>
       <dl class="facts">
         <dt>Видавництво</dt><dd>${esc(b.p)}</dd>
         <dt>Мова</dt><dd>${esc(b.lang || 'Українська')}</dd>${b.year ? `<dt>Рік</dt><dd class="num">${b.year}</dd>` : ''}${b.pages ? `<dt>Сторінок</dt><dd class="num">${esc(b.pages)}</dd>` : ''}${b.binding ? `<dt>Палітурка</dt><dd>${esc(b.binding)}</dd>` : ''}${b.size ? `<dt>Формат</dt><dd class="num">${b.size[0]}×${b.size[1]} см</dd>` : ''}
         <dt>ISBN</dt><dd class="num">${b.isbn || '—'}</dd>
       </dl>
       <p class="avail ${av.k}" style="margin-bottom:var(--s-4)">${av.short}. <span style="font-weight:400;color:var(--ink-2)">${av.more}</span></p>
-      <span class="note"><b>Склади</b> Приклад з API: <code>WMS · НП · 411 шт · 0 днів</code>, <code>Елект-К · віртуальний · 0 шт · 14 днів</code>. Клієнту показуємо лише термін.</span>
     </div>
   </div>`;
   $('#detail-body').insertAdjacentHTML('beforeend', relatedHTML(b, relPool && relPool.id === b.id ? relPool.pool : BOOKS));
@@ -2556,8 +2419,7 @@ function renderCart(){
           <div class="qty"><button class="press" type="button" data-q="${b.id}" data-d="-1" aria-label="Менше: ${esc(b.t)}">−</button><span class="num" aria-live="polite">${q}</span><button class="press" type="button" data-q="${b.id}" data-d="1" aria-label="Більше: ${esc(b.t)}">+</button></div></div>
         <div><span class="price">${money(b.price * q)}</span><button class="rm" type="button" data-rm="${b.id}">Прибрати</button></div>
       </div>`; }).join('') +
-      (hasWait && hasOk ? `<div class="callout" style="margin-top:16px"><b>Частина книжок під замовлення.</b> Відправимо все однією посилкою, щойно надійде, або розділимо на дві. Виберете під час оформлення.</div>
-        <span class="note"><b>Питання</b> Чи може постачальник відправити частинами, і хто платить за другу посилку?</span>` : '');
+      (hasWait && hasOk ? `<div class="callout" style="margin-top:16px"><b>Частина книжок під замовлення.</b> Відправимо все однією посилкою, щойно надійде, або розділимо на дві. Виберете під час оформлення.</div>` : '');
     foot.innerHTML = `<div class="meter" aria-hidden="true"><i style="--p:${Math.min(1, sum / FREE_SHIP).toFixed(3)}"></i></div>
       <div class="sumrow"><span>${left ? `До безкоштовної доставки ще ${money(left)}` : 'Доставка безкоштовна'}</span></div>
       <div class="sumrow total"><span>Разом</span><span class="num">${money(sum)}</span></div>
@@ -2575,7 +2437,6 @@ function renderCart(){
       ${opt('get', 'np', 'Нова Пошта', 'Відділення або поштомат, за тарифом НП')}
     </fieldset>
     ${state.form.get === 'np' ? `<div class="two">${fieldHTML(FIELDS[2])}${fieldHTML(FIELDS[3])}</div>` : ''}
-    <span class="note"><b>Нова Пошта</b> Міста й відділення підтягуємо з API Нової Пошти з підказками, а ТТН створюємо автоматично.</span>
     ${hasWait && hasOk ? `<fieldset class="pay"><legend class="legend">Як відправити</legend>
       ${opt('ship', 'one', 'Однією посилкою', 'Коли надійдуть усі книжки, до 14 днів')}
       ${opt('ship', 'two', 'Двома посилками', 'Що є на складі, поїде сьогодні, решта пізніше')}
@@ -2648,22 +2509,9 @@ function toast(msg, action){
   toastTimer = setTimeout(() => el.classList.remove('on'), action ? 5000 : 2200);
 }
 
-/* ── Історія «як це працює»: липка панель на широкому екрані ── */
-(function story(){
-  const panel = $('#story-panel'), steps = $$('.step');
-  steps.forEach(s => { const v = s.querySelector('.viz').cloneNode(true); panel.appendChild(v); });
-  const vizzes = $$('.viz', panel);
-  const set = i => { steps.forEach((s, j) => s.classList.toggle('on', j === i)); vizzes.forEach((v, j) => v.classList.toggle('on', j === i)); };
-  set(0);
-  const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) set(+e.target.dataset.step); }), {rootMargin:'-45% 0px -50% 0px'});
-  steps.forEach(s => obs.observe(s));
-})();
-
 /* ── Старт ── */
 try { Object.values(JSON.parse(localStorage.getItem('palitourka-cart-books') || '{}')).forEach(x => byId[x.id] || ingest(x)); } catch (e) {}
 renderHero(); renderShelf(); renderBento(); renderChips(); renderGrid(false); renderBadges();
-if (location.hash === '#notes') setNotes(true);
-if (location.hash === '#present') $('#app').classList.add('present');
 {
   const q = new URLSearchParams(location.search).get('q');
   if (q){ state.q = q; $('#q').value = q; renderGrid(false); setTimeout(() => go('catalog'), 300); }
@@ -2691,7 +2539,6 @@ fontsReady.then(() => {
     $$('img[data-cover]').forEach(img => { img.src = covers[fb.id]; });
     if (vc){ vc.querySelector('b').textContent = fb.t; vc.querySelector('.author').textContent = fb.a; vc.querySelector('.price').textContent = money(fb.price); }
     const C = window.CATALOG;
-    $('.proto .wrap > span').textContent = `Прототип на справжніх даних постачальника: ${BOOKS.length} книжок, ціни — наша націнка +${C.rules.global_markup_pct}%. Дані від ${C.generated}.`;
     sampleLooks(BOOKS.filter(b => /популярне|новинка|хіт|топ/i.test(b.st.join(' '))).slice(0, 12), renderShelf);
   } else $$('img[data-cover]').forEach(img => { img.src = covers[img.dataset.cover]; });
   renderBento();
