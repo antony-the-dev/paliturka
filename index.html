@@ -440,6 +440,20 @@ footer p{margin:0 0 4px}
 .bb-price small{font-size:var(--t-12);color:var(--ink-2)}
 .buybar .btn{flex:0 0 auto;min-width:42%}
 .buybar .eta{flex-basis:100%;margin:0}
+.rec-s{display:none}
+/* телефон: панель «ціна + У кошик» у два щільні рядки, щоб лишалось більше місця книжці й опису */
+@media (max-width:700px){
+  .sheet-foot.buybar{padding:8px 16px calc(8px + env(safe-area-inset-bottom,0px));gap:2px 12px}
+  .bb-price{gap:0}
+  .bb-price b{font-size:var(--t-20)}
+  .bb-price small{font-size:11px}
+  .buybar .paychips{display:none}
+  .buybar .btn{min-height:40px;min-width:36%;font-size:var(--t-14)}
+  .buybar .eta{font-size:11.5px;line-height:1.3;margin-top:2px}
+  .rec-l{display:none}.rec-s{display:inline}
+  .sheet-head{padding:6px 10px 6px 16px}
+  .sheet-head h2{font-size:var(--t-16)}
+}
 /* Ще від автора / серія / схожі: горизонтальні ряди обкладинок */
 .more{margin-top:var(--s-6);display:grid;gap:var(--s-3);min-width:0}
 .more h4{margin:0;font:600 var(--t-16)/1.3 var(--f-ui)}
@@ -2208,11 +2222,11 @@ function renderDetail(b){
   initGallery($('#detail .gallery'));
   const ref = b.rrp || b.old, save = ref && b.price < ref * .97 ? Math.round((1 - b.price / ref) * 100) : 0;
   const pays = (b.st || []).filter(s => PAY.has(s));
-  $('#detail-foot').innerHTML = `<div class="bb-price"><b>${money(b.price)}</b>${save ? `<small>Рекомендована <s>${money(ref)}</s> · у нас на ${save}% дешевше</small>` : ''}${pays.length ? `<span class="paychips" aria-label="Можна оплатити">${pays.map(x => `<span>${esc(x)}</span>`).join('')}</span>` : ''}</div>
+  $('#detail-foot').innerHTML = `<div class="bb-price"><b>${money(b.price)}</b>${save ? `<small><span class="rec-l">Рекомендована <s>${money(ref)}</s> · у нас на ${save}% дешевше</span><span class="rec-s"><s>${money(ref)}</s> · дешевше на ${save}%</span></small>` : ''}${pays.length ? `<span class="paychips" aria-label="Можна оплатити">${pays.map(x => `<span>${esc(x)}</span>`).join('')}</span>` : ''}</div>
     ${av.k === 'none'
       ? `<button class="btn btn-line press" type="button" data-notify="${b.id}">Повідомити</button>`
       : `<button class="btn btn-buy press" type="button" data-add="${b.id}">У кошик</button>`}
-    <p class="eta avail ${av.k}">${esc(eta(b))}</p>`;
+    <p class="eta avail ${av.k}"><span class="rec-l">${esc(eta(b))}</span><span class="rec-s">${esc(eta(b, true))}</span></p>`;
 }
 /* Адреса …#book-ID відкриває книжку; назва вкладки й дані schema.org — для превʼю й пошуковиків */
 const BASE_TITLE = document.title;
@@ -2273,7 +2287,7 @@ function relatedHTML(b, pool = BOOKS){
       <span class="mini-t">${esc(x.t)}</span><span class="mini-p">${money(x.price)}</span></button>`).join('')}</div></section>`).join('');
 }
 /* Конкретна дата замість «1–2 дні» (Baymard: дата доставки знімає сумнів). Умовно: замовлення до 14:00, будні. */
-function eta(b){
+function eta(b, short){
   const tz = 'Europe/Kyiv', d1 = new Intl.DateTimeFormat('uk-UA', {weekday:'short', day:'numeric', month:'short', timeZone:tz});
   const part = (d, o) => new Intl.DateTimeFormat('uk-UA', {...o, timeZone:tz}).format(d);
   const range = (a, z) => part(a, {month:'short'}) === part(z, {month:'short'})
@@ -2281,9 +2295,10 @@ function eta(b){
     : `${d1.format(a)} – ${d1.format(z)}`;
   const work = (n) => { const x = new Date(); while (n > 0){ x.setDate(x.getDate() + 1); const wd = x.getDay(); if (wd && wd !== 6) n--; } return x; };
   const late = kyivMinutes() >= SHIP_CUTOFF;
-  if (b.np > 0) return `У Ніжині ${range(work(late ? 2 : 1), work(late ? 3 : 2))} · Новою Поштою +1–2 дні`;
+  if (b.np > 0) return short ? `Ніжин ${range(work(late ? 2 : 1), work(late ? 3 : 2))} · НП +1–2 дні`
+    : `У Ніжині ${range(work(late ? 2 : 1), work(late ? 3 : 2))} · Новою Поштою +1–2 дні`;
   if (b.virt > 0){ const z = new Date(); z.setDate(z.getDate() + (b.days || 14)); return `Під замовлення, орієнтовно до ${new Intl.DateTimeFormat('uk-UA', {day:'numeric', month:'long', timeZone:tz}).format(z)}`; }
-  return 'Зараз немає в наявності. Напишемо, коли зʼявиться';
+  return short ? 'Зараз немає в наявності' : 'Зараз немає в наявності. Напишемо, коли зʼявиться';
 }
 /* Свайп униз закриває шторку: з ручки й шапки завжди, з вмісту — коли він прокручений до верху */
 function enableSwipe(sheet){
