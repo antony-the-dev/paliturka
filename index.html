@@ -356,7 +356,6 @@ button.cell:hover .fan-b:nth-child(3){transform:translateX(60%) rotate(14deg)}
 .price s{font-weight:500;font-size:var(--t-14);color:var(--ink-2);margin-left:6px}
 .add{min-height:44px;border-radius:999px;border:0;background:var(--buy);color:var(--on-buy);padding:0 var(--s-4);font-weight:600;font-size:var(--t-14);display:inline-flex;align-items:center;gap:6px}
 .add:hover{background:var(--buy-hover)}
-.add.added{background:var(--ok);color:var(--surface)}
 .add.alt{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
 .avail{display:flex;gap:7px;align-items:center;font-size:var(--t-14);font-weight:500;margin:0}
 .avail::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
@@ -600,9 +599,7 @@ body::before{
 }
 .btn:active:not(:disabled),.add:active{color:var(--b-on);transform:scale(.96);transition-duration:.12s}
 .btn:active:not(:disabled)::before,.add:active::before{clip-path:circle(150% at var(--mx,50%) var(--my,50%));transition-duration:.3s}
-.add.added{--b-fill:var(--ok);--b-on:#fff;background:transparent;color:#fff;box-shadow:inset 0 0 0 1.5px var(--ok)}
-.add.added::before{clip-path:circle(150% at var(--mx,50%) var(--my,50%))}
-.btn-buy.added{background:var(--ok);color:#fff;box-shadow:none;--b-fill:var(--ok);--b-on:#fff}
+.add.in-cart,.btn-buy.in-cart,.btn-stagebuy.in-cart{background:var(--ok);color:var(--paper);box-shadow:none;--b-fill:color-mix(in srgb,var(--ok) 78%,#000);--b-on:#fff}
 .pg.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 @media (prefers-reduced-motion: reduce){.btn::before,.add::before{transition:none}}
 .btn-buy{background:color-mix(in srgb,var(--buy) 14%,transparent)}
@@ -1795,7 +1792,7 @@ function renderHero(){
   lbl.textContent = b.pick ? 'Вибір Палітурки' : 'На сцені'; lbl.classList.toggle('picked', !!b.pick);
   $('#hero-price').innerHTML = priceHTML(b);
   const el = $('#hero-avail'); el.className = 'avail ' + av.k; el.textContent = av.short;
-  $('#hero-add').dataset.id = b.id; $('#hero-more').dataset.id = b.id;
+  $('#hero-add').dataset.id = b.id; $('#hero-more').dataset.id = b.id; syncAddButtons();
   $('#pager').textContent = `${state.featured + 1} / ${FEATURED.length}`;
   tintHero(b);
 }
@@ -2085,6 +2082,7 @@ function renderGrid(animate){
   apiGet('/api/books', {q:state.q.trim(), cat:state.cat, stock:state.inStock ? 1 : '', ek:state.ek ? 1 : '', sort:state.sort, page:state.page})
     .then(r => { if (my === API.seq){ grid.classList.remove('loading'); drawGrid(r.items.map(ingest), r.total, animate); } })
     .catch(() => { if (my === API.seq){ grid.classList.remove('loading'); API.on = false; renderGrid(animate); } });   // сервер не відповів — назад на data.js
+  syncAddButtons();
 }
 function drawGrid(shown, count, animate){
   const grid = $('#grid'), flip = animate === true && !reduce;
@@ -2247,6 +2245,7 @@ function renderDetail(b){
       ? `<button class="btn btn-line press" type="button" data-notify="${b.id}">Повідомити</button>`
       : `<button class="btn btn-buy press" type="button" data-add="${b.id}">У кошик</button>`}
     <p class="eta avail ${av.k}"><span class="rec-l">${esc(eta(b))}</span><span class="rec-s">${esc(eta(b, true))}</span></p>`;
+  syncAddButtons();
 }
 /* Адреса …#book-ID відкриває книжку; назва вкладки й дані schema.org — для превʼю й пошуковиків */
 const BASE_TITLE = document.title;
@@ -2381,8 +2380,20 @@ function stageBackHome(){
 /* ── Кошик ── */
 const lines = () => Object.entries(state.cart).map(([id, q]) => ({b:byId[id], q})).filter(x => x.b && x.q > 0);
 const total = () => lines().reduce((s, x) => s + x.b.price * x.q, 0);
+/* Кнопки «У кошик» самі показують стан: зелена «✓ У кошику · 2», поки книжка в кошику */
+function syncAddButtons(){
+  const hero = $('#hero-add');
+  [...$$('[data-add]'), ...(hero && hero.dataset.id ? [hero] : [])].forEach(el => {
+    const n = state.cart[el.dataset.add || el.dataset.id] || 0, on = n > 0;
+    if (el.classList.contains('in-cart') === on && el.dataset.n === String(n)) return;
+    el.classList.toggle('in-cart', on); el.dataset.n = n;
+    el.innerHTML = on ? `${I.check}У кошику · ${n}` : 'У кошик';
+    el.setAttribute('aria-label', on ? `У кошику ${n}: додати ще` : 'У кошик');
+  });
+}
 function renderBadges(){
   const n = lines().reduce((s, x) => s + x.q, 0);
+  syncAddButtons();
   $$('[data-cart-count]').forEach(el => { el.textContent = n; el.dataset.n = n; });
   updateFree();
 }
@@ -2406,20 +2417,12 @@ function flyToCart(src, done){
     {transform:`translate(${dx}px,${dy}px) scale(.12) rotate(-16deg)`, opacity:.4},
   ], {duration:620, easing:'cubic-bezier(.45,0,.55,1)'});
   anim.onfinish = () => { ghost.remove(); done(); };
-}
-function markAdded(btn){
-  if (!(btn.classList.contains('add') || btn.classList.contains('btn-buy')) || btn.classList.contains('added')) return;
-  const html = btn.innerHTML;
-  btn.classList.add('added'); btn.innerHTML = I.check + (btn.classList.contains('add') ? 'Додано' : 'У кошику');
-  setTimeout(() => { btn.classList.remove('added'); btn.innerHTML = html; }, 1400);
-}
-function addToCart(id, src){
+}function addToCart(id, src){
   const b = byId[id]; if (!b || avail(b).k === 'none') return;
   state.cart[id] = (state.cart[id] || 0) + 1; saveCart();
-  if (src) markAdded(src);
+  renderBadges();
+  if (src && !reduce) src.animate([{transform:'scale(1)'}, {transform:'scale(.94)'}, {transform:'scale(1)'}], {duration:260, easing:EASE_OUT});
   flyToCart(src, () => { renderBadges(); bump(); });
-  const n = Object.values(state.cart).reduce((a, q) => a + q, 0);
-  toast(`У кошику: «${b.t}»` + (n > 1 ? ` · разом ${n}` : ''), {label:'До кошика', fn:() => { state.view = 'list'; renderCart(); openSheet($('#cart')); }});
   if (openEl === $('#cart') && state.view === 'list') renderCart();
 }
 function removeLine(id){
